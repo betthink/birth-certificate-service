@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, Button} from 'react-native';
+import {View, Text, TouchableOpacity, Button, Alert} from 'react-native';
 import React, {useState} from 'react';
 import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import HeaderCloud from './Components/HeaderCloud';
@@ -8,11 +8,12 @@ import {hijau, putih} from '../Assets/StylingComponent/Coloring';
 // import { AuthContext } from './Components/AuthContext';
 import axios from 'axios';
 import {ipAdress} from './Components/Url';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const LoginU = ({navigation}) => {
   const [UsernameHook, setUsernameHook] = useState('');
   const [PasswordHook, setPasswordHook] = useState('');
-  const [isLoading, setisLoading] = useState(false);
-  const [userInfo, setuserInfo] = useState({});
+  // const [isLoading, setisLoading] = useState(false);
+  // const [userInfo, setuserInfo] = useState({});
   // const [dataUser, setDataUser] = useState({
   //   Username: Username,
   //   Password: Password
@@ -21,44 +22,45 @@ const LoginU = ({navigation}) => {
   // * test
   // const urlLogin = `${ipAdress}/aplikasiLayananAkta/LoginUmum.php`;
   async function loginFunc() {
-    
+    if (!UsernameHook) {
+      alert('masukan username anda!');
+      return;
+    } else if (!PasswordHook) {
+      alert('masukan password anda!');
+      return;
+    }
     try {
       // console.log(UsernameHook, PasswordHook);
-      const res = await axios(
-        {
-          
-          method: "POST",
-          data : {
-            Username : UsernameHook,
-            Password : PasswordHook,
-          
-          },
-          url: `${ipAdress}/aplikasiLayananAkta/LoginUmum.php`,
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );  
+      const res = await axios({
+        method: 'POST',
+        data: {
+          Username: UsernameHook,
+          Password: PasswordHook,
+        },
+        url: `${ipAdress}/aplikasiLayananAkta/LoginUmum.php`,
+        headers: {'Content-Type': 'multipart/form-data'},
+      });
       // console.log(res.data);
       const {value, IdUmum} = res.data;
-      if(value == 1 ){
-        alert("Berhasil Login")
-        navigation.navigate("HomeUmum", {idUser: IdUmum})
+      if (value == 1) {
+        alert('Berhasil Login');
+        // navigation.navigate("HomeUmum", {idUser: IdUmum})
+        // * sesion using asynStorage
+        AsyncStorage.setItem('userName', UsernameHook);
+        AsyncStorage.setItem('idUser', IdUmum);
+        navigation.navigate('HomeUmum', {idUser: IdUmum});
         // console.log("ini adalah Id:",res.data.IdUmum);
-      }else{
-        alert("login Gagal!!!")
+      } else {
+        alert('login Gagal!!!');
       }
-     
 
-    
       // navigation.navigate('AdminPageNavigation')
     } catch (error) {
-      alert("Gagal Login")
+      alert('Gagal Login');
       console.log(error);
     }
-    
-  
-    // console.log(res.data['message']); 
-  
-  
+
+    // console.log(res.data['message']);
   }
   // const getApiLogin = () => {
   //   const dataForApi = {
@@ -70,6 +72,7 @@ const LoginU = ({navigation}) => {
   //     .then( result =>{setDataUser(result.data), console.log(result.data)})
   //     .catch(error => console.log('err:', error));
   // };
+
   return (
     <ScrollView style={{backgroundColor: putih}}>
       <HeaderCloud />
@@ -136,14 +139,11 @@ const LoginU = ({navigation}) => {
                 alignSelf: 'center',
               },
             ]}
-            onPress={async()=>{
+            onPress={async () => {
               try {
-              
                 await loginFunc();
-              } catch (error) {
-                
-              }
-            } }>
+              } catch (error) {}
+            }}>
             <Text style={[{color: putih}]}>Loginn</Text>
           </TouchableOpacity>
         </View>

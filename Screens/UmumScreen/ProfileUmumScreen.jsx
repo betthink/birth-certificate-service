@@ -15,6 +15,7 @@ import {
   ungu,
 } from '../../Assets/StylingComponent/Coloring';
 import {ipAdress} from '../Components/Url';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // add file
 async function openDocument() {
@@ -300,6 +301,15 @@ const ProfileUmumScreen = ({navigation, route}) => {
             <Text style={[{color: putih}]}>Edit Akun</Text>
           </TouchableOpacity>
           {/* buttons Hapus */}
+          <TouchableOpacity
+            onPress={() => {
+              AsyncStorage.clear();
+              navigation.replace('LoginU');
+            }}
+            style={[styleButtons.buttons, {backgroundColor: '#454545'}]}>
+            <MaterialIcon name="logout" color={putih} />
+            <Text style={[{color: putih}]}>Log Out</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={[styleButtons.buttons, {backgroundColor: ungu}]}
             onPress={async () => {

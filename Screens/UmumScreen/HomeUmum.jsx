@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import HeaderCloud from '../Components/HeaderCloud';
 import HeaderBox from '../Components/HeaderBox';
 import {stylesDariGaya} from '../Components/Gayaaja';
@@ -16,10 +16,18 @@ import bgCloud from '../../Assets/Images/bg.png';
 import MenuUmum from '../Components/MenuUmum';
 import PersonPng from '../Components/PersonPng';
 import {fotoUrl} from '../../Assets/Url';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const HomeUmum = ({navigation, route}) => {
   // * ambil Id user
-  const {idUser} = route.params; 
-  console.log(idUser, route.params);
+  const [idUse, setIdUse] =useState('')
+  AsyncStorage.getItem('idUser').then(
+    d=>{
+      setIdUse(d);
+      // console.log(d, "ini adalah id");
+    }
+  );
+  const idUser = idUse; 
+
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       {/* <ImageBackground

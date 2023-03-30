@@ -21,6 +21,7 @@ import DetailAntrian from './Screens/AdminScreen/DetailAntrian';
 import DownloadFormulirScreen from './Screens/AdminScreen/DownloadFormulirScreen';
 import ProfileAdminScreen from './Screens/AdminScreen/ProfileAdminScreen';
 import EditDataUserUmum from './Screens/AdminScreen/EditDataUserUmum';
+import SplashScreen from './Screens/SplashScreen';
 
 
 
@@ -29,7 +30,8 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}  initialRouteName='LoginU'>
+      <Stack.Navigator screenOptions={{headerShown: false}}  initialRouteName='SplashScreen'>
+        <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="LandingPage" component={LandingPage} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="HomeUmum" component={HomeUmum} />
