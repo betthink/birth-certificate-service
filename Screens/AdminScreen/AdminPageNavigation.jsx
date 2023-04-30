@@ -86,7 +86,8 @@ function AdminPageNavigation({navigation, route}) {
         component={KelolaAntrianPage}
         options={{
           tabBarLabel: 'Antrian',
-          title: 'Antrian', headerShown: false
+          title: 'Antrian',
+          headerBackground: 'salmon'
         }}
       />
     </Tab.Navigator>

@@ -4,25 +4,16 @@ import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import HeaderCloud from './Components/HeaderCloud';
 import MeterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {stylesDariGaya} from './Components/Gayaaja';
-import {hijau, putih} from '../Assets/StylingComponent/Coloring';
+import {hijau, putih, ungu} from '../Assets/StylingComponent/Coloring';
 // import { AuthContext } from './Components/AuthContext';
 import axios from 'axios';
 import {ipAdress} from './Components/Url';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const LoginU = ({navigation}) => {
-  const [UsernameHook, setUsernameHook] = useState('');
+const Login = ({navigation, route}) => {
+  const [NamaHook, setNamaHook] = useState('');
   const [PasswordHook, setPasswordHook] = useState('');
-  // const [isLoading, setisLoading] = useState(false);
-  // const [userInfo, setuserInfo] = useState({});
-  // const [dataUser, setDataUser] = useState({
-  //   Username: Username,
-  //   Password: Password
-  // })
-
-  // * test
-  // const urlLogin = `${ipAdress}/aplikasiLayananAkta/LoginUmum.php`;
   async function loginFunc() {
-    if (!UsernameHook) {
+    if (!NamaHook) {
       alert('masukan username anda!');
       return;
     } else if (!PasswordHook) {
@@ -30,94 +21,58 @@ const LoginU = ({navigation}) => {
       return;
     }
     try {
-      // console.log(UsernameHook, PasswordHook);
+      console.log(NamaHook);
+      console.log(PasswordHook);
       const res = await axios({
         method: 'POST',
         data: {
-          Username: UsernameHook,
+          Nama: NamaHook,
           Password: PasswordHook,
         },
-        url: `${ipAdress}/aplikasiLayananAkta/LoginUmum.php`,
+        url: `${ipAdress}/aplikasiLayananAkta/Login.php`,
         headers: {'Content-Type': 'multipart/form-data'},
       });
-      // console.log(res.data);
-      const {value, IdUmum} = res.data;
+      const {message} = res.data;
+      console.log(message);
       if (value == 1) {
-        alert('Berhasil Login');
-        // navigation.navigate("HomeUmum", {idUser: IdUmum})
-        // * sesion using asynStorage
-        AsyncStorage.setItem('userName', UsernameHook);
-        AsyncStorage.setItem('idUser', IdUmum);
-        navigation.navigate('HomeUmum', {idUser: IdUmum});
-        // console.log("ini adalah Id:",res.data.IdUmum);
-      } else {
-        alert('login Gagal!!!');
-      }
+        AsyncStorage.setItem('userData', JSON.stringify(res.data));
 
-      // navigation.navigate('AdminPageNavigation')
+        if (Level == 'Umum') {
+          navigation.navigate('HomeUmum');
+        } else if (Level == 'Admin') {
+          navigation.navigate('AdminPageNavigation');
+        }
+      } else {
+        alert('Nama atau Password salah');
+      }
     } catch (error) {
       alert('Gagal Login');
-      console.log(error);
+      console.log("loh kok",error);
     }
-
-    // console.log(res.data['message']);
   }
-  // const getApiLogin = () => {
-  //   const dataForApi = {
-  //     Username: Username,
-  //     Password: Password
-  //   }
-  //   axios
-  //     .post(`${urlLogin}`, dataForApi)
-  //     .then( result =>{setDataUser(result.data), console.log(result.data)})
-  //     .catch(error => console.log('err:', error));
-  // };
-
   return (
     <ScrollView style={{backgroundColor: putih}}>
       <HeaderCloud />
       {/* wrapSemuaContent */}
-      <View style={stylesDariGaya.paddingDef}>
-        {/* button Kembali */}
-
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            marginTop: -20,
-          }}>
-          <MeterialIcon
-            style={{marginTop: 6}}
-            color={hijau}
-            name="arrow-back-ios"
-          />
-
-          <Text
-            style={[
-              stylesDariGaya.textDef,
-              stylesDariGaya.TextMediumBold,
-              {color: hijau},
-            ]}>
-            Kembali
-          </Text>
-        </TouchableOpacity>
-
+      <View
+        style={[
+          stylesDariGaya.paddingDef,
+          {justifyContent: 'center', alignItems: 'center'},
+        ]}>
         {/* Login Umum Text */}
         <View style={{alignItems: 'center', marginTop: 50}}>
           <Text style={[stylesDariGaya.TextBold, {letterSpacing: 2}]}>
-            Login Umum
+            Login
           </Text>
         </View>
         {/* Form Login */}
-
-        <View>
+        <View style={[{}]}>
           <View style={[{marginTop: 20}]}>
             <TextInput
               style={[stylesDariGaya.formInput]}
-              onChangeText={text => setUsernameHook(text)}
-              value={UsernameHook}
-              placeholder="Username"
+              onChangeText={text => setNamaHook(text)}
+              value={NamaHook}
+              placeholder="Nama"
             />
           </View>
           <View style={[{marginTop: 20}]}>
@@ -133,7 +88,7 @@ const LoginU = ({navigation}) => {
             style={[
               stylesDariGaya.Tombols,
               {
-                marginTop: 20,
+                marginTop: 50,
                 justifyContent: 'center',
                 alignItems: 'center',
                 alignSelf: 'center',
@@ -144,7 +99,7 @@ const LoginU = ({navigation}) => {
                 await loginFunc();
               } catch (error) {}
             }}>
-            <Text style={[{color: putih}]}>Loginn</Text>
+            <Text style={[{color: putih}]}>Login</Text>
           </TouchableOpacity>
         </View>
 
@@ -152,12 +107,10 @@ const LoginU = ({navigation}) => {
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
             marginTop: 50,
+            width: 350,
           }}>
-          <TouchableOpacity onPress={() => navigation.navigate('LoginAdmin')}>
-            <Text>Login Sebagai Admin</Text>
-          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('FormBuatAkunScreen')}>
             <Text style={{color: hijau, textDecorationLine: 'underline'}}>
@@ -170,4 +123,4 @@ const LoginU = ({navigation}) => {
   );
 };
 
-export default LoginU;
+export default Login;

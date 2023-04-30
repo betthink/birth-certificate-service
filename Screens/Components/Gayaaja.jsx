@@ -43,6 +43,7 @@ export const stylesDariGaya = StyleSheet.create({
     
   },
   formInput: {
+    width: 350,
     borderWidth: 2,
     borderColor: hijau,
     borderRadius: 50,

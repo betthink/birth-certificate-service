@@ -15,10 +15,10 @@ const HomeAdminScreen = ({navigation, route}) => {
       <View
         style={[
           stylesDariGaya.headerBox,
-          {paddingHorizontal: 22, justifyContent: 'center'},
+          {paddingHorizontal: 22, justifyContent: 'center',},
         ]}>
         {/* textt */}
-        <View style={[{flexDirection: 'row'}]}>
+        <View style={[{flexDirection: 'row', justifyContent: "space-between"}]}>
           <View>
             <Text style={[stylesDariGaya.TextMediumBold, {color: putih}]}>
               Selamat datang Admin
@@ -42,22 +42,7 @@ const HomeAdminScreen = ({navigation, route}) => {
           </View>
         </View>
       </View>
-      <View style={[{alignItems: 'flex-end', padding: 20}]}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('DownloadFormulirScreen')}
-          style={[
-            {
-              flexDirection: 'row',
-              width: 150,
-              backgroundColor: hijau,
-              padding: 10,
-              borderRadius: 10,
-            },
-          ]}>
-          <Text>Upload Formulir</Text>
-          <MaterialIcon name="file-document-outline" size={20} />
-        </TouchableOpacity>
-      </View>
+   
     </View>
   );
 };

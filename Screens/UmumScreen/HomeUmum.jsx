@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import HeaderCloud from '../Components/HeaderCloud';
 import HeaderBox from '../Components/HeaderBox';
 import {stylesDariGaya} from '../Components/Gayaaja';
@@ -17,16 +17,50 @@ import MenuUmum from '../Components/MenuUmum';
 import PersonPng from '../Components/PersonPng';
 import {fotoUrl} from '../../Assets/Url';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const HomeUmum = ({navigation, route}) => {
-  // * ambil Id user
-  const [idUse, setIdUse] =useState('')
-  AsyncStorage.getItem('idUser').then(
-    d=>{
-      setIdUse(d);
-      // console.log(d, "ini adalah id");
+  const [Id, setId] = useState('');
+  const [Nama, setNama] = useState('');
+  const [NIK, setNIK] = useState('');
+  const [NomorTelp, setNomorTelp] = useState('');
+  const [Password, setPassword] = useState('');
+  const [StatusLayanan, setStatusLayanan] = useState('');
+  const [Email, setEmail] = useState('');
+  const [FotoProfile, setFotoProfile] = useState('');
+  const ambilCookie = () => {
+    try {
+      AsyncStorage.getItem('userData').then(value => {
+        AsyncStorage.getItem('userData');
+
+        if (value !== null) {
+          const {
+            Id,
+            Nama,
+            NIK,
+            NomorTelp,
+            Password,
+            StatusLayanan,
+            Email,
+            FotoProfile,
+          } = JSON.parse(value);
+          setId(Id);
+          setNama(Nama);
+          setNIK(NIK);
+          setNomorTelp(NomorTelp);
+          setPassword(Password);
+          setEmail(Email);
+          setStatusLayanan(StatusLayanan);
+          setFotoProfile(FotoProfile);
+        }
+      });
+    } catch (error) {
+      console.log('Error retrieving data', error);
     }
-  );
-  const idUser = idUse; 
+  };
+
+  useEffect(() => {
+    ambilCookie();
+  }, []);
 
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
@@ -36,7 +70,7 @@ const HomeUmum = ({navigation, route}) => {
       <View style={stylesDariGaya.headerBox}>
         {/* wrapp all content di box */}
         <View style={{paddingHorizontal: 22, paddingTop: 30, flex: 1}}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-around',}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
             {/* wrap Text Header */}
             <View style={[{flex: 1}]}>
               <View>
@@ -58,7 +92,18 @@ const HomeUmum = ({navigation, route}) => {
             <View
               style={{padding: 2, backgroundColor: '#fff', borderRadius: 30}}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('ProfileUmumScreen', {Id: idUser})}>
+                onPress={() =>
+                  navigation.navigate('ProfileUmumScreen', {
+                    Id,
+                    Nama,
+                    NIK,
+                    NomorTelp,
+                    Password,
+                    StatusLayanan,
+                    Email,
+                    FotoProfile,
+                  })
+                }>
                 <Image
                   style={[stylesDariGaya.fotoProfile]}
                   // source={require('../../Assets/Images/album.png')}
@@ -91,21 +136,23 @@ const HomeUmum = ({navigation, route}) => {
             <Text style={{color: '#fff'}}>Pemberiathuan</Text>
           </TouchableOpacity>
         </View>
-        <View style={[{flex: 2}]} >
-        {/* Person png */}
-        <PersonPng />
-      
-        <MenuUmum />
-        {/* button Buat antrian */}
-        <View
-          style={[
-            stylesDariGaya.Tombols,
-            {alignSelf: 'center', marginTop: 30},
-          ]}>
-          <TouchableOpacity onPress={()=>navigation.navigate('BuatAntrian')} style={[stylesDariGaya.contentCenter]}>
-            <Text style={[stylesDariGaya.textColorWhite]}>Buat Antrian</Text>
-          </TouchableOpacity>
-        </View>
+        <View style={[{flex: 2}]}>
+          {/* Person png */}
+          <PersonPng />
+
+          <MenuUmum />
+          {/* button Buat antrian */}
+          <View
+            style={[
+              stylesDariGaya.Tombols,
+              {alignSelf: 'center', marginTop: 30},
+            ]}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('BuatAntrian')}
+              style={[stylesDariGaya.contentCenter]}>
+              <Text style={[stylesDariGaya.textColorWhite]}>Buat Antrian</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
       {/* </ImageBackground> */}

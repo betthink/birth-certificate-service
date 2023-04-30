@@ -4,29 +4,24 @@ import {hijau, putih, putihGelap} from '../../Assets/StylingComponent/Coloring';
 import {stylesDariGaya} from '../Components/Gayaaja';
 import {fotoUrl} from '../../Assets/Url';
 import axios from 'axios';
-import { ipAdress } from '../Components/Url';
+import {ipAdress} from '../Components/Url';
 export default function KelolaUserScreen({navigation}) {
-
-
-  // * Fetch data from tabel userUmum
   const [dataApi, setDataApi] = useState([]);
 
-  const url =
-   ` ${ipAdress}/aplikasiLayananAkta/api/apiDataUserUmum.php`;
+  const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataUsers.php`;
   const getApi = () => {
     axios({
       method: 'POST',
       url: `${url}`,
     })
       .then(res => setDataApi(res.data))
-      .catch(err => console.log(err)); 
+      .catch(err => console.log(err));
   };
   useEffect(() => {
-
-   getApi();
-   console.log("ambil data baruuu");
+    getApi();
+    console.log('ambil data baruuu');
   }, [getApi()]);
-// *end of code fetch data
+  // *end of code fetch data
   return (
     <View style={{flex: 1, backgroundColor: putihGelap}}>
       {/* header */}
@@ -42,9 +37,20 @@ export default function KelolaUserScreen({navigation}) {
         <FlatList
           data={dataApi}
           renderItem={({item}) => (
-            <TouchableOpacity onPress={()=>navigation.navigate("ProfileUmumScreen", {Id: item.IdUmum})}>
-              <View
-                style={[stylesDariGaya.listStyle]}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('ProfileUmumScreen', {
+                  Id: item.Id,
+                  Nama: item.Nama,
+                  Password: item.Password,
+                  Email: item.Email,
+                  NomorTelp: item.NomorTelp,
+                  NIK: item.NIK,
+                  FotoProfile: item.FotoProfile,
+                  StatusLayanan: item.StatusLayanan,
+                })
+              }>
+              <View style={[stylesDariGaya.listStyle]}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Image
                     size={50}
@@ -52,14 +58,14 @@ export default function KelolaUserScreen({navigation}) {
                     source={require('../../Assets/Images/album.png')}
                   />
 
-                  <Text style={{marginLeft: 10}}>{item.IdUmum}</Text>
+                  <Text style={{marginLeft: 10}}>{item.Id}</Text>
                 </View>
-                <Text>{item.Username}</Text>
+                <Text>{item.Nama}</Text>
               </View>
             </TouchableOpacity>
           )}
         />
       </View>
-       </View>
+    </View>
   );
 }

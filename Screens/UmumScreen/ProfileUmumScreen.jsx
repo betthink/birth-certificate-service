@@ -36,107 +36,20 @@ async function openDocument() {
 const ProfileUmumScreen = ({navigation, route}) => {
   // document picker function
   // * ini adalah Id
-  const [idUmum, setIdUmum] = useState('');
-  const [username, setusername] = useState('');
-  const [password, setpassword] = useState('');
-  const [tanggallahir, settanggallahir] = useState('');
-
-  const [nik, setnik] = useState('');
-  const [nokk, setnokk] = useState('');
-  const [nomortelepon, setnomortelepon] = useState('');
-  const [jeniskelamin, setjeniskelamin] = useState('');
-  const [nama, setnama] = useState('');
-  const [email, setemail] = useState('');
-  const [fotoProfile, setfotoProfile] = useState('');
-  const {Id} = route.params;
-  const alldata = [
-    {
-      idUmum,
-    },
-    {
-      username,
-    },
-    {
-      password,
-    },
-    {
-      tanggallahir,
-    },
-    {
-      nik,
-    },
-    {
-      nokk,
-    },
-    {
-      nomortelepon,
-    },
-    {
-      jeniskelamin,
-    },
-    {
-      nama,
-    },
-    {
-      email,
-    },
-    {
-      fotoProfile,
-    },
-  ];
-  // console.log("ini adalah id Umum",Id)
-  // * Fungsi tampilkan data user by id
-  async function tampilkanDataById() {
-    try {
-      // setIdUmum({Id});
-
-      const res = await axios({
-        method: 'POST',
-        data: {
-          IdUmum: Id,
-        },
-        url: `${ipAdress}/aplikasiLayananAkta/api/apiUserById.php`,
-        headers: {'Content-Type': 'multipart/form-data'},
-      });
-
-      console.log(res.data);
-      const {value, IdUmum} = res.data;
-      // console.log(value,"ini value")
-      if (value == 1) {
-        // alert("Berhasil ambil")
-        setIdUmum(Id);
-        setnama(res.data.Nama);
-        setnama(res.data.Nama);
-        setusername(res.data.Username);
-        setpassword(res.data.Password);
-        setnik(res.data.NIK);
-        setnokk(res.data.NomorKK);
-        setjeniskelamin(res.data.JenisKelamin);
-        setemail(res.data.Email);
-        settanggallahir(res.data.TglLahir);
-        setnomortelepon(res.data.NomorTelp);
-        setfotoProfile(res.data.FotoProfile);
-
-        // console.log("ini adalah Id:",res.data.IdUmum);
-      } else {
-        alert(' Gagal ambil data');
-      }
-
-      // navigation.navigate('AdminPageNavigation')
-    } catch (error) {
-      alert('Gagal tampil data');
-      console.log(error);
-    }
-
-    // console.log(res.data['message']);
-  }
-
+  const {
+    Id,
+    Nama,
+    NIK,
+    NomorTelp,
+    Password,
+    StatusLayanan,
+    Email,
+    FotoProfile,
+  } = route.params;
   useEffect(() => {
-    tampilkanDataById();
+    // tampilkanDataById();
   }, []);
-  //   // console.log(res.data['message']);
 
-  // }
   // * Fungsi hapus akun user umum by id
   async function deleteDataById() {
     try {
@@ -145,7 +58,7 @@ const ProfileUmumScreen = ({navigation, route}) => {
       const res = await axios({
         method: 'POST',
         data: {
-          IdUmum: Id,
+          Id,
         },
         url: `${ipAdress}/aplikasiLayananAkta/deleteAkun.php`,
         headers: {'Content-Type': 'multipart/form-data'},
@@ -233,8 +146,8 @@ const ProfileUmumScreen = ({navigation, route}) => {
             </TouchableOpacity>
             <View
               style={{position: 'absolute', bottom: 5, alignItems: 'center'}}>
-              <Text style={[stylesDariGaya.TextBold]}>{username}</Text>
-              <Text style={[stylesDariGaya.textDataStyle]}>Id: {idUmum}</Text>
+              <Text style={[stylesDariGaya.TextBold]}>{Nama}</Text>
+              <Text style={[stylesDariGaya.textDataStyle]}>Id: {Id}</Text>
             </View>
           </View>
         </View>
@@ -242,31 +155,31 @@ const ProfileUmumScreen = ({navigation, route}) => {
         <ScrollView style={{marginTop: 20}}>
           <View style={[stylesDariGaya.listData]}>
             <Text>Password</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{password}</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>{Password}</Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
             <Text>Nama</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{nama}</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>{Nama}</Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
             <Text>NIK</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{nik}</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>{NIK}</Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
             <Text>No. KK</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{nokk}</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}></Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
             <Text>No. Telp</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{nomortelepon}</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>{NomorTelp}</Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
             <Text>Jenis Kelamin</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{jeniskelamin}</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}></Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
             <Text>Email</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{email}</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>{Email}</Text>
           </View>
         </ScrollView>
         {/* *buttons */}
@@ -283,17 +196,14 @@ const ProfileUmumScreen = ({navigation, route}) => {
             // onPress={getApi}
             onPress={() =>
               navigation.navigate('EditDataUserUmum', {
-                userName: username,
-                idUmum: idUmum,
-                password: password,
-                tanggallahir: tanggallahir,
-                nik: nik,
-                nokk: nokk,
-                nomortelepon: nomortelepon,
-                jeniskelamin: jeniskelamin,
-                nama: nama,
-                email: email,
-                fotoProfile: fotoProfile,
+                Id,
+                Nama,
+                NIK,
+                NomorTelp,
+                Password,
+                StatusLayanan,
+                Email,
+                FotoProfile,
               })
             }
             style={[styleButtons.buttons, {backgroundColor: hijau}]}>
@@ -304,7 +214,7 @@ const ProfileUmumScreen = ({navigation, route}) => {
           <TouchableOpacity
             onPress={() => {
               AsyncStorage.clear();
-              navigation.replace('LoginU');
+              navigation.replace('Login');
             }}
             style={[styleButtons.buttons, {backgroundColor: '#454545'}]}>
             <MaterialIcon name="logout" color={putih} />

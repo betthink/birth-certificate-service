@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LandingPage from './Screens/LandingPage';
 import HomeUmum from './Screens/UmumScreen/HomeUmum';
-import LoginU from './Screens/LoginU';
+import LoginU from './Screens/Login';
 import SyaratScreen from './Screens/UmumScreen/SyaratScreen';
 import PemberitahuanScreen from './Screens/UmumScreen/PemberitahuanScreen';
 import ProfileUmumScreen from './Screens/UmumScreen/ProfileUmumScreen';
@@ -22,6 +22,9 @@ import DownloadFormulirScreen from './Screens/AdminScreen/DownloadFormulirScreen
 import ProfileAdminScreen from './Screens/AdminScreen/ProfileAdminScreen';
 import EditDataUserUmum from './Screens/AdminScreen/EditDataUserUmum';
 import SplashScreen from './Screens/SplashScreen';
+import Login from './Screens/Login';
+// import LayananTerdaftar from './Screens/AdminScreen/KelolaLayananPage/LayananTerdaftarPage';
+// import LayananDiproses from './Screens/AdminScreen/KelolaLayananPage/LayananDiprosesPage';
 
 
 
@@ -35,13 +38,12 @@ function App() {
         <Stack.Screen name="LandingPage" component={LandingPage} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="HomeUmum" component={HomeUmum} />
-        <Stack.Screen name="LoginU" component={LoginU} />
+        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SyaratScreen" component={SyaratScreen} />
         <Stack.Screen name="PemberitahuanScreen" component={PemberitahuanScreen} />
         <Stack.Screen name="ProfileUmumScreen" component={ProfileUmumScreen} />
         <Stack.Screen name="MenuUmum" component={MenuUmum} />
         <Stack.Screen name="AntrianLayananScreen" component={AntrianLayananScreen} />
-        <Stack.Screen name="LoginAdmin" component={LoginAdmin} />
         <Stack.Screen name="FormBuatAkunScreen" component={FormBuatAkunScreen} />
         <Stack.Screen name="BuatAntrian" component={BuatAntrian} />
         <Stack.Screen name="AdminPageNavigation" component={AdminPageNavigation} />
@@ -49,6 +51,8 @@ function App() {
         <Stack.Screen name="DownloadFormulirScreen" component={DownloadFormulirScreen} />
         <Stack.Screen name="ProfileAdminScreen" component={ProfileAdminScreen} />
         <Stack.Screen name="EditDataUserUmum" component={EditDataUserUmum} />
+        {/* <Stack.Screen name="LayananTerdaftar" component={LayananTerdaftar} />
+        <Stack.Screen name="LayananDiproses" component={LayananDiproses} /> */}
       
       </Stack.Navigator>
     </NavigationContainer>

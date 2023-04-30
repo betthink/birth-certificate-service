@@ -45,18 +45,12 @@ const LandingPage = ({navigation}) => {
           <Image source={Orang} resizeMode="contain"></Image>
         </View>
         {/* Tombols */}
+    
         <TouchableOpacity
-          onPress={() => navigation.navigate('Home')}
-          style={stylesDariGaya.Tombols}>
-          <Text style={[stylesDariGaya.textCenter, {color: putih}]}>
-            Masuk Tanpa login
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('LoginU')}
+          onPress={() => navigation.navigate('Login')}
           style={[stylesDariGaya.Tombols, {marginTop: 14}]}>
           <Text style={[stylesDariGaya.textCenter, {color: putih}]}>
-            Login
+            Masuk
           </Text>
         </TouchableOpacity>
      
