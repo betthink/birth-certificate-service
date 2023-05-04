@@ -1,63 +1,68 @@
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {stylesDariGaya} from '../Components/ImportedStyles';
-import MaterialIcon from 'react-native-vector-icons';
-import {fotoUrl} from '../../Assets/Url';
+import React, {useState} from 'react';
+import {stylesDariGaya} from './Components/ImportedStyles';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {fotoUrl} from '../Assets/Url';
 import {pickSingle, isCancel} from 'react-native-document-picker';
+import {useNavigation} from '@react-navigation/native';
 import {ScrollView, TextInput} from 'react-native-gesture-handler';
-import {hijau, putih, putihGelap} from '../../Assets/StylingComponent/Coloring';
+import {hijau, putih, putihGelap} from '../Assets/StylingComponent/Coloring';
 import axios from 'axios';
 import {ipAdress} from './Components/Url';
+import ButtonBack from './Components/ButtonBack';
 
-const EditDataUserUmum = ({navigation, route}) => {
-  // terima data
-  // navigation.navigate('EditDataUserUmum', {dataUser: alldata});
-  const {
-    userName,
-    idUmum,
-    password,
-    tanggallahir,
-    nik,
-    nokk,
-    nomortelepon,
-    jeniskelamin,
-    nama,
-    email,
-    fotoProfile,
-  } = route.params;
-  // console.log(dataUser, "ambil all data");
-  const [usernameState, setUsernameState] = useState(userName);
-  const [passwordState, setPasswordState] = useState(password);
-  const [jenisKelaminState, setJenisKelaminState] = useState(jeniskelamin);
-  const [namaState, setNamaState] = useState(nama);
-  const [tglLahirState, setTglLahirState] = useState(tanggallahir);
-  const [emailState, setEmailState] = useState(email);
-  const [nomorTelpState, setnomorTelpState] = useState(nomortelepon);
-  const [NIKState, setNIKState] = useState(nik);
-  const [noKKState, setnoKKState] = useState(nokk);
-  const [fotoProfileState, setFotoProfileState] = useState(fotoProfile);
-  //   // *kirim data ke API
-  async function EditDataUser() {
+const RegisterAkunScreen = ({navigation}) => {
+  const [Password, setPassword] = useState('');
+  const [Nama, setNama] = useState('');
+  const [Email, setEmail] = useState('');
+  const [NomorTelp, setNomorTelp] = useState('');
+  const [NIK, setNIK] = useState('');
+  const [FotoProfile, setFotoProfile] = useState('');
+  // *kirim data ke API
+  async function RegistrasiAkun() {
     try {
       const res = await axios({
         method: 'POST',
         data: {
-          IdUmum: idUmum,
+          Password,
+          Nama,
+          Email,
+          NomorTelp,
+          NIK,
+          FotoProfile: 'test.jpg',
         },
-        url: `${ipAdress}/aplikasiLayananAkta/editDataUserUmum.php`,
+        url: `${ipAdress}/aplikasiLayananAkta/addData/registrasiUserUmum.php`,
         headers: {'Content-Type': 'multipart/form-data'},
       });
-      console.log(res.data);
-      alert('Akun Berhasil Didaftarkan');
+      console.log(Nama, Password, NIK, Email, NomorTelp);
+      const {value, message} = res.data;
+      // console.log(res.data);
+      if (value == 1) {
+        alert('Akun Berhasil Didaftarkan');
+        navigation.navigate('Login');
+      } else {
+        alert(message);
+      }
+      // switch (value) {
+      //   case '1':
+      //     alert('Akun Berhasil Didaftarkan');
+      //     navigation.navigate('Login');
+      //     break;
+      //   case '3':
+      //     alert('Nik sudah digunakan');
+      //     break;
+      //   case '2':
+      //     alert(message);
+      //     break;
+      //   case '0':
+      //     alert(message);
+      // }
     } catch (error) {
-      alert('Gagal Membuat akun');
+      alert('koneksi sedang tidak bagus, sihlakan coba lagi?');
       console.log(error);
     }
-
     // console.log(res.data['message']);
   }
-
   const sizeIcon = 30;
   // * add file
   async function openDocument() {
@@ -77,56 +82,22 @@ const EditDataUserUmum = ({navigation, route}) => {
 
   return (
     <View style={{backgroundColor: putih, flex: 1}}>
-      <View
-        style={[
-          {
-            justifyContent: 'center',
-            backgroundColor: hijau,
-            height: 130,
-            borderBottomEndRadius: 20,
-          },
-        ]}>
-        <TouchableOpacity
-          onPress={
-            // postRegisterUser();
-            navigation.goBack()
-          }
-          style={[
-            {
-              flexDirection: 'row',
-              alignItems: 'center',
-            },
-          ]}>
-          <MaterialIcon
-            style={{marginTop: 3, marginHorizontal: 22}}
-            size={18}
-            color={putih}
-            name="arrow-back-ios"
-          />
-          <Text
-            style={{
-              color: '#fff',
-              fontSize: 18,
-              letterSpacing: 2,
-              fontWeight: 'bold',
-            }}>
-            Edit Akun
-          </Text>
-        </TouchableOpacity>
+      <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
+      <ButtonBack buttontext="BuatAKun" />
       </View>
       {/* Form */}
       <ScrollView style={[StyleForm.container]}>
         {/* Username */}
         <View style={[StyleForm.spaceBeetwenForm]}>
           <View style={{marginLeft: 30}}>
-            <Text>Username</Text>
+            <Text>Nama</Text>
           </View>
           <View style={[StyleForm.containerForm]}>
             <MaterialIcon name="person" size={sizeIcon} color={hijau} />
             <View style={[{flex: 1}]}>
               <TextInput
-                onChangeText={text => setUsernameState(text)}
-                value={usernameState}
+                onChangeText={text => setNama(text)}
+                value={Nama}
                 style={[stylesDariGaya.formInput, StyleForm.textInput]}
               />
             </View>
@@ -141,29 +112,14 @@ const EditDataUserUmum = ({navigation, route}) => {
             <MaterialIcon name="person" size={sizeIcon} color={hijau} />
             <View style={[{flex: 1}]}>
               <TextInput
-                onChangeText={text => setPasswordState(text)}
-                value={passwordState}
+                onChangeText={text => setPassword(text)}
+                value={Password}
                 style={[stylesDariGaya.formInput, StyleForm.textInput]}
               />
             </View>
           </View>
         </View>
-        {/* nama */}
-        <View style={[StyleForm.spaceBeetwenForm]}>
-          <View style={{marginLeft: 30}}>
-            <Text>Nama</Text>
-          </View>
-          <View style={[StyleForm.containerForm]}>
-            <MaterialIcon name="person" size={sizeIcon} color={hijau} />
-            <View style={[{flex: 1}]}>
-              <TextInput
-                onChangeText={text => setNamaState(text)}
-                value={namaState}
-                style={[stylesDariGaya.formInput, StyleForm.textInput]}
-              />
-            </View>
-          </View>
-        </View>
+
         {/* NIK */}
         <View style={[StyleForm.spaceBeetwenForm]}>
           <View style={{marginLeft: 30}}>
@@ -173,29 +129,14 @@ const EditDataUserUmum = ({navigation, route}) => {
             <MaterialIcon name="person" size={sizeIcon} color={hijau} />
             <View style={[{flex: 1}]}>
               <TextInput
-                onChangeText={text => setNIKState(text)}
-                value={NIKState}
+                onChangeText={text => setNIK(text)}
+                value={NIK}
                 style={[stylesDariGaya.formInput, StyleForm.textInput]}
               />
             </View>
           </View>
         </View>
-        {/* No. KK */}
-        <View style={[StyleForm.spaceBeetwenForm]}>
-          <View style={{marginLeft: 30}}>
-            <Text>No. KK</Text>
-          </View>
-          <View style={[StyleForm.containerForm]}>
-            <MaterialIcon name="person" size={sizeIcon} color={hijau} />
-            <View style={[{flex: 1}]}>
-              <TextInput
-                onChangeText={text => setnoKKState(text)}
-                value={noKKState}
-                style={[stylesDariGaya.formInput, StyleForm.textInput]}
-              />
-            </View>
-          </View>
-        </View>
+
         {/* No. Telp */}
         <View style={[StyleForm.spaceBeetwenForm]}>
           <View style={{marginLeft: 30}}>
@@ -205,29 +146,14 @@ const EditDataUserUmum = ({navigation, route}) => {
             <MaterialIcon name="person" size={sizeIcon} color={hijau} />
             <View style={[{flex: 1}]}>
               <TextInput
-                onChangeText={text => setnomorTelpState(text)}
-                value={nomorTelpState}
+                onChangeText={text => setNomorTelp(text)}
+                value={NomorTelp}
                 style={[stylesDariGaya.formInput, StyleForm.textInput]}
               />
             </View>
           </View>
         </View>
-        {/* Jenis Kelamin */}
-        <View style={[StyleForm.spaceBeetwenForm]}>
-          <View style={{marginLeft: 30}}>
-            <Text>Jenis Kelamin</Text>
-          </View>
-          <View style={[StyleForm.containerForm]}>
-            <MaterialIcon name="person" size={sizeIcon} color={hijau} />
-            <View style={[{flex: 1}]}>
-              <TextInput
-                onChangeText={text => setJenisKelaminState(text)}
-                value={jenisKelaminState}
-                style={[stylesDariGaya.formInput, StyleForm.textInput]}
-              />
-            </View>
-          </View>
-        </View>
+
         {/* Email */}
         <View style={[StyleForm.spaceBeetwenForm]}>
           <View style={{marginLeft: 30}}>
@@ -237,8 +163,8 @@ const EditDataUserUmum = ({navigation, route}) => {
             <MaterialIcon name="person" size={sizeIcon} color={hijau} />
             <View style={[{flex: 1}]}>
               <TextInput
-                onChangeText={text => setEmailState(text)}
-                value={emailState}
+                onChangeText={text => setEmail(text)}
+                value={Email}
                 style={[stylesDariGaya.formInput, StyleForm.textInput]}
               />
             </View>
@@ -281,7 +207,7 @@ const EditDataUserUmum = ({navigation, route}) => {
           style={[{marginTop: 30}]}
           onPress={async () => {
             try {
-              await EditDataUser();
+              await RegistrasiAkun();
             } catch (error) {}
           }}>
           <View
@@ -289,7 +215,7 @@ const EditDataUserUmum = ({navigation, route}) => {
               stylesDariGaya.Tombols,
               {alignSelf: 'center', alignItems: 'center', marginBottom: 50},
             ]}>
-            <Text style={{color: putih}}>Simpan</Text>
+            <Text style={{color: putih}}>Daftar</Text>
           </View>
         </TouchableOpacity>
       </ScrollView>
@@ -297,7 +223,7 @@ const EditDataUserUmum = ({navigation, route}) => {
   );
 };
 
-export default EditDataUserUmum;
+export default RegisterAkunScreen;
 
 const StyleForm = StyleSheet.create({
   container: {paddingHorizontal: 22, flex: 1},

@@ -1,32 +1,16 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {stylesDariGaya} from '../Components/Gayaaja';
+import {stylesDariGaya} from './Components/ImportedStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import ButtonBack from './Components/ButtonBack';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 const PemberitahuanScreen = ({navigation}) => {
   return (
     <SafeAreaView>
       {/* header box */}
-      <View style={[stylesDariGaya.headerBox, ,]}>
-        {/* xbutton */}
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: 22,
-            paddingVertical: 22,
-          }}>
-          <MaterialIcon
-            style={{color: '#fff'}}
-            name={'keyboard-arrow-left'}
-            size={30}
-          />
-          <Text style={{fontSize: 20, fontWeight: '700', color: '#fff'}}>
-            Pemberitahuan
-          </Text>
-        </TouchableOpacity>
+      <View style={[stylesDariGaya.headerBox,{justifyContent: 'center'}]}>
+     <ButtonBack buttontext={"Pemberitahuann"}  />
       </View>
       {/* pemberitahuan */}
       <View style={{alignItems: 'center'}}>

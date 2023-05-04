@@ -1,12 +1,26 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import {View, Text, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {stylesDariGaya} from './ImportedStyles';
+import { putih } from '../../Assets/StylingComponent/Coloring';
 
-const GreenButton = () => {
+const GreenButton = ({ButtonText, actionOnclick}) => {
   return (
-    <View>
-      <Text>GreenButton</Text>
-    </View>
-  )
-}
+  
+      <TouchableOpacity
+        style={[
+          stylesDariGaya.Tombols,
+          {
+            marginTop: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignSelf: 'center',
+          },
+        ]}>
+        onPress={actionOnclick}
+        <Text style={[{color: putih}]}>{ButtonText}</Text>
+      </TouchableOpacity>
+  
+  );
+};
 
-export default GreenButton
+export default GreenButton;

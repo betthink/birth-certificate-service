@@ -1,7 +1,7 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {putih, putihGelap} from '../../Assets/StylingComponent/Coloring';
-import {stylesDariGaya} from '../Components/Gayaaja';
+import {stylesDariGaya} from '../Components/ImportedStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ipAdress} from '../Components/Url';
 import axios from 'axios';

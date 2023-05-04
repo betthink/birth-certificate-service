@@ -6,11 +6,11 @@ import {
   putih,
   ungu,
 } from '../../Assets/StylingComponent/Coloring';
-import {stylesDariGaya} from '../Components/Gayaaja';
+import {stylesDariGaya} from '../Components/ImportedStyles';
 import { ipAdress } from '../Components/Url';
 import axios from 'axios';
 
-export default function RiwayatAntrianScreen({navigation}) {
+export default function KelolaRiwayatAntrianScreen({navigation}) {
 
    // * Fetch data from tabel userUmum
   // * Fungsi tampilkan data user by id

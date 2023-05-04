@@ -6,8 +6,13 @@ import {
   ScrollView,
 } from 'react-native';
 import React from 'react';
-import {hijau, putih, putihGelap} from '../../Assets/StylingComponent/Coloring';
-import {stylesDariGaya} from '../Components/Gayaaja';
+import {
+  hijau,
+  putih,
+  putihGelap,
+  ungu,
+} from '../Assets/StylingComponent/Coloring';
+import {stylesDariGaya} from './Components/ImportedStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {pickSingle, isCancel} from 'react-native-document-picker';
 
@@ -27,7 +32,7 @@ async function uploadBerkas() {
   }
 }
 
-const BuatAntrian = ({navigation}) => {
+export const BuatAntrian = ({navigation}) => {
   const IconAddFile = 'note-add';
   return (
     <View style={{flex: 1, backgroundColor: putihGelap}}>
@@ -157,8 +162,6 @@ const BuatAntrian = ({navigation}) => {
   );
 };
 
-export default BuatAntrian;
-
 export const styleAntian = StyleSheet.create({
   formInputFile: {
     flexDirection: 'row',
@@ -172,7 +175,7 @@ export const styleAntian = StyleSheet.create({
     backgroundColor: putih,
     alignItems: 'center',
     marginTop: 20,
-    // alignSelf: 'center', 
+    // alignSelf: 'center',
     // marginHorizontal: 50
   },
   fontContent: {

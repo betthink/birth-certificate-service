@@ -1,11 +1,12 @@
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
-import {stylesDariGaya} from '../Components/Gayaaja';
+import {stylesDariGaya} from '../Components/ImportedStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {pickSingle, isCancel} from 'react-native-document-picker';
 import {fotoUrl} from '../../Assets/Url';
-import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+// import axios from 'axios';
 import {
   hijau,
   hitam,
@@ -14,7 +15,7 @@ import {
   toska,
   ungu,
 } from '../../Assets/StylingComponent/Coloring';
-import {ipAdress} from '../Components/Url';
+// import {ipAdress} from '../Components/Url';
 
 // add file
 async function openDocument() {
@@ -33,86 +34,45 @@ async function openDocument() {
 }
 
 const ProfileAdminScreen = ({navigation, route}) => {
-  // document picker function
-// * ini adalah Id
-const [idUmum, setIdUmum] = useState('');
-const [username, setusername] = useState('');
-const [password, setpassword] = useState('');
-const [tanggallahir, settanggallahir] = useState('');
-
-const [nik, setnik] = useState('');
-const [nokk, setnokk] = useState('');
-const [nomortelepon, setnomortelepon] = useState('');
-const [jeniskelamin, setjeniskelamin] = useState('');
-const [nama, setnama] = useState('');
-const [email, setemail] = useState('');
-const [fotoProfile, setfotoProfile] = useState('');
-const {Id} = route.params; 
-// console.log("ini adalah id Umum",Id)
-// * Fungsi tampilkan data user by id
-async function tampilkanDataById() {
-    
-  try {
-    // setIdUmum({Id});
-
-    const res = await axios(
-      {
-        
-        method: "POST",
-        data : {
-          IdAdmin : Id,
-       
-        
-        },
-        url: `${ipAdress}/aplikasiLayananAkta/api/apiUserAdminById.php`,
-        headers: { "Content-Type": "multipart/form-data" },
-      }
-    );  
-    setIdUmum(idUmum)
-    console.log(res.data);
-    const {value, IdUmum} = res.data;
-    // console.log(value,"ini value")
-    if(value == 1 ){
-      // alert("Berhasil ambil")
-      setnama(res.data.Nama)
-      setusername(res.data.Username) 
-      setpassword(res.data.Password)    
-      setnik(res.data.NIK)
-      setnokk(res.data.NomorKK)
-      setjeniskelamin(res.data.JenisKelamin)
-      setemail(res.data.Email)
-      settanggallahir(res.data.TglLahir)
-      setnomortelepon(res.data.NomorTelp)
-      setfotoProfile(res.data.FotoProfile)
-
-      
-      // console.log("ini adalah Id:",res.data.IdUmum);
-    }else{
-      alert(" Gagal ambil data")
-    }
-   
-
+  const [password, setpassword] = useState('');
+  const [nik, setnik] = useState('');
+  const [Id, setId] = useState('');
+  const [StatusLayanan, setStatusLayanan] = useState('');
+  const [nomortelepon, setnomortelepon] = useState('');
+  const [nama, setnama] = useState('');
+  const [email, setemail] = useState('');
+  const [fotoProfile, setfotoProfile] = useState('');
   
-    // navigation.navigate('AdminPageNavigation')
-  } catch (error) {
-    alert("Gagal tampil data")
-    console.log(error);
-  }
-  
-
-  // console.log(res.data['message']); 
-
-
-}
-
- useEffect(() => {
-
-  tampilkanDataById()
+  const ambilCookie = () => {
+    AsyncStorage.getItem('userData').then(value => {
+      AsyncStorage.getItem('userData');
+      const {
+        Id,
+        Nama,
+        Password,
+        Email,
+        NomorTelp,
+        FotoProfile,
+        StatusLayanan,
+        NIK,
+      } = JSON.parse(value);
+      setId(Id);
+      setnama(Nama);
+      setpassword(Password);
+      setStatusLayanan(StatusLayanan);
+      setnik(NIK);
+      setemail(Email);
+      setnomortelepon(NomorTelp);
+      setfotoProfile(FotoProfile);
+    });
+  };
+  useEffect(() => {
+    ambilCookie();
   }, []);
-//   // console.log(res.data['message']); 
 
-
-// }
+  useEffect(() => {
+    // tampilkanDataUser();
+  }, []);
 
   return (
     <View style={{flex: 1, backgroundColor: putihGelap}}>
@@ -146,7 +106,8 @@ async function tampilkanDataById() {
             {/* image profile */}
             <TouchableOpacity
               style={{
-                backgroundColor: putihGelap,
+                backgroundColor: ungu,
+                
                 width: 100,
                 height: 100,
                 justifyContent: 'center',
@@ -160,13 +121,15 @@ async function tampilkanDataById() {
               }}
               onPress={() => {
                 openDocument();
-                // console.log("hgh");
+        
               }}>
-              <Image
-                size={50}
-                source={{
-                  uri: fotoUrl,
-                }}
+          
+              <Image     
+                style={[{width: 80, height: 80, borderRadius: 45}]}
+                source={{uri : fotoProfile }}
+                // source={{
+                //   uri: fotoUrl,
+                // }}
               />
               <MaterialIcon
                 style={{position: 'absolute', top: 5, right: 0}}
@@ -177,7 +140,7 @@ async function tampilkanDataById() {
             </TouchableOpacity>
             <View
               style={{position: 'absolute', bottom: 5, alignItems: 'center'}}>
-              <Text style={[stylesDariGaya.TextBold]}>{username}</Text>
+              <Text style={[stylesDariGaya.TextBold]}>{nama}</Text>
               <Text style={[stylesDariGaya.textDataStyle]}>Id: {Id}</Text>
             </View>
           </View>
@@ -196,21 +159,18 @@ async function tampilkanDataById() {
             <Text>NIK</Text>
             <Text style={[stylesDariGaya.textDataStyle]}>{nik}</Text>
           </View>
-          <View style={[stylesDariGaya.listData]}>
-            <Text>No. KK</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{nokk}</Text>
-          </View>
+
           <View style={[stylesDariGaya.listData]}>
             <Text>No. Telp</Text>
             <Text style={[stylesDariGaya.textDataStyle]}>{nomortelepon}</Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
             <Text>Jenis Kelamin</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{jeniskelamin}</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>{email}</Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
             <Text>Email</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{email}</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>{StatusLayanan}</Text>
           </View>
         </ScrollView>
         {/* *buttons */}
@@ -225,17 +185,24 @@ async function tampilkanDataById() {
           {/* buttons Edit */}
           <TouchableOpacity
             // onPress={getApi}
-            onPress={async()=>{
+            onPress={async () => {
               try {
-              
                 await tampilkanDataById();
-              } catch (error) {
-                
-              }
-            } }
+              } catch (error) {}
+            }}
             style={[styleButtons.buttons, {backgroundColor: hijau}]}>
             <MaterialIcon name="edit" color={putih} />
             <Text style={[{color: putih}]}>Edit Akun</Text>
+          </TouchableOpacity>
+          {/* buttons Hapus */}
+          <TouchableOpacity
+            onPress={() => {
+              AsyncStorage.clear();
+              navigation.replace('Login');
+            }}
+            style={[styleButtons.buttons, {backgroundColor: '#454545'}]}>
+            <MaterialIcon name="logout" color={putih} />
+            <Text style={[{color: putih}]}>Log Out</Text>
           </TouchableOpacity>
           {/* buttons Hapus */}
           <TouchableOpacity

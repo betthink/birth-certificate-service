@@ -8,10 +8,11 @@ import {
   ScrollView,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {stylesDariGaya} from '../Components/Gayaaja';
+import {stylesDariGaya} from '../Components/ImportedStyles';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {hijau, putih, putihGelap} from '../../Assets/StylingComponent/Coloring';
+import {hijau, putih, putihGelap, ungu} from '../../Assets/StylingComponent/Coloring';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -51,13 +52,43 @@ function KelolaAntrianPage() {
     <Tab.Navigator
       initialRouteName="LayananTerdaftar"
       screenOptions={({route}) => ({
-        tabBarLabelStyle: {fontSize: 14},
+        tabBarActiveTintColor: ungu,
+        tabBarInactiveTintColor: 'grey',
+        tabBarLabelStyle: {fontSize: 12, 
+        
+        color: putih},
         tabBarStyle: {
           backgroundColor: hijau,
-          height: 100,
+          height: 70,
           justifyContent: 'flex-end',
         },
+        
         style: {backgroundColor: 'red', marginTop: insets.top},
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName;
+          switch (route.name) {
+            case 'LayananTerdaftar':
+              iconName = focused ? 'home-circle' : 'home-circle-outline';
+              break;
+            case 'LayananDiproses':
+              iconName = focused ? 'history' : 'history';
+              break;
+            case 'KelDitolak':
+              iconName = focused
+                ? 'account-settings'
+                : 'account-settings-outline';
+              break;
+            case 'DaftarPenerima':
+              iconName = focused ? 'view-list' : 'view-list';
+              break;
+            default:
+              break;
+          }
+          // const {width} = Dimensions.get('window');
+          return (
+            <MaterialCommunityIcons name={iconName} size={26} color={putih} />
+          );
+        },
       })}>
       <Tab.Screen
         name="LayananTerdaftar"

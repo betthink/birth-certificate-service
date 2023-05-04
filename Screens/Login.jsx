@@ -3,12 +3,13 @@ import React, {useState} from 'react';
 import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import HeaderCloud from './Components/HeaderCloud';
 import MeterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {stylesDariGaya} from './Components/Gayaaja';
+import {stylesDariGaya} from './Components/ImportedStyles';
 import {hijau, putih, ungu} from '../Assets/StylingComponent/Coloring';
 // import { AuthContext } from './Components/AuthContext';
 import axios from 'axios';
 import {ipAdress} from './Components/Url';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import GreenButton from './Components/GreenButton';
 const Login = ({navigation, route}) => {
   const [NamaHook, setNamaHook] = useState('');
   const [PasswordHook, setPasswordHook] = useState('');
@@ -32,8 +33,9 @@ const Login = ({navigation, route}) => {
         url: `${ipAdress}/aplikasiLayananAkta/Login.php`,
         headers: {'Content-Type': 'multipart/form-data'},
       });
-      const {message} = res.data;
-      console.log(message);
+      const {value, Level} = res.data;
+      console.log(res.data);
+      console.log(value, "ini value");
       if (value == 1) {
         AsyncStorage.setItem('userData', JSON.stringify(res.data));
 
@@ -101,6 +103,7 @@ const Login = ({navigation, route}) => {
             }}>
             <Text style={[{color: putih}]}>Login</Text>
           </TouchableOpacity>
+         
         </View>
 
         {/* tombol login admin dan Buat AKun */}
@@ -112,7 +115,7 @@ const Login = ({navigation, route}) => {
             width: 350,
           }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('FormBuatAkunScreen')}>
+            onPress={() => navigation.navigate('RegisterAkunScreen')}>
             <Text style={{color: hijau, textDecorationLine: 'underline'}}>
               Buat Akun?
             </Text>

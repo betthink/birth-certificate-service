@@ -1,10 +1,10 @@
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
-import {stylesDariGaya} from '../Components/Gayaaja';
+import {stylesDariGaya} from './Components/ImportedStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {pickSingle, isCancel} from 'react-native-document-picker';
-import {fotoUrl} from '../../Assets/Url';
+import {fotoUrl} from '../Assets/Url';
 import axios from 'axios';
 import {
   hijau,
@@ -13,8 +13,8 @@ import {
   putihGelap,
   toska,
   ungu,
-} from '../../Assets/StylingComponent/Coloring';
-import {ipAdress} from '../Components/Url';
+} from '../Assets/StylingComponent/Coloring';
+import {ipAdress} from './Components/Url';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // add file
@@ -115,7 +115,8 @@ const ProfileUmumScreen = ({navigation, route}) => {
             {/* image profile */}
             <TouchableOpacity
               style={{
-                backgroundColor: putihGelap,
+                backgroundColor: ungu,
+
                 width: 100,
                 height: 100,
                 justifyContent: 'center',
@@ -129,13 +130,10 @@ const ProfileUmumScreen = ({navigation, route}) => {
               }}
               onPress={() => {
                 openDocument();
-                // console.log("hgh");
               }}>
               <Image
-                size={50}
-                source={{
-                  uri: fotoUrl,
-                }}
+                style={[{width: 80, height: 80, borderRadius: 45}]}
+                source={{uri: FotoProfile}}
               />
               <MaterialIcon
                 style={{position: 'absolute', top: 5, right: 0}}
@@ -187,30 +185,13 @@ const ProfileUmumScreen = ({navigation, route}) => {
           style={[
             {
               marginVertical: 20,
-              justifyContent: 'space-between',
+              justifyContent: 'center',
               flexDirection: 'row',
             },
           ]}>
           {/* buttons Edit */}
-          <TouchableOpacity
-            // onPress={getApi}
-            onPress={() =>
-              navigation.navigate('EditDataUserUmum', {
-                Id,
-                Nama,
-                NIK,
-                NomorTelp,
-                Password,
-                StatusLayanan,
-                Email,
-                FotoProfile,
-              })
-            }
-            style={[styleButtons.buttons, {backgroundColor: hijau}]}>
-            <MaterialIcon name="edit" color={putih} />
-            <Text style={[{color: putih}]}>Edit Akun</Text>
-          </TouchableOpacity>
-          {/* buttons Hapus */}
+
+          {/* buttons Log out */}
           <TouchableOpacity
             onPress={() => {
               AsyncStorage.clear();
@@ -219,16 +200,6 @@ const ProfileUmumScreen = ({navigation, route}) => {
             style={[styleButtons.buttons, {backgroundColor: '#454545'}]}>
             <MaterialIcon name="logout" color={putih} />
             <Text style={[{color: putih}]}>Log Out</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styleButtons.buttons, {backgroundColor: ungu}]}
-            onPress={async () => {
-              try {
-                await deleteDataById();
-              } catch (error) {}
-            }}>
-            <MaterialIcon name="delete" color={putih} />
-            <Text style={[{color: putih}]}>Delete</Text>
           </TouchableOpacity>
         </View>
       </View>

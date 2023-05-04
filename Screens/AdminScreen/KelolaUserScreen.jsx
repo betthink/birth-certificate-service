@@ -1,7 +1,7 @@
 import {View, Text, FlatList, Image, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {hijau, putih, putihGelap} from '../../Assets/StylingComponent/Coloring';
-import {stylesDariGaya} from '../Components/Gayaaja';
+import {stylesDariGaya} from '../Components/ImportedStyles';
 import {fotoUrl} from '../../Assets/Url';
 import axios from 'axios';
 import {ipAdress} from '../Components/Url';

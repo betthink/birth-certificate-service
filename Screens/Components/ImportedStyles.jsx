@@ -1,5 +1,4 @@
 import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
 import {hijau, putih, ungu} from '../../Assets/StylingComponent/Coloring';
 // import { white } from '../../Assets/StylingComponent/Coloring';
 
@@ -39,8 +38,7 @@ export const stylesDariGaya = StyleSheet.create({
     padding: 16,
     width: 250,
     backgroundColor: hijau,
-    borderRadius: 50, 
-    
+    borderRadius: 50,
   },
   formInput: {
     width: 350,
@@ -48,11 +46,12 @@ export const stylesDariGaya = StyleSheet.create({
     borderColor: hijau,
     borderRadius: 50,
     marginTop: 5,
-    height: 50, backgroundColor:putih
+    height: 50,
+    backgroundColor: putih,
   },
   headerBox: {
     backgroundColor: hijau,
-    height: 130,
+    height: 100,
     borderBottomEndRadius: 20,
   },
   menu: {
@@ -93,9 +92,9 @@ export const stylesDariGaya = StyleSheet.create({
 
     paddingLeft: 10,
   },
-  lineSpaceStyle: { marginTop: 5},
+  lineSpaceStyle: {marginTop: 5},
   // * list for kelola users, antrian, dan upload formulir
-  listStyle : {
+  listStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
@@ -106,5 +105,5 @@ export const stylesDariGaya = StyleSheet.create({
     marginVertical: 5,
     backgroundColor: putih,
     alignItems: 'center',
-  }
+  },
 });

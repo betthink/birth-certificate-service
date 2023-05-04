@@ -7,15 +7,15 @@ import {
   SafeAreaView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import HeaderCloud from '../Components/HeaderCloud';
-import HeaderBox from '../Components/HeaderBox';
-import {stylesDariGaya} from '../Components/Gayaaja';
-import Album from '../../Assets/Images/album.png';
+import HeaderCloud from './Components/HeaderCloud';
+import HeaderBox from './Components/HeaderBox';
+import {stylesDariGaya} from './Components/ImportedStyles';
+import Album from '../Assets/Images/album.png';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import bgCloud from '../../Assets/Images/bg.png';
-import MenuUmum from '../Components/MenuUmum';
-import PersonPng from '../Components/PersonPng';
-import {fotoUrl} from '../../Assets/Url';
+import bgCloud from '../Assets/Images/bg.png';
+import MenuUmum from './Components/MenuUmum';
+import PersonPng from './Components/PersonPng';
+import {fotoUrl} from '../Assets/Url';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeUmum = ({navigation, route}) => {
@@ -27,6 +27,7 @@ const HomeUmum = ({navigation, route}) => {
   const [StatusLayanan, setStatusLayanan] = useState('');
   const [Email, setEmail] = useState('');
   const [FotoProfile, setFotoProfile] = useState('');
+  const [Pemberitahuan, setPemberitahuan] = useState('');
   const ambilCookie = () => {
     try {
       AsyncStorage.getItem('userData').then(value => {
@@ -84,7 +85,7 @@ const HomeUmum = ({navigation, route}) => {
               </View>
               <View style={{width: 300}}>
                 <Text style={{color: '#fff'}}>
-                  Gunakan Layanan Kami dengan Bijak dan beratnggung jawab yah!
+                  Gunakan Layanan Kami dengan Bijak dan beratnggung jawab !
                 </Text>
               </View>
             </View>
@@ -108,7 +109,7 @@ const HomeUmum = ({navigation, route}) => {
                   style={[stylesDariGaya.fotoProfile]}
                   // source={require('../../Assets/Images/album.png')}
                   source={{
-                    uri: fotoUrl,
+                    uri: FotoProfile,
                   }}
                 />
               </TouchableOpacity>
@@ -148,9 +149,9 @@ const HomeUmum = ({navigation, route}) => {
               {alignSelf: 'center', marginTop: 30},
             ]}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('BuatAntrian')}
+              onPress={() => navigation.navigate('InputDataBayi')}
               style={[stylesDariGaya.contentCenter]}>
-              <Text style={[stylesDariGaya.textColorWhite]}>Buat Antrian</Text>
+              <Text style={[stylesDariGaya.textColorWhite]}>Daftar Layanan</Text>
             </TouchableOpacity>
           </View>
         </View>

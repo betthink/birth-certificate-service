@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import HeaderCloud from './Components/HeaderCloud';
-import {stylesDariGaya} from './Components/Gayaaja';
+import {stylesDariGaya} from './Components/ImportedStyles';
 import Orang from '../Assets/Images/cardPerson.png';
 import { hijau, putih } from '../Assets/StylingComponent/Coloring';
 

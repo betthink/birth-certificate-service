@@ -1,14 +1,14 @@
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {stylesDariGaya} from '../Components/Gayaaja';
+import {stylesDariGaya} from './Components/ImportedStyles';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 // import { FlatList } from 'react-native-gesture-handler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import HeaderBox from '../Components/HeaderBox';
-import {ipAdress} from '../Components/Url';
+import HeaderBox from './Components/HeaderBox';
+import {ipAdress} from './Components/Url';
 import axios from 'axios';
-import {hijau, putih, ungu} from '../../Assets/StylingComponent/Coloring';
+import {hijau, putih, ungu} from '../Assets/StylingComponent/Coloring';
 // import AntrianDitolak from './StatusScreen/AntrianDitolak';
 const Tab = createMaterialTopTabNavigator();
 // color=====================

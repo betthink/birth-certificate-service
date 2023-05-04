@@ -1,59 +1,61 @@
 // In App.js in a new project
 
 import * as React from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LandingPage from './Screens/LandingPage';
-import HomeUmum from './Screens/UmumScreen/HomeUmum';
-import LoginU from './Screens/Login';
-import SyaratScreen from './Screens/UmumScreen/SyaratScreen';
-import PemberitahuanScreen from './Screens/UmumScreen/PemberitahuanScreen';
-import ProfileUmumScreen from './Screens/UmumScreen/ProfileUmumScreen';
-import Home from './Screens/Home';
+import HomeUmum from './Screens/HomePage-umum';
+import SyaratScreen from './Screens/SyaratdaninfoPage-umum';
+import PemberitahuanScreen from './Screens/PemberitahuanPage-umum';
+import ProfileUmumScreen from './Screens/ProfilePage-umum';
 import MenuUmum from './Screens/Components/MenuUmum';
-import AntrianLayananScreen from './Screens/UmumScreen/AntrianLayananScreen';
-import LoginAdmin from './Screens/LoginAdmin';
-import FormBuatAkunScreen from './Screens/FormBuatAkunScreen';
-import BuatAntrian from './Screens/UmumScreen/BuatAntrian';
+import AntrianLayananScreen from './Screens/InfoAntrianPage-umum';
 import AdminPageNavigation from './Screens/AdminScreen/AdminPageNavigation';
 import DetailAntrian from './Screens/AdminScreen/DetailAntrian';
-import DownloadFormulirScreen from './Screens/AdminScreen/DownloadFormulirScreen';
 import ProfileAdminScreen from './Screens/AdminScreen/ProfileAdminScreen';
 import EditDataUserUmum from './Screens/AdminScreen/EditDataUserUmum';
 import SplashScreen from './Screens/SplashScreen';
 import Login from './Screens/Login';
-// import LayananTerdaftar from './Screens/AdminScreen/KelolaLayananPage/LayananTerdaftarPage';
-// import LayananDiproses from './Screens/AdminScreen/KelolaLayananPage/LayananDiprosesPage';
-
-
-
+import RegisterAkunScreen from './Screens/RegisterAkunScreen';
+import InputDataBayi from './Screens/InputDataBayi-umum';
 const Stack = createNativeStackNavigator();
 
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}  initialRouteName='SplashScreen'>
+      <Stack.Navigator
+        screenOptions={{headerShown: false, gestureEnabled: true, }}
+        initialRouteName="SplashScreen">
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="LandingPage" component={LandingPage} />
-        <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="HomeUmum" component={HomeUmum} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SyaratScreen" component={SyaratScreen} />
-        <Stack.Screen name="PemberitahuanScreen" component={PemberitahuanScreen} />
+        <Stack.Screen
+          name="PemberitahuanScreen"
+          component={PemberitahuanScreen}
+        />
         <Stack.Screen name="ProfileUmumScreen" component={ProfileUmumScreen} />
         <Stack.Screen name="MenuUmum" component={MenuUmum} />
-        <Stack.Screen name="AntrianLayananScreen" component={AntrianLayananScreen} />
-        <Stack.Screen name="FormBuatAkunScreen" component={FormBuatAkunScreen} />
-        <Stack.Screen name="BuatAntrian" component={BuatAntrian} />
-        <Stack.Screen name="AdminPageNavigation" component={AdminPageNavigation} />
+        <Stack.Screen
+          name="AntrianLayananScreen"
+          component={AntrianLayananScreen}
+        />
+        <Stack.Screen
+          name="RegisterAkunScreen"
+          component={RegisterAkunScreen}
+        />
+        <Stack.Screen name="InputDataBayi" component={InputDataBayi} />
+        <Stack.Screen
+          name="AdminPageNavigation"
+          component={AdminPageNavigation}
+        />
         <Stack.Screen name="DetailAntrian" component={DetailAntrian} />
-        <Stack.Screen name="DownloadFormulirScreen" component={DownloadFormulirScreen} />
-        <Stack.Screen name="ProfileAdminScreen" component={ProfileAdminScreen} />
+        <Stack.Screen
+          name="ProfileAdminScreen"
+          component={ProfileAdminScreen}
+        />
         <Stack.Screen name="EditDataUserUmum" component={EditDataUserUmum} />
-        {/* <Stack.Screen name="LayananTerdaftar" component={LayananTerdaftar} />
-        <Stack.Screen name="LayananDiproses" component={LayananDiproses} /> */}
-      
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,10 +1,10 @@
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {ScrollView} from 'react-native-gesture-handler';
-import {stylesDariGaya} from '../Components/Gayaaja';
+import {stylesDariGaya} from './Components/ImportedStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import ListSyarat from '../Components/ListSyarat';
+import ListSyarat from './Components/ListSyarat';
+import ButtonBack from './Components/ButtonBack';
 
 export default function SyaratScreen({navigation}) {
   const data = [
@@ -28,18 +28,7 @@ export default function SyaratScreen({navigation}) {
     <SafeAreaView style={{flex: 1}}>
       
         <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <View style={{flexDirection: 'row', paddingHorizontal: 22, alignItems: 'center', justifyContent: 'center'}}>
-              <MaterialIcon
-                name="chevron-left"
-                size={22}
-                style={{color: '#fff'}}
-              />
-              <Text style={{color: '#fff', fontSize: 20, fontWeight: '700'}}>
-                Infromasi syarat dan ketentuan
-              </Text>
-            </View>
-          </TouchableOpacity>
+         <ButtonBack buttontext={"Infromasi Syarat"}/>
         </View>
         <View style={[{flex: 1}]}>
           <FlatList
