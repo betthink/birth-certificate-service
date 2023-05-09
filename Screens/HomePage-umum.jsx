@@ -18,7 +18,7 @@ import PersonPng from './Components/PersonPng';
 import {fotoUrl} from '../Assets/Url';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const HomeUmum = ({navigation, route}) => {
+const HomeUmum = ({navigation}) => {
   const [Id, setId] = useState('');
   const [Nama, setNama] = useState('');
   const [NIK, setNIK] = useState('');
@@ -149,9 +149,11 @@ const HomeUmum = ({navigation, route}) => {
               {alignSelf: 'center', marginTop: 30},
             ]}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('InputDataBayi')}
+              onPress={() => navigation.navigate('InputDataBayi', {Id})}
               style={[stylesDariGaya.contentCenter]}>
-              <Text style={[stylesDariGaya.textColorWhite]}>Daftar Layanan</Text>
+              <Text style={[stylesDariGaya.textColorWhite]}>
+                Daftar Layanan
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

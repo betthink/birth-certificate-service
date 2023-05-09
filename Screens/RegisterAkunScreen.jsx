@@ -225,7 +225,7 @@ const RegisterAkunScreen = ({navigation}) => {
 
 export default RegisterAkunScreen;
 
-const StyleForm = StyleSheet.create({
+export const StyleForm = StyleSheet.create({
   container: {paddingHorizontal: 22, flex: 1},
   containerForm: {
     flexDirection: 'row',

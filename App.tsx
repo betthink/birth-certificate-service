@@ -19,13 +19,21 @@ import Login from './Screens/Login';
 import RegisterAkunScreen from './Screens/RegisterAkunScreen';
 import InputDataBayi from './Screens/InputDataBayi-umum';
 const Stack = createNativeStackNavigator();
+import { LogBox } from 'react-native';
+import TimePicker from './Screens/datetime-component';
 
+// Ignore log notification by message
+LogBox.ignoreLogs(['Warning: ...']);
+
+//Ignore all log notifications
+LogBox.ignoreAllLogs();
 function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false, gestureEnabled: true, }}
-        initialRouteName="SplashScreen">
+        initialRouteName="TimePicker">
+        <Stack.Screen name="TimePicker" component={TimePicker} />
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="LandingPage" component={LandingPage} />
         <Stack.Screen name="HomeUmum" component={HomeUmum} />
