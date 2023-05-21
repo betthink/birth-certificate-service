@@ -11,58 +11,194 @@ import React, {useState, useEffect} from 'react';
 import {stylesDariGaya} from '../Components/ImportedStyles';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {hijau, putih, putihGelap, ungu} from '../../Assets/StylingComponent/Coloring';
+import {
+  hijau,
+  pinkGelap,
+  putih,
+  putihGelap,
+  ungu,
+} from '../../Assets/StylingComponent/Coloring';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import axios from 'axios';
+import {ipAdress} from '../Components/Url';
+import BulatanContainer from '../Components/BulatanContainer';
 const Tab = createMaterialTopTabNavigator();
 
-function KelTerdaftar () {
+function KelTerdaftar({navigation}) {
+  const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
+  let [dataAntrianTerdaftar, setdataAntrianTerdaftar] = useState();
+  let [leng, setLeng] = useState(0);
+  const getDataAntrianTerdaftar = () => {
+    axios({
+      method: 'POST',
+      url: `${url}`,
+    })
+      .then(res => {
+        let data = res.data;
+        data = data.filter(d => d.Status == 'Terdaftar');
+        // console.log(data, "ini data antrian terdaftar");
+        setLeng(data.length);
+        setdataAntrianTerdaftar(data);
+      })
+      .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    getDataAntrianTerdaftar();
+  }, []);
   return (
     <View>
-      <Text>KelTerdaftar</Text>
+      {leng >= 1 ? (
+        <FlatList
+          data={dataAntrianTerdaftar}
+          renderItem={({item}) => (
+            <View
+              style={[
+                {
+                  paddingHorizontal: 20,
+                  flexDirection: 'row',
+                  flex: 1,
+                  height: 70,
+                  backgroundColor: putih,
+                  elevation: 2,
+                  marginVertical: 2,
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                },
+              ]}>
+              <View>
+                {/* <Text style={[{color: 'white', fontSize: 20}]}>Nama:</Text> */}
+                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                  <BulatanContainer bgColor={ungu} />
+                  <Text style={[{fontSize: 20, marginLeft: 20}]}>
+                    {item.Nama}
+                  </Text>
+                </View>
+                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                  <BulatanContainer bgColor={pinkGelap} />
+                  <Text style={[{fontSize: 20, marginLeft: 20}]}>
+                    {item.IdAntrian}
+                  </Text>
+                </View>
+              </View>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('DetailDataAntrian', {
+                    IdAntrian: item.IdAntrian,
+                  })
+                }
+                style={[{padding: 10, backgroundColor: hijau, height: 50}]}>
+                <Text>Cek Data</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      ) : (
+        <View>
+          <Text>Tidak ada data</Text>
+        </View>
+      )}
     </View>
-  )
+  );
 }
-function KelDiproses () {
+function KelDiproses() {
   return (
     <View>
-      <Text>KelDiproses</Text>
+      <Text>Antrian Diproses</Text>
     </View>
-  )
+  );
 }
-function KelDitolak () {
+function KelDitolak() {
+  const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
+  let [dataAntrianDitolak, setdataAntrianDitolak] = useState();
+  let [leng, setLeng] = useState(0);
+  const getDataAntrianDitolak = () => {
+    axios({
+      method: 'POST',
+      url: `${url}`,
+    })
+      .then(res => {
+        let data = res.data;
+        data = data.filter(d => d.Status == 'Ditolak');
+        // console.log(data, "ini data antrian terdaftar");
+        setLeng(data.length);
+        setdataAntrianDitolak(data);
+      })
+      .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    getDataAntrianDitolak();
+  }, []);
   return (
     <View>
-      <Text>Ditolak</Text>
+      <FlatList
+        data={dataAntrianDitolak}
+        renderItem={({item}) => (
+          <View style={[{padding: 20, backgroundColor: ungu}]}>
+            <Text>{item.IdUser}</Text>
+            <Text>{item.WaktuDitolak}</Text>
+            <Text>{item.Nama}</Text>
+          </View>
+        )}
+      />
     </View>
-  )
+  );
 }
-function DaftarPenerima () {
+function DaftarPenerima() {
+  const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
+  let [dataAntrianSelesai, setdataAntrianSelesai] = useState();
+  let [leng, setLeng] = useState(0);
+  const getDataAntrianSelesai = () => {
+    axios({
+      method: 'POST',
+      url: `${url}`,
+    })
+      .then(res => {
+        let data = res.data;
+        data = data.filter(d => d.Status == 'Selesai');
+        // console.log(data, "ini data antrian terdaftar");
+        setLeng(data.length);
+        setdataAntrianSelesai(data);
+      })
+      .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    getDataAntrianSelesai();
+  }, []);
   return (
     <View>
-      <Text>List Penerima</Text>
+      <FlatList
+        data={dataAntrianSelesai}
+        renderItem={({item}) => (
+          <View
+            style={[{backgroundColor: ungu, height: 50, marginVertical: 2}]}>
+            <Text>{item.WaktuSelesai}</Text>
+            <Text>{item.IdPengambilan}</Text>
+          </View>
+        )}
+      />
     </View>
-  )
+  );
 }
 
 function KelolaAntrianPage() {
   const insets = useSafeAreaInsets();
   return (
-    
     <Tab.Navigator
       initialRouteName="LayananTerdaftar"
       screenOptions={({route}) => ({
         tabBarActiveTintColor: ungu,
         tabBarInactiveTintColor: 'grey',
-        tabBarLabelStyle: {fontSize: 12, 
-        
-        color: putih},
+        tabBarLabelStyle: {
+          fontSize: 12,
+
+          color: putih,
+        },
         tabBarStyle: {
           backgroundColor: hijau,
           height: 70,
           justifyContent: 'flex-end',
         },
-        
+
         style: {backgroundColor: 'red', marginTop: insets.top},
         tabBarIcon: ({focused, color, size}) => {
           let iconName;

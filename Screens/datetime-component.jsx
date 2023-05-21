@@ -8,7 +8,7 @@ const TimePicker = () => {
   const dateObj = new Date(time);
   const formattedDate = `${dateObj.getHours()}:${dateObj.getMinutes()}:0`;
 
-  const onChange = (event, selectedTime) => {
+  const timePicker = (event, selectedTime) => {
     setShowPicker(Platform.OS === 'ios');
     if (selectedTime !== undefined) {
       setTime(selectedTime);
@@ -19,7 +19,7 @@ const TimePicker = () => {
     setShowPicker(true);
   };
   useEffect(() => {
-    console.log(time);
+    // console.log(time);
     console.log(formattedDate);
   }, [time, formattedDate]);
   return (
@@ -31,7 +31,7 @@ const TimePicker = () => {
           mode="time"
           is24Hour={true}
           display="spinner"
-          onChange={onChange}
+          onChange={timePicker}
         />
       )}
     </View>

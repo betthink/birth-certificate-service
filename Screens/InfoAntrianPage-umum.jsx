@@ -16,7 +16,7 @@ const colorPink = '#B930B4';
 const colorHijau = '#28AFB0';
 const colorKuning = '#F7CD1C';
 const colorUngu = '#2E0FEF';
-function MyTabs() {
+function AntrianLayananScreen() {
   const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
@@ -90,10 +90,11 @@ function MyTabs() {
     </Tab.Navigator>
   );
 }
+export default AntrianLayananScreen;
 // ? funtion tampilkan antrian terdaftar
 function AntrianTerdaftar() {
-  const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrian.php`;
-  let [dataAntrian, setDataAntrian] = useState();
+  const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
+  let [dataAntrianTerdaftar, setdataAntrianTerdaftar] = useState();
   let [leng, setLeng] = useState(0);
   const getApi = () => {
     axios({
@@ -102,11 +103,10 @@ function AntrianTerdaftar() {
     })
       .then(res => {
         let data = res.data;
-
         data = data.filter(d => d.Status == 'Terdaftar');
         // console.log(data, "ini data antrian terdaftar");
         setLeng(data.length);
-        setDataAntrian(data);
+        setdataAntrianTerdaftar(data);
       })
       .catch(err => console.log(err));
   };
@@ -150,7 +150,7 @@ function AntrianTerdaftar() {
         </View>
       ) : (
         <FlatList
-          data={dataAntrian}
+          data={dataAntrianTerdaftar}
           renderItem={({item}) => (
             <View
               style={[
@@ -205,39 +205,11 @@ function AntrianTerdaftar() {
                         // borderRadius: 7,
                       }
                     />
-                    <Text>{item.IdAntrian}</Text>
+                    <Text>{item.Nama}</Text>
                   </View>
                 </View>
               </View>
-              {/* colom 3 */}
-              <View style={{justifyContent: 'space-between'}}>
-                {/* ============ */}
-                <View>
-                  <View style={[StyleFlatlist.boxStyle]}>
-                    <View
-                      style={{
-                        height: 14,
-                        width: 14,
-                        // borderRadius: 7,
-                        backgroundColor: colorHijau,
-                      }}
-                    />
-                    <Text>{item.WaktuPendaftaran}</Text>
-                  </View>
-                  <View style={[StyleFlatlist.boxStyle]}>
-                    <View
-                      style={
-                        [
-                          StyleFlatlist.boxColors,
-                          {backgroundColor: colorKuning},
-                        ]
-                        // borderRadius: 7,
-                      }
-                    />
-                    <Text>{item.WaktuSelesai}</Text>
-                  </View>
-                </View>
-              </View>
+           
               {/* ============================== */}
             </View>
           )}
@@ -248,10 +220,10 @@ function AntrianTerdaftar() {
 }
 // ? funtion tampilkan antrian diproses
 function AntrianDiproses() {
-  const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrian.php`;
+  const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   const [dataAntrian, setDataAntrian] = useState();
   let [value, setValue] = useState(0);
-  const getApi = () => {
+  const getDataDiproses = () => {
     axios({
       method: 'POST',
       url: `${url}`,
@@ -266,9 +238,9 @@ function AntrianDiproses() {
       .catch(err => console.log(err));
   };
   useEffect(() => {
-    getApi();
-    console.log('ambil data Antrian Doproses');
-  }, [getApi()]);
+    getDataDiproses();
+    
+  }, [dataAntrian]);
   return (
     // {dataAntrian.length < 1 ()}
     <View style={[{flex: 1, backgroundColor: '#fff'}]}>
@@ -360,7 +332,7 @@ function AntrianDiproses() {
                         // borderRadius: 7,
                       }
                     />
-                    <Text>{item.IdAntrian}</Text>
+                    <Text>{item.Nama}</Text>
                   </View>
                 </View>
               </View>
@@ -377,7 +349,7 @@ function AntrianDiproses() {
                         backgroundColor: colorHijau,
                       }}
                     />
-                    <Text>{item.WaktuPendaftaran}</Text>
+                    <Text>{item.WaktuTerima}</Text>
                   </View>
                   <View style={[StyleFlatlist.boxStyle]}>
                     <View
@@ -403,8 +375,7 @@ function AntrianDiproses() {
 }
 // ? funtion tampilkan antrian ditolak
 const AntrianDitolak = () => {
-  // let [data, setData] = useState([]);
-  const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrian.php`;
+  const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   const [dataAntrian, setDataAntrian] = useState();
   let [lengt, setLengt] = useState(0);
   const getApi = () => {
@@ -490,7 +461,7 @@ const AntrianDitolak = () => {
                         // borderRadius: 7,
                       }
                     />
-                    <Text>{item.IdAntrian}</Text>
+                    <Text>{item.Nama}</Text>
                   </View>
                 </View>
               </View>
@@ -507,7 +478,7 @@ const AntrianDitolak = () => {
                         backgroundColor: colorHijau,
                       }}
                     />
-                    <Text>{item.WaktuPendaftaran}</Text>
+                    <Text>{item.WaktuDitolak}</Text>
                   </View>
                   <View style={[StyleFlatlist.boxStyle]}>
                     <View
@@ -531,12 +502,8 @@ const AntrianDitolak = () => {
     </View>
   );
 };
-// ============================================
-const AntrianLayananScreen = () => {
-  return <MyTabs />;
-};
 
-export default AntrianLayananScreen;
+
 
 const StyleFlatlist = StyleSheet.create({
   boxColors: {

@@ -149,7 +149,7 @@ const HomeUmum = ({navigation}) => {
               {alignSelf: 'center', marginTop: 30},
             ]}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('InputDataBayi', {Id})}
+              onPress={() => navigation.navigate('DataBayiScreenUmum', {Id})}
               style={[stylesDariGaya.contentCenter]}>
               <Text style={[stylesDariGaya.textColorWhite]}>
                 Daftar Layanan

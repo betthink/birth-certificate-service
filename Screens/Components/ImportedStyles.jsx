@@ -50,9 +50,14 @@ export const stylesDariGaya = StyleSheet.create({
     backgroundColor: putih,
   },
   headerBox: {
-    backgroundColor: hijau,
-    height: 100,
-    borderBottomEndRadius: 20,
+    // backgroundColor: hijau,
+    backgroundColor: putih,
+    height: 70,
+    elevation: 5,
+    // alignItems: 'center',
+    justifyContent: 'center',
+    // borderBottomEndRadius: 20,
+    marginBottom: 20
   },
   menu: {
     // backgroundColor: '#24CE9E',

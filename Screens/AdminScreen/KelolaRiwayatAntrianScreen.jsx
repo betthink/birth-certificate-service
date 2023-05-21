@@ -43,7 +43,7 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
           stylesDariGaya.headerBox,
           {justifyContent: 'center', paddingHorizontal: 22},
         ]}>
-        <Text style={[stylesDariGaya.TextMediumBold, {color: putih}]}>
+        <Text style={[stylesDariGaya.TextMediumBold,]}>
           Riwayat Antrian
         </Text>
       </View>

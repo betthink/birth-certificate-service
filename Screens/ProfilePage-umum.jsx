@@ -151,6 +151,11 @@ const ProfileUmumScreen = ({navigation, route}) => {
         </View>
         {/* Data pribadi  */}
         <ScrollView style={{marginTop: 20}}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('DataFormulir', {IdUser:Id})}
+            style={[stylesDariGaya.listData]}>
+            <Text style={[stylesDariGaya.textDataStyle]}>formulir</Text>
+          </TouchableOpacity>
           <View style={[stylesDariGaya.listData]}>
             <Text>Password</Text>
             <Text style={[stylesDariGaya.textDataStyle]}>{Password}</Text>

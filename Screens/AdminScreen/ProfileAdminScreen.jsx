@@ -6,7 +6,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {pickSingle, isCancel} from 'react-native-document-picker';
 import {fotoUrl} from '../../Assets/Url';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import axios from 'axios';
+import axios from 'axios';
 import {
   hijau,
   hitam,
@@ -15,6 +15,7 @@ import {
   toska,
   ungu,
 } from '../../Assets/StylingComponent/Coloring';
+import {ipAdress} from '../Components/Url';
 // import {ipAdress} from '../Components/Url';
 
 // add file
@@ -42,7 +43,8 @@ const ProfileAdminScreen = ({navigation, route}) => {
   const [nama, setnama] = useState('');
   const [email, setemail] = useState('');
   const [fotoProfile, setfotoProfile] = useState('');
-  
+  const [valueAntrian, setvalueAntrian] = useState(StatusLayanan);
+  const [newStatusAntrian, setnewStatusAntrian] = useState(StatusLayanan);
   const ambilCookie = () => {
     AsyncStorage.getItem('userData').then(value => {
       AsyncStorage.getItem('userData');
@@ -66,14 +68,78 @@ const ProfileAdminScreen = ({navigation, route}) => {
       setfotoProfile(FotoProfile);
     });
   };
+  const ubahBolean = () => {
+
+      newStatusAntrian == 1 ? setvalueAntrian(0) : setvalueAntrian(1);
+    console.log(valueAntrian, "ini new bool");
+  };
+  // function on off antrian
+  async function kelolaBukaTutupAntrian  ()  {
+    try {
+      const res = await axios({
+        method: 'POST',
+        data: {
+          Id,
+          StatusLayanan: 1,
+        },
+        url: `${ipAdress}aplikasiLayananAkta/update/BukaTutupAntrian.php`,
+        headers: {'Content-Type': 'multipart/form-data'},
+      });
+
+      const {value, message, StatusLayanan} = res.data;
+      console.log(res.data);
+      if (StatusLayanan == 1) {
+        console.log('antrian Terbuka');
+      } else {
+        console.log('antrian Tertutup');
+      }
+    } catch (error) {
+      alert('koneksi sedang tidak bagus, sihlakan coba lagi?');
+      console.log(error);
+    }
+  };
+
+  // tampilkan lagi data user /
+
+  const getNewData = async () => {
+    const url = `${ipAdress}/aplikasiLayananAkta/api/apiDataUserAdmin.php`;
+    await axios({
+      method: 'POST',
+      url: `${url}`,
+    })
+      .then(res => {
+        let data = res.data;
+
+        const datafilter = data.filter(d => d.Id == Id);
+        // const {StatusLayanan} = datafilter;
+        // const {StatusLayanan} = data;
+
+        const statusLayanan = datafilter.map(item => item.StatusLayanan);
+        const statusLayananIndex = statusLayanan[0];
+        setnewStatusAntrian(statusLayananIndex);
+        console.log(statusLayananIndex);
+      })
+      .catch(err => console.log(err));
+  };
+
+  const changeAntrian = async () => {
+    try {
+      // await ubahBolean();
+      await kelolaBukaTutupAntrian();
+      // await getNewData();
+    } catch (error) {
+      console.error('Terjadi kesalahan:', error);
+    }
+  };
+
   useEffect(() => {
     ambilCookie();
-  }, []);
+    getNewData();
 
-  useEffect(() => {
-    // tampilkanDataUser();
-  }, []);
-
+    // console.log('Ini status layaannanan', StatusLayanan);
+    // console.log('Ini valueAntrian', valueAntrian);
+    console.log('Log dari useeffect', newStatusAntrian);
+  }, [valueAntrian, newStatusAntrian]);
   return (
     <View style={{flex: 1, backgroundColor: putihGelap}}>
       {/* foto profile container */}
@@ -88,6 +154,7 @@ const ProfileAdminScreen = ({navigation, route}) => {
             </Text>
           </TouchableOpacity>
         </View>
+        {/* foto profile */}
         <View style={{}}>
           <View
             style={{
@@ -98,7 +165,7 @@ const ProfileAdminScreen = ({navigation, route}) => {
               borderBottomColor: ungu,
               borderTopStartRadius: 20,
               borderTopEndRadius: 20,
-              height: 130,
+              height: 150,
               width: '100%',
               justifyContent: 'center',
               alignItems: 'center',
@@ -107,7 +174,7 @@ const ProfileAdminScreen = ({navigation, route}) => {
             <TouchableOpacity
               style={{
                 backgroundColor: ungu,
-                
+
                 width: 100,
                 height: 100,
                 justifyContent: 'center',
@@ -121,12 +188,10 @@ const ProfileAdminScreen = ({navigation, route}) => {
               }}
               onPress={() => {
                 openDocument();
-        
               }}>
-          
-              <Image     
+              <Image
                 style={[{width: 80, height: 80, borderRadius: 45}]}
-                source={{uri : fotoProfile }}
+                source={{uri: fotoProfile}}
                 // source={{
                 //   uri: fotoUrl,
                 // }}
@@ -194,7 +259,18 @@ const ProfileAdminScreen = ({navigation, route}) => {
             <MaterialIcon name="edit" color={putih} />
             <Text style={[{color: putih}]}>Edit Akun</Text>
           </TouchableOpacity>
-          {/* buttons Hapus */}
+          {/* Turn on / off antrian */}
+          <TouchableOpacity
+            onPress={kelolaBukaTutupAntrian}
+            style={[styleButtons.buttons, {backgroundColor: '#454545'}]}>
+            <MaterialIcon name="logout" color={putih} />
+            {newStatusAntrian == 1 ? (
+              <Text style={[{color: putih}]}> Terbuka</Text>
+            ) : (
+              <Text style={[{color: putih}]}>Tertutup</Text>
+            )}
+          </TouchableOpacity>
+          {/* buttons Log out */}
           <TouchableOpacity
             onPress={() => {
               AsyncStorage.clear();
@@ -203,12 +279,6 @@ const ProfileAdminScreen = ({navigation, route}) => {
             style={[styleButtons.buttons, {backgroundColor: '#454545'}]}>
             <MaterialIcon name="logout" color={putih} />
             <Text style={[{color: putih}]}>Log Out</Text>
-          </TouchableOpacity>
-          {/* buttons Hapus */}
-          <TouchableOpacity
-            style={[styleButtons.buttons, {backgroundColor: ungu}]}>
-            <MaterialIcon name="delete" color={putih} />
-            <Text style={[{color: putih}]}>Delete</Text>
           </TouchableOpacity>
         </View>
       </View>

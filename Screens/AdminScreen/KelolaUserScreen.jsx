@@ -30,7 +30,7 @@ export default function KelolaUserScreen({navigation}) {
           stylesDariGaya.headerBox,
           {justifyContent: 'center', paddingHorizontal: 22},
         ]}>
-        <Text style={[stylesDariGaya.TextBoldP]}>Kelola User</Text>
+        <Text style={[stylesDariGaya.TextBold]}>Kelola User</Text>
       </View>
       {/* list Account */}
       <View style={{paddingHorizontal: 22}}>

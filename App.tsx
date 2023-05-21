@@ -17,11 +17,20 @@ import EditDataUserUmum from './Screens/AdminScreen/EditDataUserUmum';
 import SplashScreen from './Screens/SplashScreen';
 import Login from './Screens/Login';
 import RegisterAkunScreen from './Screens/RegisterAkunScreen';
-import InputDataBayi from './Screens/InputDataBayi-umum';
-const Stack = createNativeStackNavigator();
-import { LogBox } from 'react-native';
-import TimePicker from './Screens/datetime-component';
 
+import { LogBox } from 'react-native';
+import DataBayiScreenUmum from './Screens/DataBayiScreen-Umum';
+import DataIbuScreen from './Screens/DataIbuScreen-Umum';
+import DataAyahScreen from './Screens/DataAyahScreen-Umum';
+import DataSaksiScreen from './Screens/DataSaksiScreen-Umum';
+import DataSaksi2Screen from './Screens/DataSaksi2Screen-Umum';
+import DataFileUploadScreen from './Screens/DataFileUploadScreen-Umum';
+import DataFormulir from './Screens/DataFormulir-Umum';
+import DetailScreenFormulir from './Screens/Components/DetailScreenFormulir-umum';
+import DetailDataAntrian from './Screens/AdminScreen/DetailDataAntrian';
+
+// import TimePicker from './Screens/datetime-component';
+const Stack = createNativeStackNavigator();
 // Ignore log notification by message
 LogBox.ignoreLogs(['Warning: ...']);
 
@@ -31,9 +40,18 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{headerShown: false, gestureEnabled: true, }}
-        initialRouteName="TimePicker">
-        <Stack.Screen name="TimePicker" component={TimePicker} />
+        screenOptions={{headerShown: false, gestureEnabled: true,}}
+        initialRouteName="SplashScreen">
+        {/* <Stack.Screen name="DataFileUploadScreen" component={DataFileUploadScreen} /> */}
+        <Stack.Screen name="DataFormulir" component={DataFormulir} />
+        <Stack.Screen name="DetailDataAntrian" component={DetailDataAntrian} />
+        <Stack.Screen name="DetailScreenFormulir" component={DetailScreenFormulir} />
+        <Stack.Screen name="DataAyahScreen" component={DataAyahScreen} />
+        <Stack.Screen name="DataSaksi2Screen" component={DataSaksi2Screen} />
+        <Stack.Screen name="DataSaksiScreen" component={DataSaksiScreen} />
+        <Stack.Screen name="DataBayiScreenUmum" component={DataBayiScreenUmum} />
+        <Stack.Screen name="DataIbuScreen" component={DataIbuScreen} />
+        {/* <Stack.Screen name="DateSelect" component={DateSelect} /> */}
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="LandingPage" component={LandingPage} />
         <Stack.Screen name="HomeUmum" component={HomeUmum} />
@@ -45,6 +63,7 @@ function App() {
         />
         <Stack.Screen name="ProfileUmumScreen" component={ProfileUmumScreen} />
         <Stack.Screen name="MenuUmum" component={MenuUmum} />
+        <Stack.Screen name="DataFileUploadScreen" component={DataFileUploadScreen} />
         <Stack.Screen
           name="AntrianLayananScreen"
           component={AntrianLayananScreen}
@@ -53,7 +72,6 @@ function App() {
           name="RegisterAkunScreen"
           component={RegisterAkunScreen}
         />
-        <Stack.Screen name="InputDataBayi" component={InputDataBayi} />
         <Stack.Screen
           name="AdminPageNavigation"
           component={AdminPageNavigation}
