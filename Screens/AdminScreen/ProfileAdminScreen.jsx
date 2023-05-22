@@ -43,8 +43,8 @@ const ProfileAdminScreen = ({navigation, route}) => {
   const [nama, setnama] = useState('');
   const [email, setemail] = useState('');
   const [fotoProfile, setfotoProfile] = useState('');
-  const [valueAntrian, setvalueAntrian] = useState(StatusLayanan);
-  const [newStatusAntrian, setnewStatusAntrian] = useState(StatusLayanan);
+  const [valueStatus, setvalueStatus] = useState(StatusLayanan);
+  const [ubahBoolean, setubahBoolean] = useState(null);
   const ambilCookie = () => {
     AsyncStorage.getItem('userData').then(value => {
       AsyncStorage.getItem('userData');
@@ -68,78 +68,87 @@ const ProfileAdminScreen = ({navigation, route}) => {
       setfotoProfile(FotoProfile);
     });
   };
-  const ubahBolean = () => {
+  // ?UseeEffect=
+  useEffect(() => {
+    ambilCookie();
+    // getNewData();
 
-      newStatusAntrian == 1 ? setvalueAntrian(0) : setvalueAntrian(1);
-    console.log(valueAntrian, "ini new bool");
+    // console.log('Ini status layaannanan', StatusLayanan);
+    // console.log('Ini valueAntrian', valueAntrian);
+    // console.log('Log dari useeffect', valueStatus);
+    console.log(ubahBoolean, 'ini new bool setelah pembaruan');
+  }, [valueStatus, ubahBoolean]);
+
+  const ubahBolean = async () => {
+    const newBool = valueStatus === 1 ? 0 : 1;
+    setubahBoolean(newBool);
+
   };
+
   // function on off antrian
-  async function kelolaBukaTutupAntrian  ()  {
+  async function kelolaBukaTutupAntrian() {
+    console.log(ubahBoolean);
     try {
+      console.log('ini harusnya kedua');
       const res = await axios({
         method: 'POST',
         data: {
-          Id,
-          StatusLayanan: 1,
+          Id: Id,
+          StatusLayanan: 0,
         },
-        url: `${ipAdress}aplikasiLayananAkta/update/BukaTutupAntrian.php`,
+        url: `${ipAdress}/aplikasiLayananAkta/update/BukaTutupAntrian.php`,
         headers: {'Content-Type': 'multipart/form-data'},
       });
-
       const {value, message, StatusLayanan} = res.data;
       console.log(res.data);
+
       if (StatusLayanan == 1) {
         console.log('antrian Terbuka');
+        setvalueStatus(1);
       } else {
         console.log('antrian Tertutup');
+        setvalueStatus(0);
       }
     } catch (error) {
       alert('koneksi sedang tidak bagus, sihlakan coba lagi?');
       console.log(error);
     }
-  };
+  }
 
   // tampilkan lagi data user /
 
-  const getNewData = async () => {
-    const url = `${ipAdress}/aplikasiLayananAkta/api/apiDataUserAdmin.php`;
-    await axios({
-      method: 'POST',
-      url: `${url}`,
-    })
-      .then(res => {
-        let data = res.data;
+  // const getNewData = async () => {
+  //   const url = `${ipAdress}/aplikasiLayananAkta/api/apiDataUserAdmin.php`;
+  //   await axios({
+  //     method: 'POST',
+  //     url: `${url}`,
+  //   })
+  //     .then(res => {
+  //       let data = res.data;
 
-        const datafilter = data.filter(d => d.Id == Id);
-        // const {StatusLayanan} = datafilter;
-        // const {StatusLayanan} = data;
+  //       const datafilter = data.filter(d => d.Id == Id);
+  //       // const {StatusLayanan} = datafilter;
+  //       // const {StatusLayanan} = data;
 
-        const statusLayanan = datafilter.map(item => item.StatusLayanan);
-        const statusLayananIndex = statusLayanan[0];
-        setnewStatusAntrian(statusLayananIndex);
-        console.log(statusLayananIndex);
-      })
-      .catch(err => console.log(err));
-  };
+  //       const statusLayanan = datafilter.map(item => item.StatusLayanan);
+  //       const statusLayananIndex = statusLayanan[0];
+  //       setvalueStatus(statusLayananIndex);
+  //       console.log(statusLayananIndex);
+  //     })
+  //     .catch(err => console.log(err));
+  // };
 
-  const changeAntrian = async () => {
-    try {
-      // await ubahBolean();
-      await kelolaBukaTutupAntrian();
-      // await getNewData();
-    } catch (error) {
-      console.error('Terjadi kesalahan:', error);
-    }
-  };
+  // const changeAntrian = async () => {
+  //   try {
+  //     // await ubahBolean();
+  //     await kelolaBukaTutupAntrian();
+  //     // await getNewData();
+  //   } catch (error) {
+  //     console.error('Terjadi kesalahan:', error);
+  //   }
+  // };
 
-  useEffect(() => {
-    ambilCookie();
-    getNewData();
 
-    // console.log('Ini status layaannanan', StatusLayanan);
-    // console.log('Ini valueAntrian', valueAntrian);
-    console.log('Log dari useeffect', newStatusAntrian);
-  }, [valueAntrian, newStatusAntrian]);
   return (
     <View style={{flex: 1, backgroundColor: putihGelap}}>
       {/* foto profile container */}
@@ -261,10 +270,18 @@ const ProfileAdminScreen = ({navigation, route}) => {
           </TouchableOpacity>
           {/* Turn on / off antrian */}
           <TouchableOpacity
-            onPress={kelolaBukaTutupAntrian}
+            onPress={async () => {
+              try {
+                await ubahBolean();
+                await kelolaBukaTutupAntrian();
+                // console.log('presed');
+              } catch (error) {
+                console.log(error);
+              }
+            }}
             style={[styleButtons.buttons, {backgroundColor: '#454545'}]}>
             <MaterialIcon name="logout" color={putih} />
-            {newStatusAntrian == 1 ? (
+            {valueStatus == 1 ? (
               <Text style={[{color: putih}]}> Terbuka</Text>
             ) : (
               <Text style={[{color: putih}]}>Tertutup</Text>

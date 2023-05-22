@@ -101,6 +101,17 @@ const DataSaksi2Screen = ({navigation, route}) => {
     }
     // console.log(res.data['message']);
   }
+  const addToAntrianValid = async () => {
+    try {
+      const res = await axios({
+        method: 'POST',
+        data: {IdAntrian: IdAnak, IdUser},
+        url: `${ipAdress}/aplikasiLayananAkta/addData/addDataAntrianValid.php`,
+        headers: {'Content-Type': 'multipart/form-data'},
+      });
+      console.log(res.data, "ini data dari antrianValid");
+    } catch (error) {}
+  };
   useEffect(() => {
     console.log(
       IdAnak,
@@ -206,6 +217,7 @@ const DataSaksi2Screen = ({navigation, route}) => {
         onPresAction={async () => {
           try {
             await addDataSaksi2();
+            await addToAntrianValid();
           } catch (error) {}
         }}
       />

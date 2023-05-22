@@ -17,6 +17,7 @@ import MenuUmum from './Components/MenuUmum';
 import PersonPng from './Components/PersonPng';
 import {fotoUrl} from '../Assets/Url';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { hijau, hitam, putihGelap } from '../Assets/StylingComponent/Coloring';
 
 const HomeUmum = ({navigation}) => {
   const [Id, setId] = useState('');
@@ -78,20 +79,20 @@ const HomeUmum = ({navigation}) => {
                 <Text
                   style={[
                     stylesDariGaya.TextBold,
-                    {color: '#fff', fontSize: 20, letterSpacing: 3},
+                    {color: hijau, fontSize: 20, letterSpacing: 3},
                   ]}>
                   Selamat Datang
                 </Text>
               </View>
-              <View style={{width: 300}}>
-                <Text style={{color: '#fff'}}>
+              {/* <View style={{width: 300}}>
+                <Text style={{color: hitam}}>
                   Gunakan Layanan Kami dengan Bijak dan beratnggung jawab !
                 </Text>
-              </View>
+              </View> */}
             </View>
             {/* wrap Foto Profile */}
             <View
-              style={{padding: 2, backgroundColor: '#fff', borderRadius: 30}}>
+              style={{padding: 2, backgroundColor: '#fff', borderRadius: 30, borderWidth: 2, borderColor: putihGelap}}>
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate('ProfileUmumScreen', {

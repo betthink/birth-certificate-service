@@ -12,7 +12,13 @@ import DropdownSelect from './Components/DropdownSelect';
 import {stylesDariGaya} from './Components/ImportedStyles';
 import ButtonBack from './Components/ButtonBack';
 import DateSelect from './Components/DateSelect';
-import {hijau, hitam, putih, ungu} from '../Assets/StylingComponent/Coloring';
+import {
+  hijau,
+  hitam,
+  putih,
+  putihGelap,
+  ungu,
+} from '../Assets/StylingComponent/Coloring';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import TextInputBox from './Components/TextInputBox';
@@ -24,6 +30,24 @@ import {ipAdress} from './Components/Url';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const DataBayiScreen = ({route, navigation}) => {
+  const [dataAdmin, setdataAdmin] = useState([]);
+  const getDataAdmin = () => {
+    axios({
+      method: 'POST',
+      url: `${ipAdress}/aplikasiLayananAkta/api/apiDataUserAdmin.php`,
+    })
+      .then(res => {
+        // console.log(res.data, "ini data dari getDataAdmin");
+        // data = data.filter(d => d.Status == 'Selesai');
+        // console.log(data, "ini data antrian terdaftar");
+
+        const StatusLayanan = res.data[0].StatusLayanan;
+        setdataAdmin(StatusLayanan);
+        console.log(StatusLayanan);
+      })
+      .catch(err => console.log(err));
+  };
+
   const {Id} = route.params;
   // atribute Nama
   const [Nama, setNama] = useState('');
@@ -165,202 +189,189 @@ const DataBayiScreen = ({route, navigation}) => {
   }
   // !UseEffect
   useEffect(() => {
-    // console.log(parts);
-    // console.log( newDateString,);
-    // console.log( newDateString,);
-    // console.log(newDate);
-    // console.log(
-    //   Id,
-    //   'ini Id dari route',
-    //   getTime,
-    //   newDate,
-    //   Nama,
-    //   vJenisKelamin,
-    //   vTempatPersalinan,
-    //   vUrutanKelahiran,
-    //   vPenolongKelahiran,
-    //   BeratBayi,
-    //   PanjangBayi,
-    //   TempatKelahiran
-    // );
-  }, [
-    newDateString,
-    time,
-    // newDate,
-    Nama,
-    vJenisKelamin,
-    vTempatPersalinan,
-    vUrutanKelahiran,
-    vPenolongKelahiran,
-    BeratBayi,
-    PanjangBayi,
-    TempatKelahiran,
-  ]);
+    getDataAdmin();
+  }, []);
   return (
     <View style={[{flex: 1, backgroundColor: putih}]}>
       <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
         <ButtonBack buttontext={'Data Bayi'} />
       </View>
-      {/* container content */}
-      <ScrollView
-        style={[{flex: 1, paddingHorizontal: 20, paddingVertical: 10}]}>
-        <TextInputBox
-          Label={'Nama'}
-          IconName={'user'}
-          placeholderTitle={'Isi nama lengkap bayi'}
-          value={Nama}
-          onChangeText={text => setNama(text)}
-        />
-        {/* dropJenis Kelamin */}
-        <View style={[{zIndex: -1}]}>
-          <DropdownSelect
-            Label="Jenis Kelamin"
-            placeholder={'Pilih Jenis Kelamin'}
-            open={openJK}
-            setOpen={setopenJK}
-            data={dataJenisKelamin}
-            setData={setdataJenisKelamin}
-            value={vJenisKelamin}
-            setvalue={setvJenisKelamin}
-          />
+      {dataAdmin == 0 ? (
+        <View
+          style={[
+            {flex: 1,
+              backgroundColor: putihGelap,
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+          ]}>
+          <Text>Antrian sedang Ditutup</Text>
         </View>
-        <View style={[{zIndex: -2}]}>
-          {/* dropTmpt Persalinan */}
-          <DropdownSelect
-            placeholder={'Pilih Tempat'}
-            Label="Tempat Persalinan"
-            open={openTP}
-            setOpen={setopenTP}
-            data={dataTempatPersalinan}
-            setData={setdataTempatPersalinan}
-            value={vTempatPersalinan}
-            setvalue={setvTempatPersalinan}
-          />
-        </View>
-        {/* Tempat kelahiran */}
-        {/* TempatKelahiran */}
-        <View style={[{zIndex: -3}]}>
-        <TextInputBox
-          Label={'TempatKelahiran'}
-          placeholderTitle={'Palangka Raya..'}
-          onChangeText={text => setTempatKelahiran(text)}
-          value={TempatKelahiran}
-          IconName={'user'}
-        /></View>
-        {/* drop Usutan kelahiran */}
-        <View style={[{zIndex: -3}]}>
-          <DropdownSelect
-            placeholder={'Pilih Urutan Kelahiran'}
-            Label="Urutan Kelahiran"
-            open={openUK}
-            setOpen={setopenUK}
-            data={dataUrutanKelahiran}
-            setData={setdataUrutanKelahiran}
-            value={vUrutanKelahiran}
-            setvalue={setvUrutanKelahiran}
-          />
-        </View>
+      ) : (
+        <>
+          {/* container content */}
+          <ScrollView
+            style={[{flex: 1, paddingHorizontal: 20, paddingVertical: 10}]}>
+            <TextInputBox
+              Label={'Nama'}
+              IconName={'user'}
+              placeholderTitle={'Isi nama lengkap bayi'}
+              value={Nama}
+              onChangeText={text => setNama(text)}
+            />
+            {/* dropJenis Kelamin */}
+            <View style={[{zIndex: -1}]}>
+              <DropdownSelect
+                Label="Jenis Kelamin"
+                placeholder={'Pilih Jenis Kelamin'}
+                open={openJK}
+                setOpen={setopenJK}
+                data={dataJenisKelamin}
+                setData={setdataJenisKelamin}
+                value={vJenisKelamin}
+                setvalue={setvJenisKelamin}
+              />
+            </View>
+            <View style={[{zIndex: -2}]}>
+              {/* dropTmpt Persalinan */}
+              <DropdownSelect
+                placeholder={'Pilih Tempat'}
+                Label="Tempat Persalinan"
+                open={openTP}
+                setOpen={setopenTP}
+                data={dataTempatPersalinan}
+                setData={setdataTempatPersalinan}
+                value={vTempatPersalinan}
+                setvalue={setvTempatPersalinan}
+              />
+            </View>
+            {/* Tempat kelahiran */}
+            {/* TempatKelahiran */}
+            <View style={[{zIndex: -3}]}>
+              <TextInputBox
+                Label={'TempatKelahiran'}
+                placeholderTitle={'Palangka Raya..'}
+                onChangeText={text => setTempatKelahiran(text)}
+                value={TempatKelahiran}
+                IconName={'user'}
+              />
+            </View>
+            {/* drop Usutan kelahiran */}
+            <View style={[{zIndex: -3}]}>
+              <DropdownSelect
+                placeholder={'Pilih Urutan Kelahiran'}
+                Label="Urutan Kelahiran"
+                open={openUK}
+                setOpen={setopenUK}
+                data={dataUrutanKelahiran}
+                setData={setdataUrutanKelahiran}
+                value={vUrutanKelahiran}
+                setvalue={setvUrutanKelahiran}
+              />
+            </View>
 
-        {/* drop Penolong Kelahiran */}
-        <View style={[{zIndex: -4}]}>
-          <DropdownSelect
-            placeholder={'Pilih Penolong Kelahiran'}
-            Label="Penolong Kelahiran"
-            open={openPK}
-            setOpen={setopenPK}
-            data={dataPenolongKelahiran}
-            setData={setdataPenolongKelahiran}
-            value={vPenolongKelahiran}
-            setvalue={setvPenolongKelahiran}
-          />
-        </View>
-        {/* date and time */}
-        <View style={[{flex: 1, flexDirection: 'row', zIndex: -5}]}>
-          <DateSelect
-            //   mode : time, datetime ect
-            // display : clock, default, calendar, clock
-            openCalendar={() => OpenDate()}
-            onChange={onChangeDate}
-            valueinTextInput={newDateString}
-            value={date}
-            visible={DatePickerVisibility}
-            IconName="calendar"
-            placeholder={'yyyy-mm-dd'}
-            mode={'date'}
-            display={'calendar'}
-          />
-          <View
-            style={[
-              {
-                height: 50,
-                borderWidth: 2,
-                borderColor: ungu,
-                paddingHorizontal: 20,
-                marginLeft: 10,
-                marginTop: 20,
-              },
-            ]}>
-            {/* Time Selecter */}
-            <TouchableOpacity
-              style={[
-                {
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                },
-              ]}
-              onPress={showTimepicker}>
-              <TextInput
-                // value={valueinTextInput}
-                placeholder={getTime}
-                editable={false}
+            {/* drop Penolong Kelahiran */}
+            <View style={[{zIndex: -4}]}>
+              <DropdownSelect
+                placeholder={'Pilih Penolong Kelahiran'}
+                Label="Penolong Kelahiran"
+                open={openPK}
+                setOpen={setopenPK}
+                data={dataPenolongKelahiran}
+                setData={setdataPenolongKelahiran}
+                value={vPenolongKelahiran}
+                setvalue={setvPenolongKelahiran}
               />
-              <Icon size={20} color={ungu} name="clock" />
-            </TouchableOpacity>
-            {showTimePicker && (
-              <DateTimePicker
-                value={time}
-                mode="time"
-                is24Hour={true}
-                display="spinner"
-                onChange={onChange}
+            </View>
+            {/* date and time */}
+            <View style={[{flex: 1, flexDirection: 'row', zIndex: -5}]}>
+              <DateSelect
+                //   mode : time, datetime ect
+                // display : clock, default, calendar, clock
+                openCalendar={() => OpenDate()}
+                onChange={onChangeDate}
+                valueinTextInput={newDateString}
+                value={date}
+                visible={DatePickerVisibility}
+                IconName="calendar"
+                placeholder={'yyyy-mm-dd'}
+                mode={'date'}
+                display={'calendar'}
               />
-            )}
-          </View>
-        </View>
-        {/* berat dan panjang */}
-        <View style={[{zIndex: -6}]}>
-          <TextInputBox
-            Label={'Berat Bayi'}
-            placeholderTitle={'*50g'}
-            value={BeratBayi}
-            onChangeText={text => setBeratBayi(text)}
-            IconName={'baby'}
+              <View
+                style={[
+                  {
+                    height: 50,
+                    borderWidth: 2,
+                    borderColor: ungu,
+                    paddingHorizontal: 20,
+                    marginLeft: 10,
+                    marginTop: 20,
+                  },
+                ]}>
+                {/* Time Selecter */}
+                <TouchableOpacity
+                  style={[
+                    {
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    },
+                  ]}
+                  onPress={showTimepicker}>
+                  <TextInput
+                    // value={valueinTextInput}
+                    placeholder={getTime}
+                    editable={false}
+                  />
+                  <Icon size={20} color={ungu} name="clock" />
+                </TouchableOpacity>
+                {showTimePicker && (
+                  <DateTimePicker
+                    value={time}
+                    mode="time"
+                    is24Hour={true}
+                    display="spinner"
+                    onChange={onChange}
+                  />
+                )}
+              </View>
+            </View>
+            {/* berat dan panjang */}
+            <View style={[{zIndex: -6}]}>
+              <TextInputBox
+                Label={'Berat Bayi'}
+                placeholderTitle={'*50g'}
+                value={BeratBayi}
+                onChangeText={text => setBeratBayi(text)}
+                IconName={'baby'}
+              />
+            </View>
+            <TextInputBox
+              IconName={'baby'}
+              Label={'Panjang Bayi'}
+              placeholderTitle={'*50cm'}
+              value={PanjangBayi}
+              onChangeText={text => setPanjangBayi(text)}
+            />
+            {/* Button */}
+            <DefaultButtonBox
+              TitleColor={'#fff'}
+              onClickAction={() => setkonfirmasi(true)}
+              Title={'Submit'}
+            />
+          </ScrollView>
+          {/* Modal/Pop up  */}
+          <ModalCompon
+            onPresAction={async () => {
+              try {
+                await addDataBayi();
+              } catch (error) {}
+            }}
+            stateValueModal={konfirmasi}
           />
-        </View>
-        <TextInputBox
-          IconName={'baby'}
-          Label={'Panjang Bayi'}
-          placeholderTitle={'*50cm'}
-          value={PanjangBayi}
-          onChangeText={text => setPanjangBayi(text)}
-        />
-        {/* Button */}
-        <DefaultButtonBox
-          TitleColor={'#fff'}
-          onClickAction={() => setkonfirmasi(true)}
-          Title={'Submit'}
-        />
-      </ScrollView>
-      {/* Modal/Pop up  */}
-      <ModalCompon
-        onPresAction={async () => {
-          try {
-            await addDataBayi();
-          } catch (error) {}
-        }}
-        stateValueModal={konfirmasi}
-      />
+        </>
+      )}
     </View>
   );
 };
