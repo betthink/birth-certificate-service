@@ -10,6 +10,7 @@ import {hijau, putih, putihGelap} from '../Assets/StylingComponent/Coloring';
 import axios from 'axios';
 import {ipAdress} from './Components/Url';
 import ButtonBack from './Components/ButtonBack';
+import GreenButton from './Components/GreenButton';
 
 const RegisterAkunScreen = ({navigation}) => {
   const [Password, setPassword] = useState('');
@@ -86,7 +87,7 @@ const RegisterAkunScreen = ({navigation}) => {
       <ButtonBack buttontext="BuatAKun" />
       </View>
       {/* Form */}
-      <ScrollView style={[StyleForm.container]}>
+      <ScrollView style={[{paddingHorizontal: 20}]}>
         {/* Username */}
         <View style={[StyleForm.spaceBeetwenForm]}>
           <View style={{marginLeft: 30}}>
@@ -180,7 +181,7 @@ const RegisterAkunScreen = ({navigation}) => {
             alignItems: 'center',
             flexDirection: 'row',
             borderWidth: 4,
-            borderColor: '#fff',
+            borderColor: hijau,
             borderRadius: 50,
             alignSelf: 'center',
             marginTop: 20,
@@ -203,21 +204,11 @@ const RegisterAkunScreen = ({navigation}) => {
           />
         </TouchableOpacity>
         {/* Button Buat Akun */}
-        <TouchableOpacity
-          style={[{marginTop: 30}]}
-          onPress={async () => {
+        <GreenButton width={"100%"} ButtonText={"Daftar"}  actionOnclick={async () => {
             try {
               await RegistrasiAkun();
             } catch (error) {}
-          }}>
-          <View
-            style={[
-              stylesDariGaya.Tombols,
-              {alignSelf: 'center', alignItems: 'center', marginBottom: 50},
-            ]}>
-            <Text style={{color: putih}}>Daftar</Text>
-          </View>
-        </TouchableOpacity>
+          }}/>
       </ScrollView>
     </View>
   );
@@ -231,6 +222,7 @@ export const StyleForm = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+    // flex:1
   },
   textInput: {
     height: 40,

@@ -92,7 +92,7 @@ const DataSaksi2Screen = ({navigation, route}) => {
         setkonfirmasi(false);
         navigation.navigate('DataFileUploadScreen', {IdAnak, IdUser});
       } else {
-        alert(message);
+        alert(message,"gagal");
         setkonfirmasi(false);
       }
     } catch (error) {

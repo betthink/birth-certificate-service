@@ -1,4 +1,4 @@
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {View, Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {stylesDariGaya} from './Components/ImportedStyles';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
@@ -9,6 +9,7 @@ import HeaderBox from './Components/HeaderBox';
 import {ipAdress} from './Components/Url';
 import axios from 'axios';
 import {hijau, putih, ungu} from '../Assets/StylingComponent/Coloring';
+import GreenButton from './Components/GreenButton';
 // import AntrianDitolak from './StatusScreen/AntrianDitolak';
 const Tab = createMaterialTopTabNavigator();
 // color=====================
@@ -20,6 +21,21 @@ function AntrianLayananScreen() {
   const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
+    //  tabBar={props => (
+    //     <TouchableOpacity
+    //       style={{ position: 'absolute', top: -30, alignSelf: 'center' }}
+    //       onPress={() => {
+    //         // Aksi yang ingin dilakukan ketika tombol di atas label ditekan
+    //       }}
+    //     >
+    //       <Text>Tombol</Text>
+    //     </TouchableOpacity>
+    //   )}
+      // tabBarOptions={{
+      //   tabStyle: {
+      //     paddingTop: 20,
+      //   },
+      // }}
       screenOptions={{
         tabBarLabelStyle: {fontSize: 12},
 
@@ -31,6 +47,9 @@ function AntrianLayananScreen() {
         name="AntrianTerdaftar"
         component={AntrianTerdaftar}
         options={{
+          // tabBarLabel: ({ color, focused }) => (
+          //   <Text style={{ color: focused ? 'blue' : 'black' }}>tesss</Text>
+          // ),
           title: ({color, focused}) => (
             <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
               <MaterialIcon
@@ -92,7 +111,7 @@ function AntrianLayananScreen() {
 }
 export default AntrianLayananScreen;
 // ? funtion tampilkan antrian terdaftar
-function AntrianTerdaftar() {
+function AntrianTerdaftar({navigation}) {
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   let [dataAntrianTerdaftar, setdataAntrianTerdaftar] = useState();
   let [leng, setLeng] = useState(0);
@@ -118,6 +137,7 @@ function AntrianTerdaftar() {
   return (
     <View
       style={[{flex: 1, backgroundColor: '#fff', justifyContent: 'center'}]}>
+     
       <View
         style={[
           {alignItems: 'flex-end', paddingHorizontal: 40, paddingVertical: 20},
@@ -209,7 +229,7 @@ function AntrianTerdaftar() {
                   </View>
                 </View>
               </View>
-           
+
               {/* ============================== */}
             </View>
           )}
@@ -239,7 +259,6 @@ function AntrianDiproses() {
   };
   useEffect(() => {
     getDataDiproses();
-    
   }, [dataAntrian]);
   return (
     // {dataAntrian.length < 1 ()}
@@ -502,8 +521,6 @@ const AntrianDitolak = () => {
     </View>
   );
 };
-
-
 
 const StyleFlatlist = StyleSheet.create({
   boxColors: {

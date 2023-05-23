@@ -22,6 +22,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import axios from 'axios';
 import {ipAdress} from '../Components/Url';
 import BulatanContainer from '../Components/BulatanContainer';
+import GreenButton from '../Components/GreenButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Tab = createMaterialTopTabNavigator();
 
 function KelTerdaftar({navigation}) {
@@ -54,10 +56,10 @@ function KelTerdaftar({navigation}) {
             <View
               style={[
                 {
+                  marginHorizontal: 20,
                   paddingHorizontal: 20,
                   flexDirection: 'row',
                   flex: 1,
-                  height: 70,
                   backgroundColor: putih,
                   elevation: 2,
                   marginVertical: 2,
@@ -79,6 +81,12 @@ function KelTerdaftar({navigation}) {
                     {item.IdAntrian}
                   </Text>
                 </View>
+                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                  <BulatanContainer bgColor={'salmon'} />
+                  <Text style={[{fontSize: 20, marginLeft: 20}]}>
+                    {item.WaktuPendaftaran}
+                  </Text>
+                </View>
               </View>
               <TouchableOpacity
                 onPress={() =>
@@ -93,17 +101,129 @@ function KelTerdaftar({navigation}) {
           )}
         />
       ) : (
-        <View>
+        <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
           <Text>Tidak ada data</Text>
         </View>
       )}
     </View>
   );
 }
+// antrian valid & diproses
 function KelDiproses() {
+  const [IdAdmin, setIdAdmin] = useState(null);
+  const ambilAsyncStorage = () => {
+    AsyncStorage.getItem('userData').then(value => {
+      AsyncStorage.getItem('userData');
+      const {Id} = JSON.parse(value);
+      console.log('ini Id di dalam asyncstorage funct', Id);
+      setIdAdmin(Id);
+    });
+  };
+  const [dataAntrianValid, setdataAntrianValid] = useState();
+  const getDataAntrianValid = () => {
+    axios({
+      method: 'POST',
+      url: `${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`,
+    })
+      .then(res => {
+        let data = res.data;
+        data = data.filter(d => d.Status == 'Valid');
+        setdataAntrianValid(data);
+      })
+      .catch(err => console.log(err));
+  };
+  const [dataAntrianDiproses, setdataAntrianDiproses] = useState();
+  const getDataAntrianDiproses = () => {
+    axios({
+      method: 'POST',
+      url: `${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`,
+    })
+      .then(res => {
+        let data = res.data;
+        data = data.filter(d => d.Status == 'Diproses');
+        // console.log(data, "ini data antrian terdaftar");
+        // setLeng(data.length);
+        setdataAntrianDiproses(data);
+      })
+      .catch(err => console.log(err));
+  };
+
+  const ProsesAntrian = async () => {
+    console.log('Proesss');
+    try {
+      const res = await axios({
+        method: 'POST',
+        data: {
+          // Id: IdAntrian,
+        },
+        url: `${ipAdress}/aplikasiLayananAkta/update/ProsesAntrian.php`,
+        headers: {'Content-Type': 'multipart/form-data'},
+      });
+      // console.log(res.data);
+      const {value} = res.data;
+      if (value == 1) {
+        alert('antrian Sudah ditolak');
+        navigation.goBack();
+      } else {
+        alert('gagal menolak antrian');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    ambilAsyncStorage();
+    getDataAntrianValid();
+    getDataAntrianDiproses();
+  }, []);
   return (
-    <View>
-      <Text>Antrian Diproses</Text>
+    <View style={[{flex: 1}]}>
+      <ScrollView contentContainerStyle={[{flex: 1, backgroundColor: putih}]}>
+        {/* antrian Valid */}
+        <View style={[{marginHorizontal: 20, borderWidth: 2, flex: 1}]}>
+          <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
+            <Text>Antrian Valid</Text>
+            <Text>Admin {IdAdmin}</Text>
+          </View>
+          <FlatList
+            data={dataAntrianValid}
+            renderItem={({item}) => (
+              <View style={[{backgroundColor: ungu, marginVertical: 2}]}>
+                <Text>{item.Status}</Text>
+                <Text>{item.IdAntrian}</Text>
+                <Text>{item.Nama}</Text>
+                <Text>{item.WaktuTerima}</Text>
+              </View>
+            )}
+          />
+          <GreenButton
+            ButtonText={'Proses antrian'}
+            actionOnclick={
+              async () => console.log('Prosses')
+              // await ProsesAntrian()
+            }
+          />
+        </View>
+        {/* antrian diproses */}
+        <View
+          style={[
+            {marginHorizontal: 20, borderWidth: 2, marginTop: 10, flex: 1},
+          ]}>
+          <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
+            <Text>Antrian Diproses</Text>
+          </View>
+          <FlatList
+            data={dataAntrianDiproses}
+            renderItem={({item}) => (
+              <View style={[{backgroundColor: ungu, marginVertical: 2}]}>
+                <Text>{item.IdAntrian}</Text>
+                <Text>{item.Nama}</Text>
+                <Text>{item.WaktuTerima}</Text>
+              </View>
+            )}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -129,17 +249,30 @@ function KelDitolak() {
     getDataAntrianDitolak();
   }, []);
   return (
-    <View>
-      <FlatList
-        data={dataAntrianDitolak}
-        renderItem={({item}) => (
-          <View style={[{padding: 20, backgroundColor: ungu}]}>
-            <Text>{item.IdUser}</Text>
-            <Text>{item.WaktuDitolak}</Text>
-            <Text>{item.Nama}</Text>
-          </View>
-        )}
-      />
+    <View style={[{flex: 1}]}>
+      <ScrollView
+        contentContainerStyle={[
+          {
+            marginHorizontal: 20,
+            flex: 1,
+            borderWidth: 2,
+            backgroundColor: putih,
+          },
+        ]}>
+        <FlatList
+          data={dataAntrianDitolak}
+          renderItem={({item}) => (
+            <View
+              style={[
+                {padding: 20, backgroundColor: ungu, marginVertical: 10},
+              ]}>
+              <Text>{item.IdUser}</Text>
+              <Text>{item.WaktuDitolak}</Text>
+              <Text>{item.Nama}</Text>
+            </View>
+          )}
+        />
+      </ScrollView>
     </View>
   );
 }
@@ -165,17 +298,27 @@ function DaftarPenerima() {
     getDataAntrianSelesai();
   }, []);
   return (
-    <View>
-      <FlatList
-        data={dataAntrianSelesai}
-        renderItem={({item}) => (
-          <View
-            style={[{backgroundColor: ungu, height: 50, marginVertical: 2}]}>
-            <Text>{item.WaktuSelesai}</Text>
-            <Text>{item.IdPengambilan}</Text>
-          </View>
-        )}
-      />
+    <View style={[{flex: 1}]}>
+      <ScrollView
+        contentContainerStyle={[
+          {
+            marginHorizontal: 20,
+            flex: 1,
+            borderWidth: 2,
+            backgroundColor: putih,
+          },
+        ]}>
+        <FlatList
+          data={dataAntrianSelesai}
+          renderItem={({item}) => (
+            <View
+              style={[{backgroundColor: ungu, height: 50, marginVertical: 2}]}>
+              <Text>{item.WaktuSelesai}</Text>
+              <Text>{item.IdPengambilan}</Text>
+            </View>
+          )}
+        />
+      </ScrollView>
     </View>
   );
 }

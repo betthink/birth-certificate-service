@@ -8,7 +8,7 @@ import KelolaAntrianPage from './KelolaAntrianPage';
 import KelolaUserScreen from './KelolaUserScreen';
 import {hijau} from '../../Assets/StylingComponent/Coloring';
 import {View, Dimensions} from 'react-native';
-import {CardStyleInterpolators} from '@react-navigation/stack';
+// import {CardStyleInterpolators} from '@react-navigation/stack';
 const Tab = createBottomTabNavigator();
 function AdminPageNavigation({navigation, route}) {
   return (

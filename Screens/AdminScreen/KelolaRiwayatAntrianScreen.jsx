@@ -15,7 +15,7 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
    // * Fetch data from tabel userUmum
   // * Fungsi tampilkan data user by id
   const url =
-  ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrian.php`
+  ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`
   const [dataAntrian, setDataAntrian] = useState();
   const getApi = () => {
    axios({
@@ -25,16 +25,17 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
      .then(res => {
       
       let data = res.data;
+      // console.log(data, "ini data riwayat");
       data = data.filter(d=> d.Status == "Selesai")
-      // console.log(data, "ini data antrian Diproses");
+      console.log(data, "ini data antrian riwayat");
       setDataAntrian(data)})
      .catch(err => console.log(err)); 
   };
   useEffect(() => {
   
     getApi();
-    console.log("ambil data Antrian Selesai");
-   }, [getApi()]);
+    // console.log("ambil data Antrian Selesai");
+   }, []);
   return (
     <View style={{flex: 1, backgroundColor: putih}}>
       {/* header */}

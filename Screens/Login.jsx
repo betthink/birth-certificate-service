@@ -1,6 +1,6 @@
 import {View, Text, TouchableOpacity, Button, Alert} from 'react-native';
 import React, {useState} from 'react';
-import {ScrollView, TextInput} from 'react-native-gesture-handler';
+import {ScrollView, TextInput, } from 'react-native-gesture-handler';
 import HeaderCloud from './Components/HeaderCloud';
 import MeterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {stylesDariGaya} from './Components/ImportedStyles';
@@ -53,13 +53,13 @@ const Login = ({navigation, route}) => {
     }
   }
   return (
-    <ScrollView style={{backgroundColor: putih}}>
+    <View style={{backgroundColor: putih, flex: 1}}>
       <HeaderCloud />
       {/* wrapSemuaContent */}
       <View
         style={[
-          stylesDariGaya.paddingDef,
-          {justifyContent: 'center', alignItems: 'center'},
+          // stylesDariGaya.paddingDef,
+          {justifyContent: 'center', alignItems: 'center', flex: 1, paddingHorizontal: 20},
         ]}>
         {/* Login Umum Text */}
         <View style={{alignItems: 'center', marginTop: 50}}>
@@ -68,7 +68,7 @@ const Login = ({navigation, route}) => {
           </Text>
         </View>
         {/* Form Login */}
-        <View style={[{}]}>
+        <View style={[{flex: 1, width: '90%'}]}>
           <View style={[{marginTop: 20}]}>
             <TextInput
               style={[stylesDariGaya.formInput]}
@@ -104,15 +104,14 @@ const Login = ({navigation, route}) => {
             <Text style={[{color: putih}]}>Login</Text>
           </TouchableOpacity>
          
-        </View>
-
         {/* tombol login admin dan Buat AKun */}
         <View
           style={{
+            
             flexDirection: 'row',
             justifyContent: 'flex-end',
             marginTop: 50,
-            width: 350,
+            // width: 350,
           }}>
           <TouchableOpacity
             onPress={() => navigation.navigate('RegisterAkunScreen')}>
@@ -121,8 +120,10 @@ const Login = ({navigation, route}) => {
             </Text>
           </TouchableOpacity>
         </View>
+        </View>
+
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

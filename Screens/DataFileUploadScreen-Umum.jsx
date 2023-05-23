@@ -133,7 +133,9 @@ const DataFileUploadScreen = ({navigation, route}) => {
         <DefaultButtonBox
           Title={'Submit'}
           TitleColor={hijau}
-          onClickAction={() => console.log('Submit preesed')}
+          onClickAction={() => {
+            navigation.navigate("AntrianLayananScreen")
+          console.log('Submit preesed')}}
         />
       </ScrollView>
     </View>
