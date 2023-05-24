@@ -1,6 +1,6 @@
 import {View, Text, TouchableOpacity, Button, Alert} from 'react-native';
 import React, {useState} from 'react';
-import {ScrollView, TextInput, } from 'react-native-gesture-handler';
+import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import HeaderCloud from './Components/HeaderCloud';
 import MeterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {stylesDariGaya} from './Components/ImportedStyles';
@@ -32,10 +32,10 @@ const Login = ({navigation, route}) => {
         },
         url: `${ipAdress}/aplikasiLayananAkta/Login.php`,
         headers: {'Content-Type': 'multipart/form-data'},
-      });
+      }).catch(err => console.log(err));
       const {value, Level} = res.data;
       console.log(res.data);
-      console.log(value, "ini value");
+      console.log(value, 'ini value');
       if (value == 1) {
         AsyncStorage.setItem('userData', JSON.stringify(res.data));
 
@@ -49,7 +49,7 @@ const Login = ({navigation, route}) => {
       }
     } catch (error) {
       alert('Gagal Login');
-      console.log("loh kok",error);
+      console.log('loh kok', error);
     }
   }
   return (
@@ -59,7 +59,12 @@ const Login = ({navigation, route}) => {
       <View
         style={[
           // stylesDariGaya.paddingDef,
-          {justifyContent: 'center', alignItems: 'center', flex: 1, paddingHorizontal: 20},
+          {
+            justifyContent: 'center',
+            alignItems: 'center',
+            flex: 1,
+            paddingHorizontal: 20,
+          },
         ]}>
         {/* Login Umum Text */}
         <View style={{alignItems: 'center', marginTop: 50}}>
@@ -103,25 +108,23 @@ const Login = ({navigation, route}) => {
             }}>
             <Text style={[{color: putih}]}>Login</Text>
           </TouchableOpacity>
-         
-        {/* tombol login admin dan Buat AKun */}
-        <View
-          style={{
-            
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            marginTop: 50,
-            // width: 350,
-          }}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('RegisterAkunScreen')}>
-            <Text style={{color: hijau, textDecorationLine: 'underline'}}>
-              Buat Akun?
-            </Text>
-          </TouchableOpacity>
-        </View>
-        </View>
 
+          {/* tombol login admin dan Buat AKun */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              marginTop: 50,
+              // width: 350,
+            }}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('RegisterAkunScreen')}>
+              <Text style={{color: hijau, textDecorationLine: 'underline'}}>
+                Buat Akun?
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     </View>
   );

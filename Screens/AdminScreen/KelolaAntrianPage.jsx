@@ -6,6 +6,8 @@ import {
   StyleSheet,
   TextInput,
   ScrollView,
+  Button,
+  useWindowDimensions,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {stylesDariGaya} from '../Components/ImportedStyles';
@@ -25,8 +27,11 @@ import BulatanContainer from '../Components/BulatanContainer';
 import GreenButton from '../Components/GreenButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const Tab = createMaterialTopTabNavigator();
+import {useNavigation, useRoute, useIsFocused} from '@react-navigation/native';
+// const isFocused = useIsFocused();
 
-function KelTerdaftar({navigation}) {
+function KelTerdaftar({}) {
+  const navigation = useNavigation();
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   let [dataAntrianTerdaftar, setdataAntrianTerdaftar] = useState();
   let [leng, setLeng] = useState(0);
@@ -45,7 +50,12 @@ function KelTerdaftar({navigation}) {
       .catch(err => console.log(err));
   };
   useEffect(() => {
-    getDataAntrianTerdaftar();
+    const reloadPage = navigation.addListener('focus', () => {
+      // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
+      getDataAntrianTerdaftar();
+    });
+
+    return reloadPage;
   }, []);
   return (
     <View>
@@ -57,37 +67,33 @@ function KelTerdaftar({navigation}) {
               style={[
                 {
                   marginHorizontal: 20,
-                  paddingHorizontal: 20,
-                  flexDirection: 'row',
-                  flex: 1,
                   backgroundColor: putih,
-                  elevation: 2,
-                  marginVertical: 2,
-                  justifyContent: 'space-between',
+                  padding: 20,
+                  borderLeftWidth: 2,
+                  borderColor: hijau,
+                  flexDirection: 'row',
                   alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginVertical: 2,
                 },
               ]}>
               <View>
-                {/* <Text style={[{color: 'white', fontSize: 20}]}>Nama:</Text> */}
                 <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                  <BulatanContainer bgColor={ungu} />
-                  <Text style={[{fontSize: 20, marginLeft: 20}]}>
-                    {item.Nama}
-                  </Text>
-                </View>
-                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                  <BulatanContainer bgColor={pinkGelap} />
-                  <Text style={[{fontSize: 20, marginLeft: 20}]}>
+                  <Text>Nomor Antrian : </Text>
+                  <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
                     {item.IdAntrian}
                   </Text>
                 </View>
                 <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                  <BulatanContainer bgColor={'salmon'} />
-                  <Text style={[{fontSize: 20, marginLeft: 20}]}>
-                    {item.WaktuPendaftaran}
-                  </Text>
+                  <Text>Nama anak: </Text>
+                  <Text>{item.Nama}</Text>
                 </View>
               </View>
+              <View>
+                <Text>Status</Text>
+                <Text>{item.Status}</Text>
+              </View>
+
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate('DetailDataAntrian', {
@@ -110,12 +116,12 @@ function KelTerdaftar({navigation}) {
 }
 // antrian valid & diproses
 function KelDiproses() {
+  const navigation = useNavigation();
   const [IdAdmin, setIdAdmin] = useState(null);
   const ambilAsyncStorage = () => {
     AsyncStorage.getItem('userData').then(value => {
       AsyncStorage.getItem('userData');
       const {Id} = JSON.parse(value);
-      console.log('ini Id di dalam asyncstorage funct', Id);
       setIdAdmin(Id);
     });
   };
@@ -148,39 +154,74 @@ function KelDiproses() {
       .catch(err => console.log(err));
   };
 
-  const ProsesAntrian = async () => {
-    console.log('Proesss');
+  // const [IdSelected, setIdSelected] = useState(null);
+
+  // const ambilAntrianTerbaru = async () => {
+  //   // Mengurutkan data berdasarkan IdAntrian secara ascending
+  //   const sortedData = [...dataAntrianValid].sort(
+  //     (a, b) => a.IdAntrian - b.IdAntrian,
+  //   );
+
+  //   // Memilih data dengan IdAntrian paling rendah
+  //   // const selected = sortedData[0];
+  //   const selectId = sortedData[0].IdAntrian;
+  //   // console.log(selected, 'ini Id antrian terendah');
+  //   console.log(selectId, 'Ini Id di set');
+  //   setIdSelected(selectId);
+  //   await new Promise(resolve => setTimeout(resolve, 2000));
+  // };
+  const sendProsesAntrian = (Id) => {
+    // console.log(Id, 'Ini dari Function Proses Antrian');
+    // console.log(IdAdmin, "ini Id admin");
     try {
-      const res = await axios({
+      const res = axios({
         method: 'POST',
         data: {
-          // Id: IdAntrian,
+          IdAntrian: Id,
+          IdAdmin : IdAdmin,
         },
         url: `${ipAdress}/aplikasiLayananAkta/update/ProsesAntrian.php`,
         headers: {'Content-Type': 'multipart/form-data'},
       });
       // console.log(res.data);
       const {value} = res.data;
+      console.log(res.data, "Ini res dari function sendProses");
       if (value == 1) {
-        alert('antrian Sudah ditolak');
-        navigation.goBack();
+        alert('antrian Sudah Diproses');
+       
       } else {
-        alert('gagal menolak antrian');
+        alert('gagal memproses antrian');
       }
     } catch (error) {
       console.log(error);
     }
   };
+  const ProsesData = () => {
+    const Id = Object(
+      dataAntrianValid
+        .sort((a, b) => a.IdAntrian - b.IdAntrian)
+        .find((v, i) => i == 0),
+    ).IdAntrian;
+    // console.log(Id, 'Ini data sorted');
+    // await ambilAntrianTerbaru();
+    sendProsesAntrian(Id);
+  };
+
   useEffect(() => {
     ambilAsyncStorage();
-    getDataAntrianValid();
-    getDataAntrianDiproses();
+    const reloadPage = navigation.addListener('focus', () => {
+      // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
+      getDataAntrianValid();
+      getDataAntrianDiproses();
+    });
+
+    return reloadPage;
   }, []);
   return (
     <View style={[{flex: 1}]}>
       <ScrollView contentContainerStyle={[{flex: 1, backgroundColor: putih}]}>
         {/* antrian Valid */}
-        <View style={[{marginHorizontal: 20, borderWidth: 2, flex: 1}]}>
+        <View style={[{marginHorizontal: 20, flex: 2}]}>
           <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
             <Text>Antrian Valid</Text>
             <Text>Admin {IdAdmin}</Text>
@@ -188,37 +229,84 @@ function KelDiproses() {
           <FlatList
             data={dataAntrianValid}
             renderItem={({item}) => (
-              <View style={[{backgroundColor: ungu, marginVertical: 2}]}>
-                <Text>{item.Status}</Text>
-                <Text>{item.IdAntrian}</Text>
-                <Text>{item.Nama}</Text>
-                <Text>{item.WaktuTerima}</Text>
+              <View
+                style={[
+                  {
+                    elevation: 2,
+                    // marginHorizontal: 20,
+                    backgroundColor: putih,
+                    padding: 20,
+                    borderLeftWidth: 2,
+                    borderColor: hijau,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginVertical: 2,
+                  },
+                ]}>
+                <View>
+                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                    <Text>Nomor Antrian : </Text>
+                    <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
+                      {item.IdAntrian}
+                    </Text>
+                  </View>
+                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                    <Text>Nama anak: </Text>
+                    <Text>{item.Nama}</Text>
+                  </View>
+                </View>
+                <View>
+                  <Text>Status</Text>
+                  <Text>{item.Status}</Text>
+                </View>
               </View>
             )}
           />
           <GreenButton
             ButtonText={'Proses antrian'}
-            actionOnclick={
-              async () => console.log('Prosses')
-              // await ProsesAntrian()
-            }
+            actionOnclick={ProsesData}
           />
         </View>
         {/* antrian diproses */}
-        <View
-          style={[
-            {marginHorizontal: 20, borderWidth: 2, marginTop: 10, flex: 1},
-          ]}>
+        <View style={[{marginHorizontal: 20, marginTop: 10, flex: 1}]}>
           <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
             <Text>Antrian Diproses</Text>
           </View>
           <FlatList
             data={dataAntrianDiproses}
             renderItem={({item}) => (
-              <View style={[{backgroundColor: ungu, marginVertical: 2}]}>
-                <Text>{item.IdAntrian}</Text>
-                <Text>{item.Nama}</Text>
-                <Text>{item.WaktuTerima}</Text>
+              <View
+                style={[
+                  {
+                    // marginHorizontal: 20,
+                    elevation: 2,
+                    backgroundColor: putih,
+                    padding: 20,
+                    borderLeftWidth: 2,
+                    borderColor: hijau,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginVertical: 2,
+                  },
+                ]}>
+                <View>
+                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                    <Text>Nomor Antrian : </Text>
+                    <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
+                      {item.IdAntrian}
+                    </Text>
+                  </View>
+                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                    <Text>Nama anak: </Text>
+                    <Text>{item.Nama}</Text>
+                  </View>
+                </View>
+                <View>
+                  <Text>Admin</Text>
+                  <Text>{item.IdAdmin}</Text>
+                </View>
               </View>
             )}
           />
@@ -228,6 +316,7 @@ function KelDiproses() {
   );
 }
 function KelDitolak() {
+  const navigation = useNavigation();
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   let [dataAntrianDitolak, setdataAntrianDitolak] = useState();
   let [leng, setLeng] = useState(0);
@@ -246,7 +335,12 @@ function KelDitolak() {
       .catch(err => console.log(err));
   };
   useEffect(() => {
-    getDataAntrianDitolak();
+    const reloadPage = navigation.addListener('focus', () => {
+      // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
+      getDataAntrianDitolak();
+    });
+
+    return reloadPage;
   }, []);
   return (
     <View style={[{flex: 1}]}>
@@ -255,8 +349,8 @@ function KelDitolak() {
           {
             marginHorizontal: 20,
             flex: 1,
-            borderWidth: 2,
-            backgroundColor: putih,
+            // borderWidth: 2,
+            // backgroundColor: putih,
           },
         ]}>
         <FlatList
@@ -264,11 +358,34 @@ function KelDitolak() {
           renderItem={({item}) => (
             <View
               style={[
-                {padding: 20, backgroundColor: ungu, marginVertical: 10},
+                {
+                  // marginHorizontal: 20,
+                  backgroundColor: putih,
+                  padding: 20,
+                  borderLeftWidth: 2,
+                  borderColor: hijau,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginVertical: 2,
+                },
               ]}>
-              <Text>{item.IdUser}</Text>
-              <Text>{item.WaktuDitolak}</Text>
-              <Text>{item.Nama}</Text>
+              <View>
+                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                  <Text>Nomor Antrian : </Text>
+                  <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
+                    {item.IdAntrian}
+                  </Text>
+                </View>
+                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                  <Text>Nama anak: </Text>
+                  <Text>{item.Nama}</Text>
+                </View>
+              </View>
+              <View>
+                <Text>Status</Text>
+                <Text>{item.Status}</Text>
+              </View>
             </View>
           )}
         />
@@ -277,6 +394,7 @@ function KelDitolak() {
   );
 }
 function DaftarPenerima() {
+  const navigation = useNavigation();
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   let [dataAntrianSelesai, setdataAntrianSelesai] = useState();
   let [leng, setLeng] = useState(0);
@@ -295,7 +413,12 @@ function DaftarPenerima() {
       .catch(err => console.log(err));
   };
   useEffect(() => {
-    getDataAntrianSelesai();
+    const reloadPage = navigation.addListener('focus', () => {
+      // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
+      getDataAntrianSelesai();
+    });
+
+    return reloadPage;
   }, []);
   return (
     <View style={[{flex: 1}]}>
@@ -304,17 +427,43 @@ function DaftarPenerima() {
           {
             marginHorizontal: 20,
             flex: 1,
-            borderWidth: 2,
-            backgroundColor: putih,
+            // borderWidth: 2,
+            // backgroundColor: putih,
           },
         ]}>
         <FlatList
           data={dataAntrianSelesai}
           renderItem={({item}) => (
             <View
-              style={[{backgroundColor: ungu, height: 50, marginVertical: 2}]}>
-              <Text>{item.WaktuSelesai}</Text>
-              <Text>{item.IdPengambilan}</Text>
+              style={[
+                {
+                  // marginHorizontal: 20,
+                  backgroundColor: putih,
+                  padding: 20,
+                  borderLeftWidth: 2,
+                  borderColor: hijau,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginVertical: 2,
+                },
+              ]}>
+              <View>
+                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                  <Text>Nomor Antrian : </Text>
+                  <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
+                    {item.IdAntrian}
+                  </Text>
+                </View>
+                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                  <Text>Nama anak: </Text>
+                  <Text>{item.Nama}</Text>
+                </View>
+              </View>
+              <View>
+                <Text>Status</Text>
+                <Text>{item.Status}</Text>
+              </View>
             </View>
           )}
         />

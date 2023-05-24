@@ -1,36 +1,45 @@
-import {View, Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {stylesDariGaya} from './Components/ImportedStyles';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 // import { FlatList } from 'react-native-gesture-handler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import HeaderBox from './Components/HeaderBox';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {ipAdress} from './Components/Url';
 import axios from 'axios';
 import {hijau, putih, ungu} from '../Assets/StylingComponent/Coloring';
-import GreenButton from './Components/GreenButton';
+import pngQueue from '../Assets/Images/ReadingInformation.png';
+// import { Image } from 'react-native-svg';
+
 // import AntrianDitolak from './StatusScreen/AntrianDitolak';
-const Tab = createMaterialTopTabNavigator();
+// const Tab = createMaterialTopTabNavigator();
+const Tab = createBottomTabNavigator();
 // color=====================
 const colorPink = '#B930B4';
 const colorHijau = '#28AFB0';
 const colorKuning = '#F7CD1C';
 const colorUngu = '#2E0FEF';
-function AntrianLayananScreen() {
+function AntrianLayananScreen({navigation}) {
   const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
-    //  tabBar={props => (
-    //     <TouchableOpacity
-    //       style={{ position: 'absolute', top: -30, alignSelf: 'center' }}
-    //       onPress={() => {
-    //         // Aksi yang ingin dilakukan ketika tombol di atas label ditekan
-    //       }}
-    //     >
-    //       <Text>Tombol</Text>
-    //     </TouchableOpacity>
-    //   )}
+      //  tabBar={props => (
+      //     <TouchableOpacity
+      //       style={{ position: 'absolute', top: -30, alignSelf: 'center' }}
+      //       onPress={() => {
+      //         // Aksi yang ingin dilakukan ketika tombol di atas label ditekan
+      //       }}
+      //     >
+      //       <Text>Tombol</Text>
+      //     </TouchableOpacity>
+      //   )}
       // tabBarOptions={{
       //   tabStyle: {
       //     paddingTop: 20,
@@ -38,10 +47,20 @@ function AntrianLayananScreen() {
       // }}
       screenOptions={{
         tabBarLabelStyle: {fontSize: 12},
-
+        headerLeft: () => (
+          <TouchableOpacity
+            style={[{flexDirection: 'row'}]}
+            onPress={() => navigation.navigate('HomeUmum')}>
+            <MaterialIcon />
+            <EntypoIcon name="chevron-small-left" size={24} />
+            <Text style={{fontSize: 16}}>Kembali</Text>
+          </TouchableOpacity>
+        ),
+        // headerShown: false
         // tabBarItemStyle: {width: "100%"},
-        tabBarStyle: {backgroundColor: '#24CE9E'},
-        style: {backgroundColor: 'red', marginTop: insets.top},
+
+        tabBarStyle: {backgroundColor: '#fff'},
+        // style: {backgroundColor: 'red', marginTop: insets.top,},
       }}>
       <Tab.Screen
         name="AntrianTerdaftar"
@@ -53,14 +72,14 @@ function AntrianLayananScreen() {
           title: ({color, focused}) => (
             <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
               <MaterialIcon
-                color={focused ? putih : ungu}
+                color={focused ? hijau : 'grey'}
                 name="schedule"
                 size={25}
               />
               {focused ? (
-                <Text style={[{color: putih}]}>Terdaftar</Text>
+                <Text style={[{color: hijau}]}>Terdaftar</Text>
               ) : (
-                <Text style={[{color: ungu}]}>Terdaftar</Text>
+                <Text style={[{color: 'grey'}]}>Terdaftar</Text>
               )}
             </View>
           ),
@@ -73,14 +92,14 @@ function AntrianLayananScreen() {
           title: ({color, focused}) => (
             <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
               <MaterialIcon
-                color={focused ? putih : ungu}
+                color={focused ? hijau : 'grey'}
                 name="queue"
                 size={25}
               />
               {focused ? (
-                <Text style={[{color: putih}]}>Diproses</Text>
+                <Text style={[{color: hijau}]}>Diproses</Text>
               ) : (
-                <Text style={[{color: ungu}]}>Diproses</Text>
+                <Text style={[{color: 'grey'}]}>Diproses</Text>
               )}
             </View>
           ),
@@ -93,14 +112,14 @@ function AntrianLayananScreen() {
           title: ({color, focused}) => (
             <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
               <MaterialIcon
-                color={focused ? putih : ungu}
+                color={focused ? hijau : 'grey'}
                 name="clear"
                 size={25}
               />
               {focused ? (
-                <Text style={[{color: putih}]}>Ditolak</Text>
+                <Text style={[{color: hijau}]}>Ditolak</Text>
               ) : (
-                <Text style={[{color: ungu}]}>Ditolak</Text>
+                <Text style={[{color: 'grey'}]}>Ditolak</Text>
               )}
             </View>
           ),
@@ -122,7 +141,7 @@ function AntrianTerdaftar({navigation}) {
     })
       .then(res => {
         let data = res.data;
-        data = data.filter(d => d.Status == 'Terdaftar');
+        data = data.filter(d => d.Status == 'Terdaftar' || 'Valid');
         // console.log(data, "ini data antrian terdaftar");
         setLeng(data.length);
         setdataAntrianTerdaftar(data);
@@ -135,105 +154,76 @@ function AntrianTerdaftar({navigation}) {
   }, []);
 
   return (
-    <View
-      style={[{flex: 1, backgroundColor: '#fff', justifyContent: 'center'}]}>
-     
-      <View
-        style={[
-          {alignItems: 'flex-end', paddingHorizontal: 40, paddingVertical: 20},
-        ]}>
-        <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Waktu Pendaftaran</Text>
-          <View style={[StyleFlatlist.boxColors, {backgroundColor: hijau}]} />
-        </View>
-        <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Username pembuat antrian</Text>
-          <View
-            style={[StyleFlatlist.boxColors, {backgroundColor: '#2E0FEF'}]}
-          />
-        </View>
-        <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Estimasi Pengambilan Akta</Text>
-          <View
-            style={[StyleFlatlist.boxColors, {backgroundColor: colorKuning}]}
-          />
-        </View>
-        <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Nomor antrian</Text>
-          <View style={[StyleFlatlist.boxColors, {backgroundColor: ungu}]} />
-        </View>
-      </View>
+    <View style={[{flex: 1, justifyContent: 'center'}]}>
       {leng < 1 ? (
         <View
           style={[{flex: 1, justifyContent: 'center', alignItems: 'center'}]}>
-          <Text>Ini value kurang dari 1 </Text>
+          <Image
+            style={{
+              flex: 1,
+              alignSelf: 'center',
+              paddingVertical: 80,
+              backgroundColor: hijau,
+              marginBottom: 10,
+            }}
+            source={pngQueue}
+            resizeMode="contain"
+          />
+          <View style={[{flex: 1}]}>
+            <Text style={[{fontSize: 20}]}>Ini value kurang dari 1 </Text>
+          </View>
         </View>
       ) : (
-        <FlatList
-          data={dataAntrianTerdaftar}
-          renderItem={({item}) => (
-            <View
-              style={[
-                {
-                  flex: 1,
-                  backgroundColor: '#F7F7F7',
-                  marginVertical: 5,
-                  // marginTop: 50,
-                  alignSelf: 'center',
-                  width: '90%',
-                  borderLeftWidth: 3,
-                  borderColor: '#24CE9E',
-                  justifyContent: 'space-around',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  height: 100,
-                },
-              ]}>
-              {/*  colom 1 */}
+        <View style={[{flex: 1}]}>
+          
+          <Image
+            style={{
+              flex: 1,
+              alignSelf: 'center',
+              paddingVertical: 80,
+              backgroundColor: hijau,
+              marginBottom: 10,
+            }}
+            source={pngQueue}
+            resizeMode="contain"
+          />
+          <FlatList
+            data={dataAntrianTerdaftar}
+            renderItem={({item}) => (
               <View
-                style={{
-                  height: 40,
-                  width: 40,
-                  borderRadius: 20,
-                  backgroundColor: '#D9D9D9',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <MaterialIcon
-                  size={30}
-                  style={{color: '#24CE9E'}}
-                  name="schedule"
-                />
-              </View>
-              {/* colom 2 */}
-              <View style={{justifyContent: 'space-between'}}>
-                {/* ============ */}
+                style={[
+                  {
+                    marginHorizontal: 20,
+                    backgroundColor: putih,
+                    padding: 20,
+                    borderLeftWidth: 2,
+                    borderColor: hijau,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginVertical: 2,
+                  },
+                ]}>
                 <View>
-                  <View style={[StyleFlatlist.boxStyle]}>
-                    <View
-                      style={
-                        [StyleFlatlist.boxColors, {backgroundColor: colorPink}]
-                        // borderRadius: 7,
-                      }
-                    />
-                    <Text>{item.IdAntrian}</Text>
+                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                    <Text>Nomor Antrian : </Text>
+                    <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
+                      {item.IdAntrian}
+                    </Text>
                   </View>
-                  <View style={[StyleFlatlist.boxStyle]}>
-                    <View
-                      style={
-                        [StyleFlatlist.boxColors, {backgroundColor: colorUngu}]
-                        // borderRadius: 7,
-                      }
-                    />
+                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                    <Text>Nama anak: </Text>
                     <Text>{item.Nama}</Text>
                   </View>
                 </View>
+                <View>
+                  <Text>Status</Text>
+                  <Text>{item.Status}</Text>
+                </View>
               </View>
-
-              {/* ============================== */}
-            </View>
-          )}
-        />
+            )}
+          />
+        </View>
       )}
     </View>
   );
@@ -262,7 +252,7 @@ function AntrianDiproses() {
   }, [dataAntrian]);
   return (
     // {dataAntrian.length < 1 ()}
-    <View style={[{flex: 1, backgroundColor: '#fff'}]}>
+    <View style={[{flex: 1}]}>
       <View
         style={[
           {alignItems: 'flex-end', paddingHorizontal: 40, paddingVertical: 20},
@@ -301,90 +291,33 @@ function AntrianDiproses() {
             <View
               style={[
                 {
-                  flex: 1,
-                  backgroundColor: '#F7F7F7',
-                  marginVertical: 5,
-                  alignSelf: 'center',
-                  width: '90%',
-                  justifyContent: 'center',
-                  borderLeftWidth: 3,
-                  borderColor: '#24CE9E',
-                  justifyContent: 'space-around',
+                  marginHorizontal: 20,
+                  backgroundColor: putih,
+                  padding: 20,
+                  borderLeftWidth: 2,
+                  borderColor: hijau,
                   flexDirection: 'row',
                   alignItems: 'center',
-                  height: 100,
+                  justifyContent: 'space-between',
+                  marginVertical: 2,
                 },
               ]}>
-              {/*  colom 1 */}
-              <View
-                style={{
-                  height: 40,
-                  width: 40,
-                  borderRadius: 20,
-                  backgroundColor: '#D9D9D9',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <MaterialIcon
-                  size={30}
-                  style={{color: '#24CE9E'}}
-                  name="queue"
-                />
-              </View>
-              {/* colom 2 */}
-              <View style={{justifyContent: 'space-between'}}>
-                {/* ============ */}
-                <View>
-                  <View style={[StyleFlatlist.boxStyle]}>
-                    <View
-                      style={
-                        [StyleFlatlist.boxColors, {backgroundColor: colorPink}]
-                        // borderRadius: 7,
-                      }
-                    />
-                    <Text>{item.IdAntrian}</Text>
-                  </View>
-                  <View style={[StyleFlatlist.boxStyle]}>
-                    <View
-                      style={
-                        [StyleFlatlist.boxColors, {backgroundColor: colorUngu}]
-                        // borderRadius: 7,
-                      }
-                    />
-                    <Text>{item.Nama}</Text>
-                  </View>
+              <View>
+                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                  <Text>Nomor Antrian : </Text>
+                  <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
+                    {item.IdAntrian}
+                  </Text>
+                </View>
+                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                  <Text>Nama anak: </Text>
+                  <Text>{item.Nama}</Text>
                 </View>
               </View>
-              {/* colom 3 */}
-              <View style={{justifyContent: 'space-between'}}>
-                {/* ============ */}
-                <View>
-                  <View style={[StyleFlatlist.boxStyle]}>
-                    <View
-                      style={{
-                        height: 14,
-                        width: 14,
-                        // borderRadius: 7,
-                        backgroundColor: colorHijau,
-                      }}
-                    />
-                    <Text>{item.WaktuTerima}</Text>
-                  </View>
-                  <View style={[StyleFlatlist.boxStyle]}>
-                    <View
-                      style={
-                        [
-                          StyleFlatlist.boxColors,
-                          {backgroundColor: colorKuning},
-                        ]
-                        // borderRadius: 7,
-                      }
-                    />
-                    <Text>{item.WaktuSelesai}</Text>
-                  </View>
-                </View>
+              <View>
+                <Text>Status</Text>
+                <Text>{item.Status}</Text>
               </View>
-              {/* ============================== */}
             </View>
           )}
         />
@@ -417,7 +350,7 @@ const AntrianDitolak = () => {
   }, [getApi()]);
 
   return (
-    <View style={[{flex: 1, backgroundColor: putih}]}>
+    <View style={[{flex: 1}]}>
       {lengt < 1 ? (
         <View
           style={[{flex: 1, justifyContent: 'center', alignItems: 'center'}]}>
@@ -430,90 +363,33 @@ const AntrianDitolak = () => {
             <View
               style={[
                 {
-                  flex: 1,
-                  backgroundColor: '#F7F7F7',
-                  marginVertical: 5,
-                  alignSelf: 'center',
-                  width: '90%',
-                  justifyContent: 'center',
-                  borderLeftWidth: 3,
-                  borderColor: '#24CE9E',
-                  justifyContent: 'space-around',
+                  marginHorizontal: 20,
+                  backgroundColor: putih,
+                  padding: 20,
+                  borderLeftWidth: 2,
+                  borderColor: hijau,
                   flexDirection: 'row',
                   alignItems: 'center',
-                  height: 100,
+                  justifyContent: 'space-between',
+                  marginVertical: 2,
                 },
               ]}>
-              {/*  colom 1 */}
-              <View
-                style={{
-                  height: 40,
-                  width: 40,
-                  borderRadius: 20,
-                  backgroundColor: '#D9D9D9',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <MaterialIcon
-                  size={30}
-                  style={{color: '#24CE9E'}}
-                  name="queue"
-                />
-              </View>
-              {/* colom 2 */}
-              <View style={{justifyContent: 'space-between'}}>
-                {/* ============ */}
-                <View>
-                  <View style={[StyleFlatlist.boxStyle]}>
-                    <View
-                      style={
-                        [StyleFlatlist.boxColors, {backgroundColor: colorPink}]
-                        // borderRadius: 7,
-                      }
-                    />
-                    <Text>{item.IdAntrian}</Text>
-                  </View>
-                  <View style={[StyleFlatlist.boxStyle]}>
-                    <View
-                      style={
-                        [StyleFlatlist.boxColors, {backgroundColor: colorUngu}]
-                        // borderRadius: 7,
-                      }
-                    />
-                    <Text>{item.Nama}</Text>
-                  </View>
+              <View>
+                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                  <Text>Nomor Antrian : </Text>
+                  <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
+                    {item.IdAntrian}
+                  </Text>
+                </View>
+                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                  <Text>Nama anak: </Text>
+                  <Text>{item.Nama}</Text>
                 </View>
               </View>
-              {/* colom 3 */}
-              <View style={{justifyContent: 'space-between'}}>
-                {/* ============ */}
-                <View>
-                  <View style={[StyleFlatlist.boxStyle]}>
-                    <View
-                      style={{
-                        height: 14,
-                        width: 14,
-                        // borderRadius: 7,
-                        backgroundColor: colorHijau,
-                      }}
-                    />
-                    <Text>{item.WaktuDitolak}</Text>
-                  </View>
-                  <View style={[StyleFlatlist.boxStyle]}>
-                    <View
-                      style={
-                        [
-                          StyleFlatlist.boxColors,
-                          {backgroundColor: colorKuning},
-                        ]
-                        // borderRadius: 7,
-                      }
-                    />
-                    <Text>{item.WaktuSelesai}</Text>
-                  </View>
-                </View>
+              <View>
+                <Text>Status</Text>
+                <Text>{item.Status}</Text>
               </View>
-              {/* ============================== */}
             </View>
           )}
         />

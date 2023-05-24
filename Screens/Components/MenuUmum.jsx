@@ -1,9 +1,15 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwsome from 'react-native-vector-icons/FontAwesome5';
 import {stylesDariGaya} from './ImportedStyles';
 import {useNavigation} from '@react-navigation/native';
-import { hijau, pinkGelap, putih, ungu } from '../../Assets/StylingComponent/Coloring';
+import {
+  hijau,
+  pinkGelap,
+  putih,
+  ungu,
+} from '../../Assets/StylingComponent/Coloring';
 
 const MenuUmum = () => {
   const navigation = useNavigation();
@@ -19,7 +25,7 @@ const MenuUmum = () => {
       <TouchableOpacity
         onPress={() => navigation.navigate('SyaratScreen')}
         style={[
-          stylesDariGaya.menu,
+      
           {
             borderColor: hijau,
             alignItems: 'center',
@@ -27,8 +33,8 @@ const MenuUmum = () => {
             backgroundColor: putih,
           },
         ]}>
+        <FontAwsome name="book-open" size={30} style={{color: hijau}} />
         <Text style={{}}>Syarat</Text>
-        <MaterialIcon name="info" size={30} style={{color: hijau}} />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate('AntrianLayananScreen')}
@@ -41,8 +47,22 @@ const MenuUmum = () => {
             backgroundColor: putih,
           },
         ]}>
+        <MaterialIcon name="human-queue" size={40} style={{color: hijau}} />
         <Text style={{}}>Antrian Layanan</Text>
-        <MaterialIcon name="person" size={30} style={{color: hijau}} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('AntrianLayananScreen')}
+        style={[
+          stylesDariGaya.menu,
+          {
+            borderColor: hijau,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: putih,
+          },
+        ]}>
+        <MaterialIcon name="playlist-add" size={40} style={{color: hijau}} />
+        <Text style={{}}>Daftar Layanan</Text>
       </TouchableOpacity>
     </View>
   );

@@ -1,6 +1,7 @@
 import {View, Text, Image} from 'react-native';
 import React from 'react';
-import Person from '../../Assets/Images/person.png';
+// import Person from '../../Assets/Images/person.png';
+import Person from '../../Assets/Images/ReadingInformation.png';
 const PersonPng = () => {
   return (
     <View style={{justifyContent: 'center', alignItems: 'center'}}>

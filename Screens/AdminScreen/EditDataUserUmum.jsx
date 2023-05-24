@@ -8,7 +8,7 @@ import {pickSingle, isCancel} from 'react-native-document-picker';
 import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import {hijau, putih, putihGelap} from '../../Assets/StylingComponent/Coloring';
 import axios from 'axios';
-import {ipAdress} from './Components/Url';
+
 
 const EditDataUserUmum = ({navigation, route}) => {
   // terima data

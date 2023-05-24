@@ -38,8 +38,9 @@ const DetailDataAntrian = ({route, navigation}) => {
       // console.log(res.data);
       const {value} = res.data;
       if (value == 1) {
-        alert('antrian Sudah diterima');
+        alert('antrian Sudah diterimaaa');
         navigation.goBack();
+        // navigation.navigate("AdminPageNavigation");
       } else {
         alert('gagal menerima antrian');
       }
@@ -75,6 +76,9 @@ const DetailDataAntrian = ({route, navigation}) => {
   }, []);
   return (
     <View>
+    <Text>
+      {IdAntrian}
+    </Text>
       <FlatList
         data={dataUpload}
         renderItem={({item}) => (
