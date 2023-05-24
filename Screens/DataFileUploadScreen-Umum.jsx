@@ -26,7 +26,7 @@ const DataFileUploadScreen = ({navigation, route}) => {
       const result = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.allFiles],
       });
-      setData(result);
+      setData(result, "ini data dari result");
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +45,7 @@ const DataFileUploadScreen = ({navigation, route}) => {
       });
 
       const response = await fetch(
-        `${ipAdress}aplikasiLayananAkta/addData/upload.php`,
+        `${ipAdress}aplikasiLayananAkta/addData/addDataBerkasLampiran.php`,
         {
           method: 'POST',
           body: formData,
@@ -85,7 +85,7 @@ const DataFileUploadScreen = ({navigation, route}) => {
         <ListUploadFile
           titleList={FileKK == null ? 'ScanKK' : FileKK.name}
           MaterialIconName={'file-document'}
-          onPressAction={uploadFile}
+          onPressAction={()=>pickDocument(setFileKK)}
         />
         {/* KTP IBU */}
         <ListUploadFile
@@ -101,15 +101,15 @@ const DataFileUploadScreen = ({navigation, route}) => {
         />
         {/* KTP Saksi1 */}
         <ListUploadFile
-          titleList={FileKtpIbu == null ? 'Scan KTP Saksi1' : FileKtpIbu.name}
+          titleList={FileSaksi1 == null ? 'Scan KTP Saksi1' : FileSaksi1.name}
           MaterialIconName={'file-document'}
-          onPressAction={() => pickDocument(setFileKtpIbu)}
+          onPressAction={() => pickDocument(setFileSaksi1)}
         />
         {/* KTP Saksi2 */}
         <ListUploadFile
-          titleList={FileSaksi1 == null ? 'Scan KTP Saksi2' : FileSaksi1.name}
+          titleList={FileSaksi2 == null ? 'Scan KTP Saksi2' : FileSaksi2.name}
           MaterialIconName={'file-document'}
-          onPressAction={() => pickDocument(setFileSaksi1)}
+          onPressAction={() => pickDocument(setFileSaksi2)}
         />
         {/* Ket NIkah */}
         <ListUploadFile
