@@ -7,6 +7,7 @@ import DefaultButtonBox from './Components/DefaultButtonBox';
 import {hijau} from '../Assets/StylingComponent/Coloring';
 import DocumentPicker from 'react-native-document-picker';
 import {ipAdress} from './Components/Url';
+import axios from 'axios';
 const DataFileUploadScreen = ({navigation, route}) => {
   // add file
   // const {IdAnak, IdUser} = route.params;
@@ -26,52 +27,73 @@ const DataFileUploadScreen = ({navigation, route}) => {
       const result = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.allFiles],
       });
-      setData(result, "ini data dari result");
+      setData(result);
+      console.log(result.name, 'ini nama dari result');
     } catch (error) {
       console.log(error);
     }
   };
   const uploadFile = async () => {
     try {
-      const result = await DocumentPicker.pickSingle({
-        type: [DocumentPicker.types.allFiles],
-      });
-      console.log(result, "ini result");
+      // console.log("tes");
+      // const result = await DocumentPicker.pickSingle({
+      //   type: [DocumentPicker.types.allFiles],
+      // });
+      // console.log(result, 'ini result');
       const formData = new FormData();
-      formData.append('file', {
-        uri: Platform.OS === 'android' ? `file://${result.uri}` : result.uri,
-        name: result.name,
-        type: result.type,
-      });
-
-      const response = await fetch(
-        `${ipAdress}aplikasiLayananAkta/addData/addDataBerkasLampiran.php`,
+    
+      formData.append('KK', FileKK);
+      formData.append('KTP_Ibu', FileKtpIbu);
+      formData.append('KTP_Ayah', FileKtpAyah);
+      formData.append('Ket_Nikah', FileKetNikah);
+      formData.append('Ket_LahirAnak', FileKetLahirAnak);
+      formData.append('KTP_Saksi', FileSaksi1);
+      formData.append('KTP_Saksi2', FileSaksi2);
+      formData.append('IdUser', 1);
+      formData.append('IdAnak', 17);
+      const response = await axios.post(
+        `${ipAdress}/aplikasiLayananAkta/addData/NewUploadFilesApi.php`,
+        formData,
         {
-          method: 'POST',
-          body: formData,
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         },
       );
+      // const response = await axios({
+      //   method: 'POST',
+      //   // data: formData,
+      //   url: `${ipAdress}aplikasiLayananAkta/addData/addDataBerkasLampiran.php`,
+      //   headers: {'Content-Type': 'multipart/form-data'},
+      // });
+      // const response = await fetch(
+      //   `${ipAdress}aplikasiLayananAkta/addData/addDataBerkasLampiran.php`,
+      //   {
+      //     method: 'POST',
+      //     body: formData,
+      //     headers: {
+      //       'Content-Type': 'multipart/form-data',
+      //     },
+      //   },
+      // );
 
       console.log('Upload response:', response.text());
       console.log(response);
-
     } catch (error) {
       console.log('Document Picker Error:', error);
     }
   };
 
   useEffect(() => {
-    if (FileKK == null) {
-      console.log(FileKK);
-    } else {
-      console.log(FileKK.name);
-    }
+    // console.log(FileKK[0].name, "Ini name useEf");
+    // if (FileKK == null) {
+    //   console.log(FileKK);
+    // } else {
+    //   console.log(FileKK.name);
+    // }
     // FileKK == !null ? console.log(FileKK.uri) : null;
-    console.log(IdAnak, IdUser);
-  }, [FileKK]);
+    // console.log(IdAnak, IdUser);
+  }, []);
 
   return (
     <View style={[{flex: 1}]}>
@@ -85,7 +107,7 @@ const DataFileUploadScreen = ({navigation, route}) => {
         <ListUploadFile
           titleList={FileKK == null ? 'ScanKK' : FileKK.name}
           MaterialIconName={'file-document'}
-          onPressAction={()=>pickDocument(setFileKK)}
+          onPressAction={() => pickDocument(setFileKK)}
         />
         {/* KTP IBU */}
         <ListUploadFile
@@ -134,8 +156,10 @@ const DataFileUploadScreen = ({navigation, route}) => {
           Title={'Submit'}
           TitleColor={hijau}
           onClickAction={() => {
-            navigation.navigate("AntrianLayananScreen")
-          console.log('Submit preesed')}}
+            uploadFile();
+            // navigation.navigate("AntrianLayananScreen")
+            console.log('Submit preesed');
+          }}
         />
       </ScrollView>
     </View>
