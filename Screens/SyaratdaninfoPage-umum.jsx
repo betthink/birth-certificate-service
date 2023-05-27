@@ -1,10 +1,11 @@
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+import {View, Text, FlatList, TouchableOpacity, Image, ImageBackground} from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {stylesDariGaya} from './Components/ImportedStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import ListSyarat from './Components/ListSyarat';
 import ButtonBack from './Components/ButtonBack';
+// import { Image } from 'react-native-svg';
 
 export default function SyaratScreen({navigation}) {
   const data = [
@@ -30,8 +31,11 @@ export default function SyaratScreen({navigation}) {
         <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
          <ButtonBack buttontext={"Infromasi Syarat"}/>
         </View>
+        <ImageBackground style={[{resizeMode: 'cover', flex: 1}]} source={require('../Assets/Images/ReadingInformation.png')} >
+        {/* <Image  /> */}
         <View style={[{flex: 1}]}>
           <FlatList
+          style={[{marginVertical: 20}]}
             data={data}
             keyExtractor={item => item.id.toString()}
             renderItem={({item}) => (
@@ -39,6 +43,7 @@ export default function SyaratScreen({navigation}) {
             )}
           />
         </View>
+        </ImageBackground>
       
     </SafeAreaView>
   );

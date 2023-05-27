@@ -1,16 +1,42 @@
 import {View, Text, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {stylesDariGaya} from './Components/ImportedStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import ButtonBack from './Components/ButtonBack';
+import axios from 'axios';
+import { ipAdress } from './Components/Url';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
-const PemberitahuanScreen = ({navigation}) => {
+
+const PemberitahuanScreen = ({navigation, route}) => {
+  const {Id} = route.params;
+  const [dataPemberitahuan, setataPemberitahuan] = useState('');
+// getPemberitahuan
+const getPemberitahuan = async()=> {
+  try {
+    const result = await axios({
+      method: 'POST',
+      url: `${ipAdress}/aplikasiLayananAkta/api/apiDataUsers.php`,
+    
+    }) 
+  
+    const data = result.data;
+  const  datafilter = data.filter(d => d.Id == Id);
+  console.log(datafilter);
+  setataPemberitahuan(datafilter[0].Pemberitahuan);
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+useEffect(()=> {
+  getPemberitahuan()
+},[])
   return (
     <SafeAreaView>
       {/* header box */}
-      <View style={[stylesDariGaya.headerBox,{justifyContent: 'center'}]}>
-     <ButtonBack buttontext={"Pemberitahuann"}  />
+      <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
+        <ButtonBack buttontext={'Pemberitahuann'} />
       </View>
       {/* pemberitahuan */}
       <View style={{alignItems: 'center'}}>
@@ -40,7 +66,7 @@ const PemberitahuanScreen = ({navigation}) => {
               alignItems: 'center',
             }}>
             <Text style={{color: '#fff'}}>
-              Belum ada pemberitahuan terkait layanan
+             {dataPemberitahuan} {Id}
             </Text>
           </View>
         </View>

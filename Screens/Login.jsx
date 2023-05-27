@@ -35,7 +35,7 @@ const Login = ({navigation, route}) => {
       }).catch(err => console.log(err));
       const {value, Level} = res.data;
       console.log(res.data);
-      console.log(value, 'ini value');
+      // console.log(value, 'ini value');
       if (value == 1) {
         AsyncStorage.setItem('userData', JSON.stringify(res.data));
 

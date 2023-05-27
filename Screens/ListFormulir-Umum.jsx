@@ -8,7 +8,7 @@ import ButtonBack from './Components/ButtonBack';
 import {stylesDariGaya} from './Components/ImportedStyles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
-const DataFormulir = ({navigation, route}) => {
+const ListFormulir = ({navigation, route}) => {
   const {IdUser} = route.params;
   const [data, setData] = useState(null);
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataBayi.php`;
@@ -26,18 +26,18 @@ const DataFormulir = ({navigation, route}) => {
   const renderItem = ({item}) => (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate('DetailScreenFormulir', {
-          IdAnak: item.IdAnak,
-          Nama: item.Nama,
-          JenisKelamin: item.JenisKelamin,
-          TempatPersalinan: item.TempatPersalinwan,
-          TempatKelahiran: item.TempatKelahiran,
-          DateKelahiran: item.DateKelahiran,
-          TimeKelahiran: item.TimeKelahiran,
-          UrutanKelahiran: item.UrutanKelahiran,
-          PenolongBayi: item.PenolongBayi,
-          BeratBayi: item.BeratBayi,
-          PanjangBayi: item.PanjangBayi,
+        navigation.navigate('FormulirScreen', {
+          IdAntrian: item.IdAnak,
+          // Nama: item.Nama,
+          // JenisKelamin: item.JenisKelamin,
+          // TempatPersalinan: item.TempatPersalinwan,
+          // TempatKelahiran: item.TempatKelahiran,
+          // DateKelahiran: item.DateKelahiran,
+          // TimeKelahiran: item.TimeKelahiran,
+          // UrutanKelahiran: item.UrutanKelahiran,
+          // PenolongBayi: item.PenolongBayi,
+          // BeratBayi: item.BeratBayi,
+          // PanjangBayi: item.PanjangBayi,
         })
       }
       style={{
@@ -64,7 +64,7 @@ const DataFormulir = ({navigation, route}) => {
   return (
     <View style={[{flex: 1, backgroundColor: putih}]}>
       <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
-        <ButtonBack buttontext={'Data Bayi'} />
+        <ButtonBack buttontext={'List Formulir'} />
       </View>
       {data == null ? (
         <View
@@ -92,4 +92,4 @@ const DataFormulir = ({navigation, route}) => {
   );
 };
 
-export default DataFormulir;
+export default ListFormulir;

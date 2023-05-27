@@ -45,6 +45,7 @@ const ProfileUmumScreen = ({navigation, route}) => {
     StatusLayanan,
     Email,
     FotoProfile,
+    Level,
   } = route.params;
   useEffect(() => {
     // tampilkanDataById();
@@ -53,17 +54,14 @@ const ProfileUmumScreen = ({navigation, route}) => {
   // * Fungsi hapus akun user umum by id
   async function deleteDataById() {
     try {
-      // setIdUmum({Id});
-
       const res = await axios({
         method: 'POST',
         data: {
           Id,
         },
-        url: `${ipAdress}/aplikasiLayananAkta/deleteAkun.php`,
+        url: `${ipAdress}/aplikasiLayananAkta/deleteData/deleteAkun.php`,
         headers: {'Content-Type': 'multipart/form-data'},
       });
-
       const {value} = res.data;
       // console.log(value,"ini value")
       if (value == 1) {
@@ -74,14 +72,10 @@ const ProfileUmumScreen = ({navigation, route}) => {
       } else {
         alert(' Gagal hapus akun');
       }
-
-      // navigation.navigate('AdminPageNavigation')
     } catch (error) {
       alert('Gagal h data');
       console.log(error);
     }
-
-    // console.log(res.data['message']);
   }
   return (
     <View style={{flex: 1, backgroundColor: putihGelap}}>
@@ -115,15 +109,15 @@ const ProfileUmumScreen = ({navigation, route}) => {
             {/* image profile */}
             <TouchableOpacity
               style={{
-                backgroundColor: ungu,
+                // backgroundColor: ungu,
 
                 width: 100,
                 height: 100,
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexDirection: 'row',
-                borderWidth: 4,
-                borderColor: '#fff',
+                borderWidth: 2,
+                borderColor: ungu,
                 borderRadius: 50,
                 position: 'absolute',
                 top: -30,
@@ -133,7 +127,9 @@ const ProfileUmumScreen = ({navigation, route}) => {
               }}>
               <Image
                 style={[{width: 80, height: 80, borderRadius: 45}]}
-                source={{uri: FotoProfile}}
+                source={{
+                  uri: `${ipAdress}/aplikasiLayananAkta/uploads/FotoProfile/${NIK}/${FotoProfile}`,
+                }}
               />
               <MaterialIcon
                 style={{position: 'absolute', top: 5, right: 0}}
@@ -152,7 +148,7 @@ const ProfileUmumScreen = ({navigation, route}) => {
         {/* Data pribadi  */}
         <ScrollView style={{marginTop: 20}}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('DataFormulir', {IdUser:Id})}
+            onPress={() => navigation.navigate('ListFormulir', {IdUser: Id})}
             style={[stylesDariGaya.listData]}>
             <Text style={[stylesDariGaya.textDataStyle]}>formulir</Text>
           </TouchableOpacity>
@@ -197,15 +193,51 @@ const ProfileUmumScreen = ({navigation, route}) => {
           {/* buttons Edit */}
 
           {/* buttons Log out */}
-          <TouchableOpacity
-            onPress={() => {
-              AsyncStorage.clear();
-              navigation.replace('Login');
-            }}
-            style={[styleButtons.buttons, {backgroundColor: '#454545'}]}>
-            <MaterialIcon name="logout" color={putih} />
-            <Text style={[{color: putih}]}>Log Out</Text>
-          </TouchableOpacity>
+          {Level == 'Umum' ? (
+            <TouchableOpacity
+              onPress={() => {
+                AsyncStorage.clear();
+                navigation.replace('Login');
+              }}
+              style={[styleButtons.buttons, {backgroundColor: '#454545'}]}>
+              <MaterialIcon name="logout" color={putih} />
+              <Text style={[{color: putih}]}>Log Out</Text>
+            </TouchableOpacity>
+          ) : (
+            <View
+              style={[
+                {
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  flex: 1,
+                },
+              ]}>
+              <TouchableOpacity
+                onPress={() => {
+                  deleteDataById();
+                }}
+                style={[styleButtons.buttons, {backgroundColor: 'salmon'}]}>
+                <MaterialIcon name="logout" color={putih} />
+                <Text style={[{color: putih}]}>Hapus</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('EditDataUserUmum', {
+                    Nama,
+                    Password,
+                    NIK,
+                    NomorTelp,
+                    Email,
+                    Id,
+                    FotoProfile,
+                  });
+                }}
+                style={[styleButtons.buttons, {backgroundColor: hijau}]}>
+                <MaterialIcon name="logout" color={putih} />
+                <Text style={[{color: putih}]}>Edit</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </View>
     </View>

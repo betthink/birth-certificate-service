@@ -25,9 +25,13 @@ import DataAyahScreen from './Screens/DataAyahScreen-Umum';
 import DataSaksiScreen from './Screens/DataSaksiScreen-Umum';
 import DataSaksi2Screen from './Screens/DataSaksi2Screen-Umum';
 import DataFileUploadScreen from './Screens/DataFileUploadScreen-Umum';
-import DataFormulir from './Screens/DataFormulir-Umum';
+import DataFormulir from './Screens/ListFormulir-Umum';
 import DetailScreenFormulir from './Screens/Components/DetailScreenFormulir-umum';
-import DetailDataAntrian from './Screens/AdminScreen/DetailDataAntrian';
+import DetailDataAntrian from './Screens/AdminScreen/CekDataPage';
+import DetailProsesAntrian from './Screens/AdminScreen/DetailProsesAntrian';
+import CekDataPage from './Screens/AdminScreen/CekDataPage';
+import FormulirScreen from './Screens/AdminScreen/FormulirScreen-Admin';
+import ListFormulir from './Screens/ListFormulir-Umum';
 
 // import TimePicker from './Screens/datetime-component';
 const Stack = createNativeStackNavigator();
@@ -41,9 +45,11 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false, gestureEnabled: true,}}
-        initialRouteName="DataFileUploadScreen">
+        initialRouteName="SplashScreen">
         {/* <Stack.Screen name="DataFileUploadScreen" component={DataFileUploadScreen} /> */}
-        <Stack.Screen name="DataFormulir" component={DataFormulir} />
+        <Stack.Screen name="FormulirScreen" component={FormulirScreen} />
+        <Stack.Screen name="DetailProsesAntrian" component={DetailProsesAntrian} />
+        <Stack.Screen name="ListFormulir" component={ListFormulir} />
         <Stack.Screen name="DetailDataAntrian" component={DetailDataAntrian} />
         <Stack.Screen name="DetailScreenFormulir" component={DetailScreenFormulir} />
         <Stack.Screen name="DataAyahScreen" component={DataAyahScreen} />
@@ -76,7 +82,7 @@ function App() {
           name="AdminPageNavigation"
           component={AdminPageNavigation}
         />
-        <Stack.Screen name="DetailAntrian" component={DetailAntrian} />
+        <Stack.Screen name="CekDataPage" component={CekDataPage} />
         <Stack.Screen
           name="ProfileAdminScreen"
           component={ProfileAdminScreen}

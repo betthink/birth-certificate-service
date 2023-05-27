@@ -10,9 +10,9 @@ import {ipAdress} from './Components/Url';
 import axios from 'axios';
 const DataFileUploadScreen = ({navigation, route}) => {
   // add file
-  // const {IdAnak, IdUser} = route.params;
-  const IdAnak = 16;
-  const IdUser = 1;
+  const {IdAnak, IdUser} = route.params;
+  // const IdAnak = 16;
+  // const IdUser = 1;
   const [FileKK, setFileKK] = useState(null);
   const [FileKtpIbu, setFileKtpIbu] = useState(null);
   const [FileKtpAyah, setFileKtpAyah] = useState(null);
@@ -35,11 +35,7 @@ const DataFileUploadScreen = ({navigation, route}) => {
   };
   const uploadFile = async () => {
     try {
-      // console.log("tes");
-      // const result = await DocumentPicker.pickSingle({
-      //   type: [DocumentPicker.types.allFiles],
-      // });
-      // console.log(result, 'ini result');
+
       const formData = new FormData();
     
       formData.append('KK', FileKK);
@@ -49,8 +45,8 @@ const DataFileUploadScreen = ({navigation, route}) => {
       formData.append('Ket_LahirAnak', FileKetLahirAnak);
       formData.append('KTP_Saksi', FileSaksi1);
       formData.append('KTP_Saksi2', FileSaksi2);
-      formData.append('IdUser', 1);
-      formData.append('IdAnak', 17);
+      formData.append('IdUser', IdUser);
+      formData.append('IdAnak', IdAnak);
       const response = await axios.post(
         `${ipAdress}/aplikasiLayananAkta/addData/NewUploadFilesApi.php`,
         formData,
@@ -60,28 +56,29 @@ const DataFileUploadScreen = ({navigation, route}) => {
           },
         },
       );
-      // const response = await axios({
-      //   method: 'POST',
-      //   // data: formData,
-      //   url: `${ipAdress}aplikasiLayananAkta/addData/addDataBerkasLampiran.php`,
-      //   headers: {'Content-Type': 'multipart/form-data'},
-      // });
-      // const response = await fetch(
-      //   `${ipAdress}aplikasiLayananAkta/addData/addDataBerkasLampiran.php`,
-      //   {
-      //     method: 'POST',
-      //     body: formData,
-      //     headers: {
-      //       'Content-Type': 'multipart/form-data',
-      //     },
-      //   },
-      // );
 
-      console.log('Upload response:', response.text());
-      console.log(response);
+      console.log(response.data, "Ini nilai dari res data Uploads");
+      const {message, value} = response.data;
+      if(value == 1) {
+        alert("Berhasil membuat antrian");
+        navigation.navigate("AntrianLayananScreen")
+      }
     } catch (error) {
+      alert("Gagal membuat antrian");
       console.log('Document Picker Error:', error);
     }
+  };
+  // add to tabel antrianValid
+  const addToAntrianValid = async () => {
+    try {
+      const res = await axios({
+        method: 'POST',
+        data: {IdAntrian: IdAnak, IdUser},
+        url: `${ipAdress}/aplikasiLayananAkta/addData/addDataAntrianValid.php`,
+        headers: {'Content-Type': 'multipart/form-data'},
+      });
+      console.log(res.data, "ini data dari antrianValid");
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -155,8 +152,9 @@ const DataFileUploadScreen = ({navigation, route}) => {
         <DefaultButtonBox
           Title={'Submit'}
           TitleColor={hijau}
-          onClickAction={() => {
-            uploadFile();
+          onClickAction={async() => {
+            await uploadFile();
+            await addToAntrianValid();
             // navigation.navigate("AntrianLayananScreen")
             console.log('Submit preesed');
           }}

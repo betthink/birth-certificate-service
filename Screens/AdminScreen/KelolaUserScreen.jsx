@@ -14,12 +14,19 @@ export default function KelolaUserScreen({navigation}) {
       method: 'POST',
       url: `${url}`,
     })
-      .then(res => setDataApi(res.data))
+      .then(res => {
+        // console.log(res.data, "INi res di kelola user")
+        setDataApi(res.data)})
       .catch(err => console.log(err));
   };
   useEffect(() => {
-    getApi();
-    console.log('ambil data baruuu');
+   
+    const reloadPage = navigation.addListener('focus', () => {
+      // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
+      getApi();
+    });
+
+    return reloadPage;
   }, [getApi()]);
   // *end of code fetch data
   return (
@@ -35,6 +42,7 @@ export default function KelolaUserScreen({navigation}) {
       {/* list Account */}
       <View style={{paddingHorizontal: 22}}>
         <FlatList
+        style={[{marginTop: 20}]}
           data={dataApi}
           renderItem={({item}) => (
             <TouchableOpacity
@@ -48,6 +56,7 @@ export default function KelolaUserScreen({navigation}) {
                   NIK: item.NIK,
                   FotoProfile: item.FotoProfile,
                   StatusLayanan: item.StatusLayanan,
+                  Level: 'Admin',
                 })
               }>
               <View style={[stylesDariGaya.listStyle]}>

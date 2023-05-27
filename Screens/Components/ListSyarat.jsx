@@ -28,7 +28,7 @@ const styleList = StyleSheet.create({
   container: {
     // width: 380,
     padding: 5,
-    borderRadius: 12,
+    // borderRadius: 12,
     backgroundColor: '#fff',
 
     overflow: 'hidden',
@@ -36,7 +36,7 @@ const styleList = StyleSheet.create({
     borderBottomWidth: 2,
     borderColor: '#28AFB0',
     marginHorizontal: 22,
-    marginVertical: 5,
+    // marginVertical: 5,
   },
   title: {
     fontSize: 16,

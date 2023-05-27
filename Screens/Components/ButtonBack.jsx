@@ -7,16 +7,16 @@ import {useNavigation} from '@react-navigation/native';
 const ButtonBack = ({buttontext}) => {
   const navigation = useNavigation();
   return (
-    <View style={[{flexDirection: 'row'}]}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
+    <View >
+      <TouchableOpacity style={[{flexDirection: 'row'}]} onPress={() => navigation.goBack()}>
         <MaterialIcon
           style={{marginTop: 3, marginHorizontal: 22}}
           size={18}
           color={hitam}
           name="arrow-back-ios"
         />
+        <Text style={[styles.textStyle]}>{buttontext}</Text>
       </TouchableOpacity>
-      <Text style={[styles.textStyle]}>{buttontext}</Text>
     </View>
   );
 };

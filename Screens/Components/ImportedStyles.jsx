@@ -57,7 +57,7 @@ export const stylesDariGaya = StyleSheet.create({
     // alignItems: 'center',
     justifyContent: 'center',
     // borderBottomEndRadius: 20,
-    marginBottom: 20
+    // marginBottom: 20
   },
   menu: {
     // backgroundColor: '#24CE9E',

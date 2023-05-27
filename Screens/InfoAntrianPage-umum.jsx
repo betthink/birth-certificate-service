@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  ImageBackground,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -14,7 +15,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {ipAdress} from './Components/Url';
 import axios from 'axios';
-import {hijau, putih, ungu} from '../Assets/StylingComponent/Coloring';
+import {hijau, putih, putihGelap, ungu} from '../Assets/StylingComponent/Coloring';
 import pngQueue from '../Assets/Images/ReadingInformation.png';
 // import { Image } from 'react-native-svg';
 
@@ -30,21 +31,6 @@ function AntrianLayananScreen({navigation}) {
   const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
-      //  tabBar={props => (
-      //     <TouchableOpacity
-      //       style={{ position: 'absolute', top: -30, alignSelf: 'center' }}
-      //       onPress={() => {
-      //         // Aksi yang ingin dilakukan ketika tombol di atas label ditekan
-      //       }}
-      //     >
-      //       <Text>Tombol</Text>
-      //     </TouchableOpacity>
-      //   )}
-      // tabBarOptions={{
-      //   tabStyle: {
-      //     paddingTop: 20,
-      //   },
-      // }}
       screenOptions={{
         tabBarLabelStyle: {fontSize: 12},
         headerLeft: () => (
@@ -134,7 +120,7 @@ function AntrianTerdaftar({navigation}) {
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   let [dataAntrianTerdaftar, setdataAntrianTerdaftar] = useState();
   let [leng, setLeng] = useState(0);
-  const getApi = () => {
+  const getApiTerdaftar = () => {
     axios({
       method: 'POST',
       url: `${url}`,
@@ -149,7 +135,12 @@ function AntrianTerdaftar({navigation}) {
       .catch(err => console.log(err));
   };
   useEffect(() => {
-    getApi();
+    const reloadPage = navigation.addListener('focus', () => {
+      // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
+      getApiTerdaftar();
+    });
+
+    return reloadPage;
     // console.log(dataAntrian.length, 'ambil data Antrian terdaftar');
   }, []);
 
@@ -175,7 +166,6 @@ function AntrianTerdaftar({navigation}) {
         </View>
       ) : (
         <View style={[{flex: 1}]}>
-          
           <Image
             style={{
               flex: 1,
@@ -229,11 +219,11 @@ function AntrianTerdaftar({navigation}) {
   );
 }
 // ? funtion tampilkan antrian diproses
-function AntrianDiproses() {
+function AntrianDiproses({navigation}) {
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   const [dataAntrian, setDataAntrian] = useState();
   let [value, setValue] = useState(0);
-  const getDataDiproses = () => {
+  const getApiDiproses = () => {
     axios({
       method: 'POST',
       url: `${url}`,
@@ -248,42 +238,24 @@ function AntrianDiproses() {
       .catch(err => console.log(err));
   };
   useEffect(() => {
-    getDataDiproses();
-  }, [dataAntrian]);
+    const reloadPage = navigation.addListener('focus', () => {
+      // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
+      getApiDiproses();
+    });
+
+    return reloadPage;
+  }, []);
   return (
     // {dataAntrian.length < 1 ()}
     <View style={[{flex: 1}]}>
-      <View
-        style={[
-          {alignItems: 'flex-end', paddingHorizontal: 40, paddingVertical: 20},
-        ]}>
-        <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Waktu Pendaftaran</Text>
-          <View style={[StyleFlatlist.boxColors, {backgroundColor: hijau}]} />
-        </View>
-        <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Username pembuat antrian</Text>
-          <View
-            style={[StyleFlatlist.boxColors, {backgroundColor: '#2E0FEF'}]}
-          />
-        </View>
-        <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Estimasi Pengambilan Akta</Text>
-          <View
-            style={[StyleFlatlist.boxColors, {backgroundColor: colorKuning}]}
-          />
-        </View>
-        <View style={[StyleFlatlist.containerInfoWithColor]}>
-          <Text style={[{paddingRight: 10}]}>Nomor antrian</Text>
-          <View style={[StyleFlatlist.boxColors, {backgroundColor: ungu}]} />
-        </View>
-      </View>
-
       {value < 1 ? (
-        <View
-          style={[{flex: 1, justifyContent: 'center', alignItems: 'center'}]}>
-          <Text>Ini value kurang dari 1 </Text>
-        </View>
+        <ImageBackground
+          source={require(`../Assets/Images/Sleeping.png`)}
+          style={[{flex: 1, resizeMode: 'cover'}]}>
+          <View style={[{justifyContent: 'center', alignItems: 'center', backgroundColor: hijau, padding: 20 }]}>
+            <Text style={[{color: putih, fontSize: 16, fontWeight: 'bold'}]}>Belum ada antrian yang sedang diproses </Text>
+          </View>
+        </ImageBackground>
       ) : (
         <FlatList
           data={dataAntrian}
@@ -326,11 +298,11 @@ function AntrianDiproses() {
   );
 }
 // ? funtion tampilkan antrian ditolak
-const AntrianDitolak = () => {
+const AntrianDitolak = ({navigation}) => {
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   const [dataAntrian, setDataAntrian] = useState();
   let [lengt, setLengt] = useState(0);
-  const getApi = () => {
+  const getApiDitolak = () => {
     axios({
       method: 'POST',
       url: `${url}`,
@@ -345,9 +317,13 @@ const AntrianDitolak = () => {
       .catch(err => console.log(err));
   };
   useEffect(() => {
-    getApi();
-    console.log('ambil data Antrian Ditolak');
-  }, [getApi()]);
+    const reloadPage = navigation.addListener('focus', () => {
+      // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
+      getApiDitolak();
+    });
+
+    return reloadPage;
+  }, []);
 
   return (
     <View style={[{flex: 1}]}>

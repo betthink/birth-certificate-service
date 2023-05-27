@@ -28,9 +28,11 @@ import {
 } from '../Assets/StylingComponent/Coloring';
 // import {SvgXml} from 'react-native-svg';
 // import svgConent from '../Assets/Svg/content.svg'
-import pngHeader from '../Assets/Images/addFile.png';
+import pngHeader from '../Assets/Images/mailSent.png';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Material from 'react-native-vector-icons/MaterialIcons';
 import FontAwsome from 'react-native-vector-icons/FontAwesome5';
+import { ipAdress } from './Components/Url';
 
 const HomeUmum = ({navigation}) => {
   const [Id, setId] = useState('');
@@ -41,7 +43,7 @@ const HomeUmum = ({navigation}) => {
   const [StatusLayanan, setStatusLayanan] = useState('');
   const [Email, setEmail] = useState('');
   const [FotoProfile, setFotoProfile] = useState('');
-  const [Pemberitahuan, setPemberitahuan] = useState('');
+  const [Level, setLevel] = useState('');
 
   const ambilCookie = () => {
     try {
@@ -57,7 +59,7 @@ const HomeUmum = ({navigation}) => {
             Password,
             StatusLayanan,
             Email,
-            FotoProfile,
+            FotoProfile,Level
           } = JSON.parse(value);
           setId(Id);
           setNama(Nama);
@@ -67,6 +69,7 @@ const HomeUmum = ({navigation}) => {
           setEmail(Email);
           setStatusLayanan(StatusLayanan);
           setFotoProfile(FotoProfile);
+          setLevel(Level)
         }
       });
     } catch (error) {
@@ -74,12 +77,15 @@ const HomeUmum = ({navigation}) => {
     }
   };
 
+  
   useEffect(() => {
     ambilCookie();
+    // getDataUser();
+   
   }, []);
   // u
   return (
-    <View style={{flex: 1, backgroundColor: '#fff'}}>
+    <View style={{flex: 1, backgroundColor: putihGelap}}>
       <View
         style={[
           {
@@ -130,6 +136,7 @@ const HomeUmum = ({navigation}) => {
                     StatusLayanan,
                     Email,
                     FotoProfile,
+                    Level
                   })
                 }>
                 <Image
@@ -139,7 +146,7 @@ const HomeUmum = ({navigation}) => {
                   ]}
                   // source={require('../../Assets/Images/album.png')}
                   source={{
-                    uri: FotoProfile,
+                    uri: `${ipAdress}/aplikasiLayananAkta/uploads/FotoProfile/${NIK}/${FotoProfile}`,
                   }}
                 />
               </TouchableOpacity>
@@ -162,8 +169,8 @@ const HomeUmum = ({navigation}) => {
           }}>
           <TouchableOpacity
             style={{flexDirection: 'row'}}
-            onPress={() => navigation.navigate('PemberitahuanScreen')}>
-            <MaterialIcon name="notifications" color={putihGelap} size={20} />
+            onPress={() => navigation.navigate('PemberitahuanScreen' ,{Id})}>
+            <MaterialIcon name="bell" color={putihGelap} size={20} />
             <Text style={{color: '#fff'}}>Pemberiathuan</Text>
           </TouchableOpacity>
         </View>
@@ -199,17 +206,17 @@ const HomeUmum = ({navigation}) => {
                 size={40}
                 style={{color: hijau}}
               />
-              <Text style={{textAlign: 'center'}}>Antrian Layanan</Text>
+              <Text style={{textAlign: 'center'}}>Antrian</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate('DataBayiScreenUmum', {Id})}
               style={[styles.styleMenu]}>
-              <MaterialIcon
-                name="playlist-add"
+              <Material
+                name="post-add"
                 size={40}
                 style={{color: hijau}}
               />
-              <Text style={{textAlign: 'center'}}>Daftar Layanan</Text>
+              <Text style={{textAlign: 'center'}}>Daftar</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -222,6 +229,8 @@ export default HomeUmum;
 
 export const styles = StyleSheet.create({
   styleMenu: {
+    backgroundColor: putihGelap,
+    borderRadius: 50,
     flex: 1,
     width: 100,
     elevation: 2,

@@ -10,6 +10,7 @@ import axios from 'axios';
 import {
   hijau,
   hitam,
+  pinkGelap,
   putih,
   putihGelap,
   toska,
@@ -182,7 +183,7 @@ const ProfileAdminScreen = ({navigation, route}) => {
             {/* image profile */}
             <TouchableOpacity
               style={{
-                backgroundColor: ungu,
+                // backgroundColor: ungu,
 
                 width: 100,
                 height: 100,
@@ -190,7 +191,7 @@ const ProfileAdminScreen = ({navigation, route}) => {
                 alignItems: 'center',
                 flexDirection: 'row',
                 borderWidth: 4,
-                borderColor: '#fff',
+                borderColor: pinkGelap,
                 borderRadius: 50,
                 position: 'absolute',
                 top: -30,
@@ -200,7 +201,7 @@ const ProfileAdminScreen = ({navigation, route}) => {
               }}>
               <Image
                 style={[{width: 80, height: 80, borderRadius: 45}]}
-                source={{uri: fotoProfile}}
+                source={{uri: `${ipAdress}/aplikasiLayananAkta/uploads/FotoProfile/${nik}/${fotoProfile}`}}
                 // source={{
                 //   uri: fotoUrl,
                 // }}

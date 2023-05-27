@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, Image, Dimensions} from 'react-native';
+import {View, Text, TouchableOpacity, Image, Dimensions, ImageBackground} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
   hijau,
@@ -17,13 +17,16 @@ import {ipAdress} from '../Components/Url';
 
 const HomeAdminScreen = ({navigation}) => {
   const [linkProfile, setlinkProfile] = useState(null);
+  const [Nik, setNik] = useState(null);
   // console.log(linkProfile, 'ini link profile');
   const ambilAsyncStorage = () => {
     AsyncStorage.getItem('userData').then(value => {
       AsyncStorage.getItem('userData');
-      const {FotoProfile} = JSON.parse(value);
+      const {FotoProfile, NIK} = JSON.parse(value);
+    
       setlinkProfile(FotoProfile);
-      console.log(FotoProfile, 'Ini Url fotoProfile');
+      setNik(NIK);
+      // console.log(FotoProfile, 'Ini Url fotoProfile');
     });
   };
   // function getDataAntrian
@@ -127,14 +130,15 @@ const HomeAdminScreen = ({navigation}) => {
                 style={[stylesDariGaya.fotoProfile]}
                 // source={require('../../Assets/Images/album.png')}
                 source={{
-                  uri: linkProfile,
+                  uri: `${ipAdress}/aplikasiLayananAkta/uploads/FotoProfile/${Nik}/${linkProfile}`,
                 }}
               />
             </TouchableOpacity>
           </View>
         </View>
       </View>
-      <View
+      <View 
+      // source={require('../../Assets/Images/manageData.png')}
         style={[
           {
             justifyContent: 'center',
@@ -160,6 +164,7 @@ const HomeAdminScreen = ({navigation}) => {
           absolute
           style={{
             // marginVertical: 8,
+            
             borderRadius: 16,
           }}
         />

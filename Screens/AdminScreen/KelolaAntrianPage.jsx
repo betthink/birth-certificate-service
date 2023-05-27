@@ -21,6 +21,7 @@ import {
   ungu,
 } from '../../Assets/StylingComponent/Coloring';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import axios from 'axios';
 import {ipAdress} from '../Components/Url';
 import BulatanContainer from '../Components/BulatanContainer';
@@ -58,9 +59,10 @@ function KelTerdaftar({}) {
     return reloadPage;
   }, []);
   return (
-    <View>
+    <View style={[{flex: 1}]}>
       {leng >= 1 ? (
         <FlatList
+        style={[{marginTop: 20}]}
           data={dataAntrianTerdaftar}
           renderItem={({item}) => (
             <View
@@ -96,8 +98,10 @@ function KelTerdaftar({}) {
 
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate('DetailDataAntrian', {
+                  navigation.navigate('CekDataPage', {
                     IdAntrian: item.IdAntrian,
+                    IdUser: item.IdUser,
+                    Nama: item.Nama,
                   })
                 }
                 style={[{padding: 10, backgroundColor: hijau, height: 50}]}>
@@ -107,8 +111,18 @@ function KelTerdaftar({}) {
           )}
         />
       ) : (
-        <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
-          <Text>Tidak ada data</Text>
+        <View
+          style={[
+            {
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex: 1,
+              backgroundColor: 'salmon',
+            },
+          ]}>
+          <Text style={[{color: putih, fontSize: 16, letterSpacing: 1}]}>
+            Tidak ada data
+          </Text>
         </View>
       )}
     </View>
@@ -126,6 +140,7 @@ function KelDiproses() {
     });
   };
   const [dataAntrianValid, setdataAntrianValid] = useState();
+  const [Jumlah, setJumlah] = useState(0);
   const getDataAntrianValid = () => {
     axios({
       method: 'POST',
@@ -135,6 +150,8 @@ function KelDiproses() {
         let data = res.data;
         data = data.filter(d => d.Status == 'Valid');
         setdataAntrianValid(data);
+        console.log('Ini jumlah antrian valid yang menunggu', data.length);
+        setJumlah(data.length);
       })
       .catch(err => console.log(err));
   };
@@ -154,23 +171,7 @@ function KelDiproses() {
       .catch(err => console.log(err));
   };
 
-  // const [IdSelected, setIdSelected] = useState(null);
-
-  // const ambilAntrianTerbaru = async () => {
-  //   // Mengurutkan data berdasarkan IdAntrian secara ascending
-  //   const sortedData = [...dataAntrianValid].sort(
-  //     (a, b) => a.IdAntrian - b.IdAntrian,
-  //   );
-
-  //   // Memilih data dengan IdAntrian paling rendah
-  //   // const selected = sortedData[0];
-  //   const selectId = sortedData[0].IdAntrian;
-  //   // console.log(selected, 'ini Id antrian terendah');
-  //   console.log(selectId, 'Ini Id di set');
-  //   setIdSelected(selectId);
-  //   await new Promise(resolve => setTimeout(resolve, 2000));
-  // };
-  const sendProsesAntrian = (Id) => {
+  const sendProsesAntrian = Id => {
     // console.log(Id, 'Ini dari Function Proses Antrian');
     // console.log(IdAdmin, "ini Id admin");
     try {
@@ -178,17 +179,16 @@ function KelDiproses() {
         method: 'POST',
         data: {
           IdAntrian: Id,
-          IdAdmin : IdAdmin,
+          IdAdmin: IdAdmin,
         },
         url: `${ipAdress}/aplikasiLayananAkta/update/ProsesAntrian.php`,
         headers: {'Content-Type': 'multipart/form-data'},
       });
       // console.log(res.data);
       const {value} = res.data;
-      console.log(res.data, "Ini res dari function sendProses");
+      console.log(res.data, 'Ini res dari function sendProses');
       if (value == 1) {
         alert('antrian Sudah Diproses');
-       
       } else {
         alert('gagal memproses antrian');
       }
@@ -219,10 +219,20 @@ function KelDiproses() {
   }, []);
   return (
     <View style={[{flex: 1}]}>
-      <ScrollView contentContainerStyle={[{flex: 1, backgroundColor: putih}]}>
+      <ScrollView contentContainerStyle={[{flex: 1, backgroundColor: putihGelap}]}>
         {/* antrian Valid */}
-        <View style={[{marginHorizontal: 20, flex: 2}]}>
-          <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
+        <View
+          style={[
+            {
+              marginTop: 10,
+              marginHorizontal: 20,
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+          ]}>
+          <Text style={[{fontSize: 20}]}>Jumlah Antrian Menunggu:</Text>
+          <Text style={[{fontSize: 20}]}>{Jumlah}</Text>
+          {/* <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
             <Text>Antrian Valid</Text>
             <Text>Admin {IdAdmin}</Text>
           </View>
@@ -262,21 +272,47 @@ function KelDiproses() {
                 </View>
               </View>
             )}
-          />
-          <GreenButton
-            ButtonText={'Proses antrian'}
-            actionOnclick={ProsesData}
-          />
+          /> */}
         </View>
         {/* antrian diproses */}
         <View style={[{marginHorizontal: 20, marginTop: 10, flex: 1}]}>
-          <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
-            <Text>Antrian Diproses</Text>
-          </View>
+          {Jumlah > 0 ? (
+            <GreenButton
+              width={'100%'}
+              ButtonText={'Proses'}
+              actionOnclick={ProsesData}
+            />
+          ) : (
+            <View
+              style={[
+                {flex: 1, justifyContent: 'center', alignItems: 'center'},
+              ]}>
+              <Text>Tidak ada antrian yang perlu di tangani</Text>
+            </View>
+          )}
+
+          <View
+            style={[
+              {
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: 20,
+              },
+            ]}></View>
           <FlatList
+            contentContainerStyle={[
+              {paddingBottom: 170, marginTop: 20, paddingTop: 20},
+            ]}
             data={dataAntrianDiproses}
             renderItem={({item}) => (
-              <View
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('DetailProsesAntrian', {
+                    IdAntrian: item.IdAntrian,
+                    Nama: item.Nama,
+                    IdAdmin: item.IdAdmin,
+                  })
+                }
                 style={[
                   {
                     // marginHorizontal: 20,
@@ -307,7 +343,7 @@ function KelDiproses() {
                   <Text>Admin</Text>
                   <Text>{item.IdAdmin}</Text>
                 </View>
-              </View>
+              </TouchableOpacity>
             )}
           />
         </View>
@@ -344,52 +380,68 @@ function KelDitolak() {
   }, []);
   return (
     <View style={[{flex: 1}]}>
-      <ScrollView
-        contentContainerStyle={[
-          {
-            marginHorizontal: 20,
-            flex: 1,
-            // borderWidth: 2,
-            // backgroundColor: putih,
-          },
-        ]}>
-        <FlatList
-          data={dataAntrianDitolak}
-          renderItem={({item}) => (
-            <View
-              style={[
-                {
-                  // marginHorizontal: 20,
-                  backgroundColor: putih,
-                  padding: 20,
-                  borderLeftWidth: 2,
-                  borderColor: hijau,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginVertical: 2,
-                },
-              ]}>
-              <View>
-                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                  <Text>Nomor Antrian : </Text>
-                  <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
-                    {item.IdAntrian}
-                  </Text>
+      {leng < 1 ? (
+        <View
+          style={[
+            {
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: ungu,
+            },
+          ]}>
+          <Text style={[{fontSize: 16, letterSpacing: 1, color: putih}]}>
+            Tidak ada Antrian DItolak
+          </Text>
+        </View>
+      ) : (
+        <ScrollView
+          contentContainerStyle={[
+            {
+              marginHorizontal: 20,
+              flex: 1,
+              // borderWidth: 2,
+              // backgroundColor: putih,
+            },
+          ]}>
+          <FlatList
+            data={dataAntrianDitolak}
+            renderItem={({item}) => (
+              <View
+                style={[
+                  {
+                    // marginHorizontal: 20,
+                    backgroundColor: putih,
+                    padding: 20,
+                    borderLeftWidth: 2,
+                    borderColor: hijau,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginVertical: 2,
+                  },
+                ]}>
+                <View>
+                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                    <Text>Nomor Antrian : </Text>
+                    <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
+                      {item.IdAntrian}
+                    </Text>
+                  </View>
+                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                    <Text>Nama anak: </Text>
+                    <Text>{item.Nama}</Text>
+                  </View>
                 </View>
-                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                  <Text>Nama anak: </Text>
-                  <Text>{item.Nama}</Text>
+                <View>
+                  <Text>Status</Text>
+                  <Text>{item.Status}</Text>
                 </View>
               </View>
-              <View>
-                <Text>Status</Text>
-                <Text>{item.Status}</Text>
-              </View>
-            </View>
-          )}
-        />
-      </ScrollView>
+            )}
+          />
+        </ScrollView>
+      )}
     </View>
   );
 }
@@ -422,52 +474,73 @@ function DaftarPenerima() {
   }, []);
   return (
     <View style={[{flex: 1}]}>
-      <ScrollView
-        contentContainerStyle={[
-          {
-            marginHorizontal: 20,
-            flex: 1,
-            // borderWidth: 2,
-            // backgroundColor: putih,
-          },
-        ]}>
-        <FlatList
-          data={dataAntrianSelesai}
-          renderItem={({item}) => (
-            <View
-              style={[
-                {
-                  // marginHorizontal: 20,
-                  backgroundColor: putih,
-                  padding: 20,
-                  borderLeftWidth: 2,
-                  borderColor: hijau,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginVertical: 2,
-                },
-              ]}>
-              <View>
-                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                  <Text>Nomor Antrian : </Text>
-                  <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
-                    {item.IdAntrian}
-                  </Text>
+      {leng < 1 ? (
+        <View
+          style={[
+            {
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'salmon',
+            },
+          ]}>
+          <Text style={[{fontSize: 16, letterSpacing: 1, color: putih}]}>
+            Belum ada penerima
+          </Text>
+        </View>
+      ) : (
+        <ScrollView
+          contentContainerStyle={[
+            {
+              marginHorizontal: 20,
+              flex: 1,
+              // borderWidth: 2,
+              // backgroundColor: putih,
+            },
+          ]}>
+          <FlatList
+          style={[{marginTop: 20}]}
+            data={dataAntrianSelesai}
+            renderItem={({item}) => (
+              <View
+                style={[
+                  {
+                    // marginHorizontal: 20,
+                    backgroundColor: putih,
+                    padding: 20,
+                    borderLeftWidth: 2,
+                    borderColor: hijau,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginVertical: 2,
+                  },
+                ]}>
+                <View>
+                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                    <Text>Id Pengambilan : </Text>
+                    <Text style={[{fontWeight: 'bold', fontSize: 20, color: hijau}]}>
+                      {item.IdPengambilan}
+                    </Text>
+                  </View>
+                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                    <Text>Nama anak: </Text>
+                    <Text style={[{color: hijau}]}>{item.Nama}</Text>
+                  </View>
                 </View>
-                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                  <Text>Nama anak: </Text>
-                  <Text>{item.Nama}</Text>
-                </View>
+                {/* <View>
+                  <Text>Status</Text>
+                  <Text>{item.Status}</Text>
+                </View> */}
+                <TouchableOpacity style={[{width: 30, borderWidth: 2, borderColor: hijau, borderRadius: 15}]} onPress={()=>console.log("press")}>
+                 
+                  <MaterialIcons size={25} name='done' />
+                </TouchableOpacity>
               </View>
-              <View>
-                <Text>Status</Text>
-                <Text>{item.Status}</Text>
-              </View>
-            </View>
-          )}
-        />
-      </ScrollView>
+            )}
+          />
+        </ScrollView>
+      )}
     </View>
   );
 }
