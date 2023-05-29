@@ -134,7 +134,7 @@ const DataSaksiScreen = ({navigation, route}) => {
         {/* NIK */}
         <TextInputBox
           Label={'NIK'}
-          placeholderTitle={'62130xxxxxx'}
+          placeholderTitle={'*62130xxxxxx'}
           onChangeText={text => setNIK(text)}
           value={NIk}
           IconName={'id-card'}
@@ -142,15 +142,15 @@ const DataSaksiScreen = ({navigation, route}) => {
         {/* Nama */}
         <TextInputBox
           Label={'Nama'}
-          placeholderTitle={'Robet...'}
+          placeholderTitle={'*Nama Lengkap'}
           onChangeText={text => setNama(text)}
           value={Nama}
           IconName={'user'}
         />
         {/* TempatKelahiran */}
         <TextInputBox
-          Label={'TempatKelahiran'}
-          placeholderTitle={'Palangka Raya..'}
+          Label={'Tempat Kelahiran'}
+          placeholderTitle={'*kabupaten/kota/kecamatan'}
           onChangeText={text => setTempatKelahiran(text)}
           value={TempatKelahiran}
           IconName={'user'}
@@ -170,7 +170,7 @@ const DataSaksiScreen = ({navigation, route}) => {
         {/* Alamat */}
         <TextInputBox
           Label={'Alamat'}
-          placeholderTitle={'Jl.jauh..'}
+          placeholderTitle={'*Jalan/street'}
           onChangeText={text => setAlamat(text)}
           value={Alamat}
           IconName={'house-user'}
@@ -190,7 +190,7 @@ const DataSaksiScreen = ({navigation, route}) => {
         {/* Kebangsaan */}
         <TextInputBox
           Label={'Kebangsaan'}
-          placeholderTitle={'German'}
+          placeholderTitle={'*Negara asal'}
           onChangeText={text => setKebangsaan(text)}
           value={Kebangsaan}
           IconName={'flag'}
@@ -199,7 +199,7 @@ const DataSaksiScreen = ({navigation, route}) => {
         {/* button */}
         <DefaultButtonBox
           onClickAction={() => setkonfirmasi(true)}
-          Title={'Submit'}
+          Title={'Lanjutkan'}
         />
       </ScrollView>
       <ModalCompon

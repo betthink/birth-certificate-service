@@ -15,19 +15,20 @@ export default function KelolaUserScreen({navigation}) {
       url: `${url}`,
     })
       .then(res => {
-        // console.log(res.data, "INi res di kelola user")
+        console.log(res.data, "INi res di kelola user")
         setDataApi(res.data)})
       .catch(err => console.log(err));
   };
   useEffect(() => {
-   
+
     const reloadPage = navigation.addListener('focus', () => {
       // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
       getApi();
+   
     });
 
     return reloadPage;
-  }, [getApi()]);
+  }, []);
   // *end of code fetch data
   return (
     <View style={{flex: 1, backgroundColor: putihGelap}}>
@@ -64,7 +65,10 @@ export default function KelolaUserScreen({navigation}) {
                   <Image
                     size={50}
                     // source={{uri: item.foto}}
-                    source={require('../../Assets/Images/album.png')}
+                    style={[{resizeMode: 'cover', width: 50, height: 50, borderRadius: 25}]}
+                    source={{ uri: `${ipAdress}/aplikasiLayananAkta/uploads/FotoProfile/${item.NIK}/${item.FotoProfile}`}}
+                    // source={require('../../Assets/Images/album.png')}
+                    
                   />
 
                   <Text style={{marginLeft: 10}}>{item.Id}</Text>

@@ -120,7 +120,7 @@ const DataAyahScreen = ({navigation,route}) => {
         {/* NIK */}
         <TextInputBox
           Label={'NIK'}
-          placeholderTitle={'62130xxxxxx'}
+          placeholderTitle={'*62130xxxxxx'}
           onChangeText={text => setNIK(text)}
           value={NIk}
           IconName={'id-card'}
@@ -128,15 +128,15 @@ const DataAyahScreen = ({navigation,route}) => {
         {/* Nama */}
         <TextInputBox
           Label={'Nama'}
-          placeholderTitle={'Robet...'}
+          placeholderTitle={'*Nama Lengkap'}
           onChangeText={text => setNama(text)}
           value={Nama}
           IconName={'user'}
         />
         {/* TempatKelahiran */}
         <TextInputBox
-          Label={'TempatKelahiran'}
-          placeholderTitle={'Palangka Raya..'}
+          Label={'Tempat Kelahiran'}
+          placeholderTitle={'*kabupaten/kota/kecamatan'}
           onChangeText={text => setTempatKelahiran(text)}
           value={TempatKelahiran}
           IconName={'user'}
@@ -156,7 +156,7 @@ const DataAyahScreen = ({navigation,route}) => {
         {/* Alamat */}
         <TextInputBox
           Label={'Alamat'}
-          placeholderTitle={'Jl.jauh..'}
+          placeholderTitle={'*Jalan/street'}
           onChangeText={text => setAlamat(text)}
           value={Alamat}
           IconName={'house-user'}
@@ -164,7 +164,7 @@ const DataAyahScreen = ({navigation,route}) => {
         <View style={[{zIndex: 1}]}>
           <DropdownSelect
             placeholder={'Pilih Kewarganegaraan'}
-            Label="Kewarganegaraan"
+            Label="*Kewarganegaraan"
             open={openKW}
             setOpen={setopenKW}
             data={dataKewarganegaraan}
@@ -176,7 +176,7 @@ const DataAyahScreen = ({navigation,route}) => {
         {/* Kebangsaan */}
         <TextInputBox
           Label={'Kebangsaan'}
-          placeholderTitle={'German'}
+          placeholderTitle={'*nagara asal'}
           onChangeText={text => setKebangsaan(text)}
           value={Kebangsaan}
           IconName={'flag'}
@@ -184,7 +184,7 @@ const DataAyahScreen = ({navigation,route}) => {
         {/* Pekerjaan */}
         <TextInputBox
           Label={'Pekerjaan'}
-          placeholderTitle={'petani..'}
+          placeholderTitle={'*pekerjaan'}
           onChangeText={text => setPekerjaan(text)}
           value={Pekerjaan}
           IconName={'user'}

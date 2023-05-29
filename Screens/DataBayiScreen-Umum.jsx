@@ -264,8 +264,8 @@ const DataBayiScreen = ({route, navigation}) => {
                 {/* TempatKelahiran */}
                 <View style={[{zIndex: -3}]}>
                   <TextInputBox
-                    Label={'TempatKelahiran'}
-                    placeholderTitle={'Palangka Raya..'}
+                    Label={'Tempat Kelahiran'}
+                    placeholderTitle={'*kabupaten/kota/kecamatan'}
                     onChangeText={text => setTempatKelahiran(text)}
                     value={TempatKelahiran}
                     IconName={'user'}
@@ -373,7 +373,7 @@ const DataBayiScreen = ({route, navigation}) => {
                 <DefaultButtonBox
                   TitleColor={'#fff'}
                   onClickAction={() => setkonfirmasi(true)}
-                  Title={'Submit'}
+                  Title={'Lanjutkan'}
                 />
               </ScrollView>
               {/* Modal/Pop up  */}

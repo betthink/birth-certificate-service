@@ -25,7 +25,7 @@ const DataFileUploadScreen = ({navigation, route}) => {
   const pickDocument = async setData => {
     try {
       const result = await DocumentPicker.pickSingle({
-        type: [DocumentPicker.types.allFiles],
+        type: [DocumentPicker.types.pdf],
       });
       setData(result);
       console.log(result.name, 'ini nama dari result');
@@ -48,7 +48,7 @@ const DataFileUploadScreen = ({navigation, route}) => {
       formData.append('IdUser', IdUser);
       formData.append('IdAnak', IdAnak);
       const response = await axios.post(
-        `${ipAdress}/aplikasiLayananAkta/addData/NewUploadFilesApi.php`,
+        `${ipAdress}/aplikasiLayananAkta/addData/UploadFileBerkasMakeZip.php`,
         formData,
         {
           headers: {

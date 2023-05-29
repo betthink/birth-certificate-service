@@ -1,6 +1,6 @@
 import {View, Text, Modal, TouchableOpacity, Dimensions} from 'react-native';
 import React from 'react';
-import {ungu} from '../../Assets/StylingComponent/Coloring';
+import {hijau, ungu} from '../../Assets/StylingComponent/Coloring';
 
 const ModalCompon = ({stateValueModal, onPresAction}) => {
   const WIDTH = Dimensions.get('window').width;
@@ -23,11 +23,16 @@ const ModalCompon = ({stateValueModal, onPresAction}) => {
             style={[
               {
                 flexDirection: 'row',
-                justifyContent: 'center',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                flex: 1
               },
             ]}>
-            <TouchableOpacity onPress={onPresAction} style={[{height: 30, backgroundColor: 'white', alignItems: 'center'}]}>
-              <Text>Ini Modal?</Text>
+            <TouchableOpacity>
+              <Text style={[{padding: 30, backgroundColor:'salmon', borderRadius: 20}]}>Batal?</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onPresAction} style={[{   alignItems: 'center', justifyContent: 'center',}]}>
+              <Text style={[{padding: 30, backgroundColor:hijau, borderRadius: 20}]}>Konfirmasi?</Text>
             </TouchableOpacity>
             
           </View>

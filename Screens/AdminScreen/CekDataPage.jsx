@@ -1,4 +1,5 @@
-import {View, Text, Alert, TextInput} from 'react-native';
+import {View, Text, Alert, TextInput, Platform, Linking} from 'react-native';
+// import RNFetchBlob from 'rn-fetch-blob';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {ipAdress} from '../Components/Url';
@@ -9,7 +10,7 @@ import {stylesDariGaya} from '../Components/ImportedStyles';
 import {putih, ungu} from '../../Assets/StylingComponent/Coloring';
 import TextInputMassage from '../Components/TextInputMassage';
 // import {useNavigation} from '@react-navigation/native';
-
+import RNFS from 'react-native-fs';
 const CekDataPage = ({route, navigation}) => {
   // const navigation = useNavigation();
   const {IdAntrian, Nama} = route.params;
@@ -39,7 +40,7 @@ const CekDataPage = ({route, navigation}) => {
     try {
       const res = await axios({
         method: 'POST',
-        url: `${ipAdress}/aplikasiLayananAkta/api/apiDataBayiJoinFileUploadFilterById.php`,
+        url: `${ipAdress}/aplikasiLayananAkta/api/apiFileUploadZip.php`,
         data: {IdAnak: IdAntrian},
         headers: {'Content-Type': 'multipart/form-data'},
       });
@@ -49,7 +50,7 @@ const CekDataPage = ({route, navigation}) => {
 
       setdataUpload(data);
       setIdUser(data[0].IdUser);
-      setwaktuPendaftaran(data[0].waktu_upload);
+      setwaktuPendaftaran(data[0].dateUpload);
     } catch (error) {
       console.log(error);
     }
@@ -99,6 +100,21 @@ const CekDataPage = ({route, navigation}) => {
       console.log(error);
     }
   };
+  // download file
+  const openURL = async () => {
+    // Cek apakah URL dapat dibuka
+    const url = `${ipAdress}/aplikasiLayananAkta/download/downloadFiles.php?IdAnak=${IdAntrian}`
+    const supported = await Linking.canOpenURL(url);
+    
+    if (supported) {
+      // Buka URL di browser eksternal
+      await Linking.openURL(url);
+    } else {
+      console.log(`Tidak dapat membuka URL: ${url}`);
+    }
+  };
+
+
   useEffect(() => {
     // console.log(IdAntrian);
     getDataAntrianTerdaftar();
@@ -143,18 +159,11 @@ const CekDataPage = ({route, navigation}) => {
               ]}>
               <View>
                 {/* <Text>{item.IdAnak}</Text> */}
-                <Text>{item.KK}</Text>
-                <Text>{item.IdAnak}</Text>
-                <Text>{item.KTP_Ibu}</Text>
-                <Text>{item.KTP_Ayah}</Text>
-                <Text>{item.Ket_Nikah}</Text>
-                <Text>{item.Ket_LahirAnak}</Text>
-                <Text>{item.KTP_Saksi}</Text>
-                <Text>{item.KTP_Saksi2}</Text>
+                <Text>{item.fileCompresed}</Text>
               </View>
               <View>
                 <GreenButton
-                  actionOnclick={() => console.log('Download Presed')}
+                  actionOnclick={() => openURL()}
                   ButtonText={'Download'}
                 />
               </View>

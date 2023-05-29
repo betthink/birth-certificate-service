@@ -155,13 +155,13 @@ const HomeUmum = ({navigation}) => {
         </View>
       </View>
       {/* wrap content in below box */}
-      <View style={{paddingHorizontal: 22, flex: 1}}>
+      <View style={{paddingHorizontal: 22, flex: 1, backgroundColor: putihGelap}}>
         {/* pemberitahuan */}
         <View
           style={{
             marginTop: 10,
             height: 30,
-            backgroundColor: '#92E3A9',
+            backgroundColor: hijau,
             alignSelf: 'flex-end',
             borderRadius: 10,
             paddingHorizontal: 10,
@@ -170,8 +170,8 @@ const HomeUmum = ({navigation}) => {
           <TouchableOpacity
             style={{flexDirection: 'row'}}
             onPress={() => navigation.navigate('PemberitahuanScreen' ,{Id})}>
-            <MaterialIcon name="bell" color={putihGelap} size={20} />
-            <Text style={{color: '#fff'}}>Pemberiathuan</Text>
+            <MaterialIcon name="bell" color={'black'} size={20} />
+            <Text style={{}}>Pemberiathuan</Text>
           </TouchableOpacity>
         </View>
         <View style={[{flex: 1}]}>
@@ -195,7 +195,7 @@ const HomeUmum = ({navigation}) => {
             <TouchableOpacity
               onPress={() => navigation.navigate('SyaratScreen')}
               style={[styles.styleMenu]}>
-              <FontAwsome name="book-open" size={30} style={{color: hijau}} />
+              <FontAwsome name="book-open" size={30} style={{color: putih}} />
               <Text style={{}}>Syarat</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -204,7 +204,7 @@ const HomeUmum = ({navigation}) => {
               <MaterialIcon
                 name="human-queue"
                 size={40}
-                style={{color: hijau}}
+                style={{color: putih}}
               />
               <Text style={{textAlign: 'center'}}>Antrian</Text>
             </TouchableOpacity>
@@ -214,7 +214,7 @@ const HomeUmum = ({navigation}) => {
               <Material
                 name="post-add"
                 size={40}
-                style={{color: hijau}}
+                style={{color: putih}}
               />
               <Text style={{textAlign: 'center'}}>Daftar</Text>
             </TouchableOpacity>
@@ -229,8 +229,8 @@ export default HomeUmum;
 
 export const styles = StyleSheet.create({
   styleMenu: {
-    backgroundColor: putihGelap,
-    borderRadius: 50,
+    backgroundColor: hijau,
+    borderRadius: 10,
     flex: 1,
     width: 100,
     elevation: 2,

@@ -119,7 +119,7 @@ const DataIbuScreen = ({navigation, route}) => {
         {/* NIK */}
         <TextInputBox
           Label={'NIK'}
-          placeholderTitle={'62130xxxxxx'}
+          placeholderTitle={'*62130xxxxxx'}
           onChangeText={text => setNIK(text)}
           value={NIk}
           IconName={'id-card'}
@@ -127,20 +127,22 @@ const DataIbuScreen = ({navigation, route}) => {
         {/* Nama */}
         <TextInputBox
           Label={'Nama'}
-          placeholderTitle={'Robet...'}
+          placeholderTitle={'*Nama lengkap Ibu'}
           onChangeText={text => setNama(text)}
           value={Nama}
           IconName={'user'}
         />
         {/* TempatKelahiran */}
         <TextInputBox
-          Label={'TempatKelahiran'}
-          placeholderTitle={'Palangka Raya..'}
+          Label={'Tempat Kelahiran'}
+          placeholderTitle={'*kabupaten/kota/kecamatan'}
           onChangeText={text => setTempatKelahiran(text)}
           value={TempatKelahiran}
           IconName={'user'}
         />
         {/* date Select */}
+        <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+        <Text style={[{paddingRight: 5}]}>TTL</Text>
         <DateSelect
           openCalendar={() => OpenDate()}
           onChange={onChangeDate}
@@ -151,11 +153,11 @@ const DataIbuScreen = ({navigation, route}) => {
           placeholder={'yyyy-mm-dd'}
           mode={'date'}
           display={'calendar'}
-        />
+        /></View>
         {/* Alamat */}
         <TextInputBox
           Label={'Alamat'}
-          placeholderTitle={'Jl.jauh..'}
+          placeholderTitle={'*Jalan/street'}
           onChangeText={text => setAlamat(text)}
           value={Alamat}
           IconName={'house-user'}
@@ -175,7 +177,7 @@ const DataIbuScreen = ({navigation, route}) => {
         {/* Kebangsaan */}
         <TextInputBox
           Label={'Kebangsaan'}
-          placeholderTitle={'German'}
+          placeholderTitle={'*nagara asal'}
           onChangeText={text => setKebangsaan(text)}
           value={Kebangsaan}
           IconName={'flag'}
@@ -183,7 +185,7 @@ const DataIbuScreen = ({navigation, route}) => {
         {/* Pekerjaan */}
         <TextInputBox
           Label={'Pekerjaan'}
-          placeholderTitle={'petani..'}
+          placeholderTitle={'*pekerjaan'}
           onChangeText={text => setPekerjaan(text)}
           value={Pekerjaan}
           IconName={'user'}
@@ -191,7 +193,7 @@ const DataIbuScreen = ({navigation, route}) => {
         {/* button */}
         <DefaultButtonBox
           onClickAction={() => setkonfirmasi(true)}
-          Title={'Submit'}
+          Title={'Lanjutkan'}
         />
       </ScrollView>
       <ModalCompon

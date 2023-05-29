@@ -205,6 +205,7 @@ function KelDiproses() {
     // console.log(Id, 'Ini data sorted');
     // await ambilAntrianTerbaru();
     sendProsesAntrian(Id);
+    navigation.navigate('LayananDiproses');
   };
 
   useEffect(() => {
