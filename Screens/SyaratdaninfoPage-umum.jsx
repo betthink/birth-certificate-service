@@ -1,11 +1,18 @@
-import {View, Text, FlatList, TouchableOpacity, Image, ImageBackground} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  ImageBackground,
+} from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {stylesDariGaya} from './Components/ImportedStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import ListSyarat from './Components/ListSyarat';
 import ButtonBack from './Components/ButtonBack';
-import { putihGelap } from '../Assets/StylingComponent/Coloring';
+import {Grey, Kuning, greenTea, putihGelap, ungu} from '../Assets/StylingComponent/Coloring';
 // import { Image } from 'react-native-svg';
 
 export default function SyaratScreen({navigation}) {
@@ -28,24 +35,28 @@ export default function SyaratScreen({navigation}) {
   ];
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: putihGelap}}>
-      
-        <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
-         <ButtonBack buttontext={"Infromasi Syarat"}/>
-        </View>
-        <ImageBackground style={[{resizeMode: 'cover', flex: 1}]} source={require('../Assets/Images/ReadingInformation.png')} >
+      <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
+        <ButtonBack buttontext={'Infromasi Syarat'} />
+      </View>
+      <View style={[{resizeMode: 'cover', flex: 1}]}>
         {/* <Image  /> */}
-        <View style={[{flex: 1}]}>
+
+        <View style={[{flex: 1, backgroundColor: ungu,}]}>
+          <Image
+            style={[{resizeMode: 'cover',  width: 200, height: 200, alignSelf: 'center'}]}
+            source={require('../Assets/Images/ReadingInformation.png')}
+          />
+          <View style={[{flex: 1, backgroundColor: putihGelap}]}>
           <FlatList
-          style={[{marginVertical: 20}]}
+            style={[{marginVertical: 20}]}
             data={data}
             keyExtractor={item => item.id.toString()}
             renderItem={({item}) => (
               <ListSyarat title={item.title} bodyText={item.body} />
             )}
-          />
+          /></View>
         </View>
-        </ImageBackground>
-      
+      </View>
     </SafeAreaView>
   );
 }

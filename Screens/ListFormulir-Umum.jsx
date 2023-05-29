@@ -42,7 +42,7 @@ const ListFormulir = ({navigation, route}) => {
       }
       style={{
         padding: 10,
-        backgroundColor: hijau,
+        backgroundColor: ungu,
         marginTop: 2,
         flexDirection: 'row',
         alignItems: 'center',

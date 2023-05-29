@@ -149,13 +149,10 @@ const ProfileUmumScreen = ({navigation, route}) => {
         <ScrollView style={{marginTop: 20}}>
           <TouchableOpacity
             onPress={() => navigation.navigate('ListFormulir', {IdUser: Id})}
-            style={[stylesDariGaya.listData]}>
-            <Text style={[stylesDariGaya.textDataStyle]}>formulir</Text>
+            style={[{justifyContent: 'center', flex: 1, backgroundColor: ungu,  alignItems :'center', padding: 20}]}>
+            <Text style={[{color: putih}]}>formulir</Text>
           </TouchableOpacity>
-          <View style={[stylesDariGaya.listData]}>
-            <Text>Password</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{Password}</Text>
-          </View>
+ 
           <View style={[stylesDariGaya.listData]}>
             <Text>Nama</Text>
             <Text style={[stylesDariGaya.textDataStyle]}>{Nama}</Text>
@@ -164,18 +161,12 @@ const ProfileUmumScreen = ({navigation, route}) => {
             <Text>NIK</Text>
             <Text style={[stylesDariGaya.textDataStyle]}>{NIK}</Text>
           </View>
-          <View style={[stylesDariGaya.listData]}>
-            <Text>No. KK</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}></Text>
-          </View>
+         
           <View style={[stylesDariGaya.listData]}>
             <Text>No. Telp</Text>
             <Text style={[stylesDariGaya.textDataStyle]}>{NomorTelp}</Text>
           </View>
-          <View style={[stylesDariGaya.listData]}>
-            <Text>Jenis Kelamin</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}></Text>
-          </View>
+        
           <View style={[stylesDariGaya.listData]}>
             <Text>Email</Text>
             <Text style={[stylesDariGaya.textDataStyle]}>{Email}</Text>

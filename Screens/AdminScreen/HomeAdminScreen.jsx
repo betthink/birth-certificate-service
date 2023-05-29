@@ -123,7 +123,7 @@ const HomeAdminScreen = ({navigation}) => {
             <Text style={[stylesDariGaya.TextBold]}>Username!</Text>
           </View>
           {/* fotoProfile */}
-          <View style={{padding: 2, backgroundColor: hijau, borderRadius: 30}}>
+          <View style={{padding: 2, backgroundColor: ungu, borderRadius: 30}}>
             <TouchableOpacity
               onPress={() => navigation.navigate('ProfileAdminScreen')}>
               <Image

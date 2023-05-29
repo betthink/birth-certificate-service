@@ -10,7 +10,7 @@ const DefaultButtonBox = ({Title, onClickAction, TitleColor}) => {
         {
           height: 50,
           marginVertical: 20,
-          backgroundColor: hijau,
+          backgroundColor: ungu,
           alignItems: 'center',
           justifyContent: 'center',
         },

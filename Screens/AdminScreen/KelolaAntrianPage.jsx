@@ -72,7 +72,7 @@ function KelTerdaftar({}) {
                   backgroundColor: putih,
                   padding: 20,
                   borderLeftWidth: 2,
-                  borderColor: hijau,
+                  borderColor: ungu,
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'space-between',
@@ -104,8 +104,8 @@ function KelTerdaftar({}) {
                     Nama: item.Nama,
                   })
                 }
-                style={[{padding: 10, backgroundColor: hijau, height: 50}]}>
-                <Text>Cek Data</Text>
+                style={[{padding: 10, backgroundColor: ungu, height: 50}]}>
+                <Text style={[{color: putih}]}>Cek Data</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -405,6 +405,7 @@ function KelDitolak() {
               // backgroundColor: putih,
             },
           ]}>
+          <View style={[{marginTop: 20}]}>
           <FlatList
             data={dataAntrianDitolak}
             renderItem={({item}) => (
@@ -415,7 +416,7 @@ function KelDitolak() {
                     backgroundColor: putih,
                     padding: 20,
                     borderLeftWidth: 2,
-                    borderColor: hijau,
+                    borderColor: ungu,
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'space-between',
@@ -440,7 +441,7 @@ function KelDitolak() {
                 </View>
               </View>
             )}
-          />
+          /></View>
         </ScrollView>
       )}
     </View>
@@ -510,7 +511,7 @@ function DaftarPenerima() {
                     backgroundColor: putih,
                     padding: 20,
                     borderLeftWidth: 2,
-                    borderColor: hijau,
+                    borderColor: ungu,
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'space-between',
@@ -520,20 +521,20 @@ function DaftarPenerima() {
                 <View>
                   <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
                     <Text>Id Pengambilan : </Text>
-                    <Text style={[{fontWeight: 'bold', fontSize: 20, color: hijau}]}>
+                    <Text style={[{fontWeight: 'bold', fontSize: 20, color: ungu}]}>
                       {item.IdPengambilan}
                     </Text>
                   </View>
                   <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
                     <Text>Nama anak: </Text>
-                    <Text style={[{color: hijau}]}>{item.Nama}</Text>
+                    <Text style={[{color: ungu}]}>{item.Nama}</Text>
                   </View>
                 </View>
                 {/* <View>
                   <Text>Status</Text>
                   <Text>{item.Status}</Text>
                 </View> */}
-                <TouchableOpacity style={[{width: 30, borderWidth: 2, borderColor: hijau, borderRadius: 15}]} onPress={()=>console.log("press")}>
+                <TouchableOpacity style={[{width: 30, borderWidth: 2, borderColor: ungu, borderRadius: 15}]} onPress={()=>console.log("press")}>
                  
                   <MaterialIcons size={25} name='done' />
                 </TouchableOpacity>
@@ -560,7 +561,7 @@ function KelolaAntrianPage() {
           color: putih,
         },
         tabBarStyle: {
-          backgroundColor: hijau,
+          backgroundColor: ungu,
           height: 70,
           justifyContent: 'flex-end',
         },

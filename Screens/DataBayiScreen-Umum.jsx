@@ -2,12 +2,14 @@ import {
   View,
   Text,
   Button,
+  StyleSheet,
   TextInput,
   TouchableOpacity,
   Modal,
   Dimensions,
   ImageBackground,
-  ActivityIndicator,Image
+  ActivityIndicator,
+  Image,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import DropdownSelect from './Components/DropdownSelect';
@@ -15,6 +17,8 @@ import {stylesDariGaya} from './Components/ImportedStyles';
 import ButtonBack from './Components/ButtonBack';
 import DateSelect from './Components/DateSelect';
 import {
+  Kuning,
+  greenTea,
   hijau,
   hitam,
   putih,
@@ -23,6 +27,9 @@ import {
 } from '../Assets/StylingComponent/Coloring';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import FeaherIcon from 'react-native-vector-icons/Feather';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TextInputBox from './Components/TextInputBox';
 import {ScrollView} from 'react-native-gesture-handler';
 import DefaultButtonBox from './Components/DefaultButtonBox';
@@ -201,8 +208,9 @@ const DataBayiScreen = ({route, navigation}) => {
   return (
     <View style={[{flex: 1, backgroundColor: putih}]}>
       {isLoading ? (
-        <View style={[{justifyContent: 'center', alignItems: 'center', flex: 1}]}>
-          <ActivityIndicator size="large" color="#0000ff" />
+        <View
+          style={[{justifyContent: 'center', alignItems: 'center', flex: 1}]}>
+          <ActivityIndicator size="large" color={ungu} />
         </View>
       ) : (
         <>
@@ -226,7 +234,18 @@ const DataBayiScreen = ({route, navigation}) => {
               {/* container content */}
               <ScrollView
                 style={[{flex: 1, paddingHorizontal: 20, paddingVertical: 10}]}>
-                <Image style={[{ resizeMode: 'center',  width: '100%' , height: 200, borderBottomWidth: 2, borderColor: 'salmon'}]} source={require('../Assets/Images/fillFormulir.png')}  />
+                {/* <Image
+                  style={[
+                    {
+                      resizeMode: 'center',
+                      width: '100%',
+                      height: 200,
+                      borderBottomWidth: 2,
+                      borderColor: 'salmon',
+                    },
+                  ]}
+                  source={require('../Assets/Images/fillFormulir.png')}
+                /> */}
                 <TextInputBox
                   Label={'Nama'}
                   IconName={'user'}
@@ -235,7 +254,12 @@ const DataBayiScreen = ({route, navigation}) => {
                   onChangeText={text => setNama(text)}
                 />
                 {/* dropJenis Kelamin */}
-                <View style={[{zIndex: -1}]}>
+                <View style={[{zIndex: -1}, style.containerDropdownAndIcon]}>
+                  <FeaherIcon
+                    style={[{color: ungu}]}
+                    name="users"
+                    size={20}
+                  />
                   <DropdownSelect
                     Label="Jenis Kelamin"
                     placeholder={'Pilih Jenis Kelamin'}
@@ -247,8 +271,14 @@ const DataBayiScreen = ({route, navigation}) => {
                     setvalue={setvJenisKelamin}
                   />
                 </View>
-                <View style={[{zIndex: -2}]}>
-                  {/* dropTmpt Persalinan */}
+                {/* dropTmpt Persalinan */}
+                <View style={[{zIndex: -2}, style.containerDropdownAndIcon]}>
+                  <MaterialIcon
+                    style={[{color: ungu}]}
+                    name="hospital-building"
+                    size={20}
+                  />
+
                   <DropdownSelect
                     placeholder={'Pilih Tempat'}
                     Label="Tempat Persalinan"
@@ -268,11 +298,16 @@ const DataBayiScreen = ({route, navigation}) => {
                     placeholderTitle={'*kabupaten/kota/kecamatan'}
                     onChangeText={text => setTempatKelahiran(text)}
                     value={TempatKelahiran}
-                    IconName={'user'}
+                    IconName={'map-pin'}
                   />
                 </View>
                 {/* drop Usutan kelahiran */}
-                <View style={[{zIndex: -3}]}>
+                <View style={[{zIndex: -3}, style.containerDropdownAndIcon]}>
+                  <FeaherIcon
+                    style={[{color: ungu}]}
+                    name="users"
+                    size={20}
+                  />
                   <DropdownSelect
                     placeholder={'Pilih Urutan Kelahiran'}
                     Label="Urutan Kelahiran"
@@ -286,7 +321,12 @@ const DataBayiScreen = ({route, navigation}) => {
                 </View>
 
                 {/* drop Penolong Kelahiran */}
-                <View style={[{zIndex: -4}]}>
+                <View style={[{zIndex: -4}, style.containerDropdownAndIcon]}>
+                  <FontAwesome5
+                    style={[{color: ungu}]}
+                    name="user-nurse"
+                    size={20}
+                  />
                   <DropdownSelect
                     placeholder={'Pilih Penolong Kelahiran'}
                     Label="Penolong Kelahiran"
@@ -298,62 +338,93 @@ const DataBayiScreen = ({route, navigation}) => {
                     setvalue={setvPenolongKelahiran}
                   />
                 </View>
-                {/* date and time */}
-                <View style={[{flex: 1, flexDirection: 'row', zIndex: -5}]}>
-                  <DateSelect
-                    //   mode : time, datetime ect
-                    // display : clock, default, calendar, clock
-                    openCalendar={() => OpenDate()}
-                    onChange={onChangeDate}
-                    valueinTextInput={newDateString}
-                    value={date}
-                    visible={DatePickerVisibility}
-                    IconName="calendar"
-                    placeholder={'yyyy-mm-dd'}
-                    mode={'date'}
-                    display={'calendar'}
-                  />
+                <View style={[{flexDirection: 'row', zIndex: -5}]}>
+                  {/* date  */}
                   <View
                     style={[
                       {
-                        height: 50,
-                        borderWidth: 2,
-                        borderColor: ungu,
-                        paddingHorizontal: 20,
-                        marginLeft: 10,
-                        marginTop: 20,
+                        flex: 1,
+                        zIndex: -5,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginTop: 15,
                       },
                     ]}>
-                    {/* Time Selecter */}
-                    <TouchableOpacity
-                      style={[
-                        {
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                        },
-                      ]}
-                      onPress={showTimepicker}>
-                      <TextInput
-                        // value={valueinTextInput}
-                        placeholder={getTime}
-                        editable={false}
+                    <Icon name="calendar" size={20} color={ungu} />
+                    <View style={[{paddingLeft: 17}]}>
+                      <Text style={[style.label]}>Tanggal Kelahiran</Text>
+                      <DateSelect
+                        //   mode : time, datetime ect
+                        // display : clock, default, calendar, clock
+                        openCalendar={() => OpenDate()}
+                        onChange={onChangeDate}
+                        valueinTextInput={newDateString}
+                        value={date}
+                        visible={DatePickerVisibility}
+                        // IconName="calendar"
+                        placeholder={'yyyy-mm-dd'}
+                        mode={'date'}
+                        display={'calendar'}
                       />
-                      <Icon size={20} color={ungu} name="clock" />
-                    </TouchableOpacity>
-                    {showTimePicker && (
-                      <DateTimePicker
-                        value={time}
-                        mode="time"
-                        is24Hour={true}
-                        display="spinner"
-                        onChange={onChange}
-                      />
-                    )}
+                    </View>
+                  </View>
+                  {/* Time */}
+                  <View
+                    style={[
+                      {
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        flex: 1,
+                        marginTop: 15,
+                      },
+                    ]}>
+                    <Icon size={20} color={ungu} name="clock" />
+                    <View style={[{paddingLeft: 16, width: 200}]}>
+                      <Text style={[style.label]}>Jam Kelahiran</Text>
+                      <View
+                        style={[
+                          {
+                            height: 50,
+                            borderEndWidth: 2,
+                            borderBottomWidth: 2,
+                            borderColor: greenTea,
+                            // paddingHorizontal: 20,
+                            // marginLeft: 10,
+                            flex: 1,
+                            // marginTop: 20,
+                          },
+                        ]}>
+                        {/* Time Selecter */}
+                        <TouchableOpacity
+                          style={[
+                            {
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                            },
+                          ]}
+                          onPress={showTimepicker}>
+                          <TextInput
+                            // value={valueinTextInput}
+                            placeholder={getTime}
+                            editable={false}
+                          />
+                        </TouchableOpacity>
+                        {showTimePicker && (
+                          <DateTimePicker
+                            value={time}
+                            mode="time"
+                            is24Hour={true}
+                            display="spinner"
+                            onChange={onChange}
+                          />
+                        )}
+                      </View>
+                    </View>
                   </View>
                 </View>
                 {/* berat dan panjang */}
-                <View style={[{zIndex: -6}]}>
+                <View style={[{zIndex: -6, flex: 1}]}>
                   <TextInputBox
                     Label={'Berat Bayi'}
                     placeholderTitle={'*Gunakan satuan gram/g'}
@@ -394,3 +465,16 @@ const DataBayiScreen = ({route, navigation}) => {
 };
 
 export default DataBayiScreen;
+const style = StyleSheet.create({
+  containerDropdownAndIcon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flex: 1,
+    marginVertical: 5,
+  },
+  label: {
+    fontWeight: 'bold',
+    letterSpacing: 1,
+  },
+});

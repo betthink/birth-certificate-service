@@ -1,14 +1,14 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {stylesDariGaya} from './ImportedStyles';
-import {hijau, putih} from '../../Assets/StylingComponent/Coloring';
+import {hijau, putih, ungu} from '../../Assets/StylingComponent/Coloring';
 
 const GreenButton = ({ButtonText, actionOnclick, width}) => {
   return (
     <TouchableOpacity
       style={[
         {
-          backgroundColor: hijau,
+          backgroundColor: ungu,
           width: width,
           padding: 20,
           marginTop: 20,

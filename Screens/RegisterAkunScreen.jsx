@@ -2,16 +2,23 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import React, {useState} from 'react';
 import {stylesDariGaya} from './Components/ImportedStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import {fotoUrl} from '../Assets/Url';
 // import {pickSingle, isCancel} from 'react-native-document-picker';
 import DocumentPicker from 'react-native-document-picker';
 import {useNavigation} from '@react-navigation/native';
 import {ScrollView, TextInput} from 'react-native-gesture-handler';
-import {hijau, putih, putihGelap} from '../Assets/StylingComponent/Coloring';
+import {
+  hijau,
+  putih,
+  putihGelap,
+  ungu,
+} from '../Assets/StylingComponent/Coloring';
 import axios from 'axios';
 import {ipAdress} from './Components/Url';
 import ButtonBack from './Components/ButtonBack';
 import GreenButton from './Components/GreenButton';
+import {Feather, IonIcon} from './Components/Icons';
 
 const RegisterAkunScreen = ({navigation}) => {
   const [Password, setPassword] = useState(null);
@@ -20,24 +27,24 @@ const RegisterAkunScreen = ({navigation}) => {
   const [NomorTelp, setNomorTelp] = useState(null);
   const [NIK, setNIK] = useState(null);
   const [FotoProfile, setFotoProfile] = useState(null);
+  const [UriFoto, setUriFoto] = useState(null);
   // *kirim data ke API
   const pickDocument = async setData => {
     try {
       const result = await DocumentPicker.pickSingle({
-        type: [DocumentPicker.types.allFiles],
+        type: [DocumentPicker.types.images],
       });
       setData(result);
-      console.log(result.name, 'ini nama dari result');
+      setUriFoto(result.uri);
+      // console.log(result.name, 'ini nama dari result');
     } catch (error) {
       console.log(error);
     }
   };
   async function RegistrasiAkun() {
-
-
     try {
       const formData = new FormData();
-    
+
       formData.append('Password', Password);
       formData.append('Nama', Nama);
       formData.append('Email', Email);
@@ -57,7 +64,7 @@ const RegisterAkunScreen = ({navigation}) => {
       console.log(Nama, Password, NIK, Email, NomorTelp, FotoProfile);
       const {value, message} = res.data;
       console.log(res.data);
-      console.log(message, "Ini massagee");
+      console.log(message, 'Ini massagee');
       if (value == 1) {
         alert('Akun Berhasil Didaftarkan');
         navigation.navigate('Login');
@@ -104,18 +111,18 @@ const RegisterAkunScreen = ({navigation}) => {
   return (
     <View style={{backgroundColor: putih, flex: 1}}>
       <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
-      <ButtonBack buttontext="BuatAKun" />
+        <ButtonBack buttontext="BuatAKun" />
       </View>
       {/* Form */}
       <ScrollView style={[{paddingHorizontal: 20}]}>
         {/* Username */}
         <View style={[StyleForm.spaceBeetwenForm]}>
-          <View style={{marginLeft: 30}}>
+          <View style={[StyleForm.mgLef]}>
             <Text>Nama</Text>
           </View>
           <View style={[StyleForm.containerForm]}>
-            <MaterialIcon name="person" size={sizeIcon} color={hijau} />
-            <View style={[{flex: 1}]}>
+            <MaterialIcon name="person" size={sizeIcon} color={ungu} />
+            <View style={[StyleForm.pdLef]}>
               <TextInput
                 onChangeText={text => setNama(text)}
                 value={Nama}
@@ -126,12 +133,12 @@ const RegisterAkunScreen = ({navigation}) => {
         </View>
         {/* Password */}
         <View style={[StyleForm.spaceBeetwenForm]}>
-          <View style={{marginLeft: 30}}>
+          <View style={[StyleForm.mgLef]}>
             <Text>Password</Text>
           </View>
           <View style={[StyleForm.containerForm]}>
-            <MaterialIcon name="person" size={sizeIcon} color={hijau} />
-            <View style={[{flex: 1}]}>
+            <AntDesign name="barcode" size={20} color={ungu} />
+            <View style={[StyleForm.pdLef, {marginLeft: 10}]}>
               <TextInput
                 onChangeText={text => setPassword(text)}
                 value={Password}
@@ -143,12 +150,12 @@ const RegisterAkunScreen = ({navigation}) => {
 
         {/* NIK */}
         <View style={[StyleForm.spaceBeetwenForm]}>
-          <View style={{marginLeft: 30}}>
+          <View style={[StyleForm.mgLef]}>
             <Text>NIK</Text>
           </View>
           <View style={[StyleForm.containerForm]}>
-            <MaterialIcon name="person" size={sizeIcon} color={hijau} />
-            <View style={[{flex: 1}]}>
+            <Feather name="hash" size={sizeIcon} color={ungu} />
+            <View style={[StyleForm.pdLef]}>
               <TextInput
                 onChangeText={text => setNIK(text)}
                 value={NIK}
@@ -160,13 +167,14 @@ const RegisterAkunScreen = ({navigation}) => {
 
         {/* No. Telp */}
         <View style={[StyleForm.spaceBeetwenForm]}>
-          <View style={{marginLeft: 30}}>
+          <View style={[StyleForm.mgLef]}>
             <Text>No. Telp</Text>
           </View>
           <View style={[StyleForm.containerForm]}>
-            <MaterialIcon name="person" size={sizeIcon} color={hijau} />
-            <View style={[{flex: 1}]}>
+            <Feather name="phone" size={sizeIcon} color={ungu} />
+            <View style={[StyleForm.pdLef]}>
               <TextInput
+                keyboardType="numeric"
                 onChangeText={text => setNomorTelp(text)}
                 value={NomorTelp}
                 style={[stylesDariGaya.formInput, StyleForm.textInput]}
@@ -177,12 +185,12 @@ const RegisterAkunScreen = ({navigation}) => {
 
         {/* Email */}
         <View style={[StyleForm.spaceBeetwenForm]}>
-          <View style={{marginLeft: 30}}>
+          <View style={[StyleForm.mgLef]}>
             <Text>Email</Text>
           </View>
           <View style={[StyleForm.containerForm]}>
-            <MaterialIcon name="person" size={sizeIcon} color={hijau} />
-            <View style={[{flex: 1}]}>
+            <IonIcon name="mail-open" size={sizeIcon} color={ungu} />
+            <View style={[StyleForm.pdLef]}>
               <TextInput
                 onChangeText={text => setEmail(text)}
                 value={Email}
@@ -200,8 +208,8 @@ const RegisterAkunScreen = ({navigation}) => {
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'row',
-            borderWidth: 4,
-            borderColor: hijau,
+            borderWidth: 2,
+            borderColor: ungu,
             borderRadius: 50,
             alignSelf: 'center',
             marginTop: 20,
@@ -210,25 +218,29 @@ const RegisterAkunScreen = ({navigation}) => {
             pickDocument(setFotoProfile);
             // console.log("hgh");
           }}>
-          <Image
-            size={50}
-            source={{
-              uri: fotoUrl,
-            }}
-          />
+          {/* {UriFoto == null ? (
+            <View style={[{width: 50, height: 50}]} />
+          ) : (
+            <Image size={50} source={require(`${UriFoto}`)} />
+          )} */}
+ 
           <MaterialIcon
             style={{position: 'absolute', top: 5, right: 0}}
             name="add-circle"
             size={20}
-            color={'#24CE9E'}
+            color={ungu}
           />
         </TouchableOpacity>
         {/* Button Buat Akun */}
-        <GreenButton width={"100%"} ButtonText={"Daftar"}  actionOnclick={async () => {
+        <GreenButton
+          width={'100%'}
+          ButtonText={'Daftar'}
+          actionOnclick={async () => {
             try {
               await RegistrasiAkun();
             } catch (error) {}
-          }}/>
+          }}
+        />
       </ScrollView>
     </View>
   );
@@ -240,7 +252,7 @@ export const StyleForm = StyleSheet.create({
   container: {paddingHorizontal: 22, flex: 1},
   containerForm: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
     // flex:1
   },
@@ -249,5 +261,12 @@ export const StyleForm = StyleSheet.create({
   },
   spaceBeetwenForm: {
     marginTop: 18,
+  },
+  pdLef: {
+    flex: 1,
+    paddingLeft: 20,
+  },
+  mgLef: {
+    marginLeft: 50,
   },
 });

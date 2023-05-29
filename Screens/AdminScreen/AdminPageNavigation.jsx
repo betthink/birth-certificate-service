@@ -6,7 +6,7 @@ import HomeAdminScreen from './HomeAdminScreen';
 import KelolaRiwayatAntrianScreen from './KelolaRiwayatAntrianScreen';
 import KelolaAntrianPage from './KelolaAntrianPage';
 import KelolaUserScreen from './KelolaUserScreen';
-import {hijau} from '../../Assets/StylingComponent/Coloring';
+import {hijau, ungu} from '../../Assets/StylingComponent/Coloring';
 import {View, Dimensions} from 'react-native';
 // import {CardStyleInterpolators} from '@react-navigation/stack';
 const Tab = createBottomTabNavigator();
@@ -17,10 +17,10 @@ function AdminPageNavigation({navigation, route}) {
       screenOptions={({route}) => ({
         // cardStyleInterpolator: ,
      
-        headerStyle: {backgroundColor: '#42f44b'},
+        headerStyle: {backgroundColor: ungu},
         headerTintColor: '#fff',
         headerTitleStyle: {fontWeight: 'bold'},
-        tabBarActiveTintColor: hijau,
+        tabBarActiveTintColor: ungu,
         tabBarInactiveTintColor: 'grey',
         tabBarIcon: ({focused, color, size}) => {
           let iconName;

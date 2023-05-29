@@ -3,13 +3,15 @@ import React, {useEffect, useState} from 'react';
 import ButtonBack from './Components/ButtonBack';
 import {stylesDariGaya} from './Components/ImportedStyles';
 import TextInputBox from './Components/TextInputBox';
-import {putih} from '../Assets/StylingComponent/Coloring';
+import {putih, ungu} from '../Assets/StylingComponent/Coloring';
 import DateSelect from './Components/DateSelect';
 import DefaultButtonBox from './Components/DefaultButtonBox';
 import DropdownSelect from './Components/DropdownSelect';
 import ModalCompon from './Components/ModalCompon';
 import axios from 'axios';
+import Icon from 'react-native-vector-icons/FontAwesome'
 import { ipAdress } from './Components/Url';
+import { Image } from 'react-native-svg';
 const DataIbuScreen = ({navigation, route}) => {
   // ambil Id anak dari route
   const {IdAnak, IdUser} = route.params;
@@ -142,14 +144,15 @@ const DataIbuScreen = ({navigation, route}) => {
         />
         {/* date Select */}
         <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-        <Text style={[{paddingRight: 5}]}>TTL</Text>
+        {/* <Text style={[{paddingRight: 5}]}>TTL</Text> */}
+        <Icon size={20} color={ungu} name={"calendar"} />
         <DateSelect
           openCalendar={() => OpenDate()}
           onChange={onChangeDate}
           valueinTextInput={newDateString}
           value={date}
           visible={DatePickerVisibility}
-          IconName="calendar"
+          // IconName="calendar"
           placeholder={'yyyy-mm-dd'}
           mode={'date'}
           display={'calendar'}

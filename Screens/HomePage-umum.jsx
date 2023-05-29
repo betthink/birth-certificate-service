@@ -19,6 +19,10 @@ import PersonPng from './Components/PersonPng';
 import {fotoUrl} from '../Assets/Url';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
+  Grey,
+  Kuning,
+  Purple,
+  greenTea,
   hijau,
   hitam,
   pinkGelap,
@@ -28,7 +32,7 @@ import {
 } from '../Assets/StylingComponent/Coloring';
 // import {SvgXml} from 'react-native-svg';
 // import svgConent from '../Assets/Svg/content.svg'
-import pngHeader from '../Assets/Images/mailSent.png';
+import pngHeader from '../Assets/Images/office.png';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Material from 'react-native-vector-icons/MaterialIcons';
 import FontAwsome from 'react-native-vector-icons/FontAwesome5';
@@ -85,13 +89,13 @@ const HomeUmum = ({navigation}) => {
   }, []);
   // u
   return (
-    <View style={{flex: 1, backgroundColor: putihGelap}}>
+    <View style={{flex: 1, backgroundColor: ungu}}>
       <View
         style={[
           {
             height: 100,
             paddingHorizontal: 22,
-            borderBottomWidth: 1,
+            // borderBottomWidth: 1,
             borderColor: 'grey',
           },
         ]}>
@@ -104,16 +108,16 @@ const HomeUmum = ({navigation}) => {
                 <Text
                   style={[
                     stylesDariGaya.TextBold,
-                    {color: hijau, fontSize: 20, letterSpacing: 3},
+                    {color: Grey, fontSize: 20, letterSpacing: 3},
                   ]}>
                   Selamat Datang
                 </Text>
               </View>
-              {/* <View style={{width: 300}}>
-                <Text style={{color: hitam}}>
-                  Gunakan Layanan Kami dengan Bijak dan beratnggung jawab !
-                </Text>
-              </View> */}
+              <Text  style={[
+                    stylesDariGaya.TextBold,
+                    {color: putih, fontSize: 20, letterSpacing: 3},
+                  ]}>{Nama}</Text>
+       
             </View>
             {/* wrap Foto Profile */}
 
@@ -155,31 +159,31 @@ const HomeUmum = ({navigation}) => {
         </View>
       </View>
       {/* wrap content in below box */}
-      <View style={{paddingHorizontal: 22, flex: 1, backgroundColor: putihGelap}}>
+      <View style={{paddingHorizontal: 22, flex: 1, backgroundColor: putihGelap, borderTopLeftRadius: 30, borderTopRightRadius: 30}}>
         {/* pemberitahuan */}
         <View
           style={{
             marginTop: 10,
-            height: 30,
-            backgroundColor: hijau,
+            height: 40,
+            backgroundColor: ungu,
             alignSelf: 'flex-end',
-            borderRadius: 10,
+            borderRadius: 15,
             paddingHorizontal: 10,
             justifyContent: 'center',
           }}>
           <TouchableOpacity
             style={{flexDirection: 'row'}}
             onPress={() => navigation.navigate('PemberitahuanScreen' ,{Id})}>
-            <MaterialIcon name="bell" color={'black'} size={20} />
-            <Text style={{}}>Pemberiathuan</Text>
+            <MaterialIcon name="bell" color={'white'} size={20} />
+         
           </TouchableOpacity>
         </View>
-        <View style={[{flex: 1}]}>
+        <View style={[{flex: 1, }]}>
           {/* png */}
           <Image
-            style={{flex: 1, alignSelf: 'center'}}
+            style={{flex: 1, alignSelf: 'center', width: 300,}}
             source={pngHeader}
-            resizeMode="center"
+            resizeMode="contain"
           />
           {/* Menu  */}
           <View
@@ -194,9 +198,9 @@ const HomeUmum = ({navigation}) => {
             {/* Syarat */}
             <TouchableOpacity
               onPress={() => navigation.navigate('SyaratScreen')}
-              style={[styles.styleMenu]}>
-              <FontAwsome name="book-open" size={30} style={{color: putih}} />
-              <Text style={{}}>Syarat</Text>
+              style={[styles.styleMenu, ]}>
+              <FontAwsome name="book-open" size={30} style={{color: Grey}} />
+              <Text style={{ color: putih}}>Syarat</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate('AntrianLayananScreen')}
@@ -204,9 +208,9 @@ const HomeUmum = ({navigation}) => {
               <MaterialIcon
                 name="human-queue"
                 size={40}
-                style={{color: putih}}
+                style={{color: Grey}}
               />
-              <Text style={{textAlign: 'center'}}>Antrian</Text>
+              <Text style={{textAlign: 'center',  color: putih}}>Antrian</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate('DataBayiScreenUmum', {Id})}
@@ -214,9 +218,9 @@ const HomeUmum = ({navigation}) => {
               <Material
                 name="post-add"
                 size={40}
-                style={{color: putih}}
+                style={{color: Grey}}
               />
-              <Text style={{textAlign: 'center'}}>Daftar</Text>
+              <Text style={{textAlign: 'center', color: putih}}>Daftar</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -229,7 +233,7 @@ export default HomeUmum;
 
 export const styles = StyleSheet.create({
   styleMenu: {
-    backgroundColor: hijau,
+    backgroundColor: ungu,
     borderRadius: 10,
     flex: 1,
     width: 100,

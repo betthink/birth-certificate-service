@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, Button, Alert} from 'react-native';
+import {View, Text, TouchableOpacity, Button, Alert, Image} from 'react-native';
 import React, {useState} from 'react';
 import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import HeaderCloud from './Components/HeaderCloud';
@@ -10,6 +10,7 @@ import axios from 'axios';
 import {ipAdress} from './Components/Url';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import GreenButton from './Components/GreenButton';
+// import { Image } from 'react-native-svg';
 const Login = ({navigation, route}) => {
   const [NamaHook, setNamaHook] = useState('');
   const [PasswordHook, setPasswordHook] = useState('');
@@ -54,7 +55,13 @@ const Login = ({navigation, route}) => {
   }
   return (
     <View style={{backgroundColor: putih, flex: 1}}>
-      <HeaderCloud />
+      {/* <HeaderCloud /> */}
+      <Image
+        style={{height: 200,
+        alignSelf: 'center', width: 300, marginTop: 50}}
+        // resizeMode="contain"
+        source={require('../Assets/Images/Login.png')}
+      />
       {/* wrapSemuaContent */}
       <View
         style={[
@@ -67,14 +74,14 @@ const Login = ({navigation, route}) => {
           },
         ]}>
         {/* Login Umum Text */}
-        <View style={{alignItems: 'center', marginTop: 50}}>
+        <View style={{alignItems: 'center',}}>
           <Text style={[stylesDariGaya.TextBold, {letterSpacing: 2}]}>
             Login
           </Text>
         </View>
         {/* Form Login */}
-        <View style={[{flex: 1, width: '90%'}]}>
-          <View style={[{marginTop: 20}]}>
+        <View style={[{flex: 1, width: '90%', }]}>
+          <View style={[{marginTop: 20, justifyContent: 'center', alignItems: 'center'}]}>
             <TextInput
               style={[stylesDariGaya.formInput]}
               onChangeText={text => setNamaHook(text)}
@@ -82,7 +89,7 @@ const Login = ({navigation, route}) => {
               placeholder="Nama"
             />
           </View>
-          <View style={[{marginTop: 20}]}>
+          <View style={[{marginTop: 20, justifyContent: 'center', alignItems: 'center'}]}>
             <TextInput
               style={[stylesDariGaya.formInput]}
               onChangeText={text => setPasswordHook(text)}
@@ -119,7 +126,7 @@ const Login = ({navigation, route}) => {
             }}>
             <TouchableOpacity
               onPress={() => navigation.navigate('RegisterAkunScreen')}>
-              <Text style={{color: hijau, textDecorationLine: 'underline'}}>
+              <Text style={{color: ungu, textDecorationLine: 'underline'}}>
                 Buat Akun?
               </Text>
             </TouchableOpacity>

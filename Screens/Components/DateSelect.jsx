@@ -2,7 +2,7 @@ import {View, Text, TouchableOpacity, Pressable, Button} from 'react-native';
 import React, {useEffect, useState} from 'react';
 // import DateTimePicker from '@react-native-datetimepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {hijau, ungu} from '../../Assets/StylingComponent/Coloring';
+import {greenTea, hijau, ungu} from '../../Assets/StylingComponent/Coloring';
 import {TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 const DateSelect = ({
@@ -16,29 +16,11 @@ const DateSelect = ({
   mode,
   display,
 }) => {
-  // atribute state date select
-  //   const [date, setDate] = useState(new Date());
-  //   const [datePickerVisibility, setDatePickerVisibility] = useState(false);
-  //   //  ? Change format date to yyyy-mm-dd
-  //   const dateFormated = date.toISOString().split('T')[0];
-  //   //   function show/off date
-  //   const OpenDate = () => {
-  //     console.log('Presd');
-  //     setDatePickerVisibility(true);
-  //   };
-  //   // function make value date
-  //   const onChange = (event, selectedDate) => {
-  //     const currentDate = selectedDate || date;
-  //     setDate(currentDate);
-  //     setDatePickerVisibility(false);
-  //   };
-  //   useEffect(() => {
-  //     console.log(dateFormated);
-  //   }, [dateFormated]);
+ 
   return (
-    <View style={[{flex: 1, marginTop: 20}]}>
+    <View style={[{flex: 1}]}>
       {/* <Text>DateSelect</Text> */}
-      <View style={[{height: 50, borderWidth: 2, borderColor: ungu}]}>
+      <View style={[{height: 50, borderEndWidth: 2,borderBottomWidth: 2, borderColor: ungu}]}>
         <TouchableOpacity
           style={[
             {

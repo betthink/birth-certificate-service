@@ -62,7 +62,7 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
                 height: 70,
                 borderLeftWidth: 3,
                 borderBottomWidth: 2,
-                borderLeftColor: hijau,
+                borderLeftColor: ungu,
                 marginTop: 20,
                 borderBottomColor: 'grey',
                 paddingHorizontal: 10,
@@ -79,7 +79,7 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
               </View>
               <View style={[{flexDirection : 'row', justifyContent: 'space-between'}]}>
               <Text>Waktu Pendaftaran</Text>
-                <Text style={{color: hijau}}>{item.WaktuPendaftaran} </Text>
+                <Text style={{color: ungu}}>{item.WaktuPendaftaran} </Text>
               </View>
             </TouchableOpacity>
           )}

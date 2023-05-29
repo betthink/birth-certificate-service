@@ -240,12 +240,12 @@ const ProfileAdminScreen = ({navigation, route}) => {
             <Text style={[stylesDariGaya.textDataStyle]}>{nomortelepon}</Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
-            <Text>Jenis Kelamin</Text>
+            <Text>Email</Text>
             <Text style={[stylesDariGaya.textDataStyle]}>{email}</Text>
           </View>
           <View style={[stylesDariGaya.listData]}>
-            <Text>Email</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{StatusLayanan}</Text>
+            <Text>Status Antrian</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>{StatusLayanan == 1 ? 'Buka' : 'Tutup'}</Text>
           </View>
         </ScrollView>
         {/* *buttons */}

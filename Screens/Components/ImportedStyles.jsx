@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet} from 'react-native';
-import {hijau, putih, ungu} from '../../Assets/StylingComponent/Coloring';
+import {greenTea, hijau, putih, ungu} from '../../Assets/StylingComponent/Coloring';
 // import { white } from '../../Assets/StylingComponent/Coloring';
 
 export const stylesDariGaya = StyleSheet.create({
@@ -37,13 +37,13 @@ export const stylesDariGaya = StyleSheet.create({
     elevation: 5,
     padding: 16,
     width: 250,
-    backgroundColor: hijau,
+    backgroundColor: ungu,
     borderRadius: 50,
   },
   formInput: {
-    width: '100%',
+    width: '90%',
     borderWidth: 2,
-    borderColor: hijau,
+    borderColor: ungu,
     borderRadius: 50,
     marginTop: 5,
     height: 50,
@@ -81,7 +81,7 @@ export const stylesDariGaya = StyleSheet.create({
     justifyContent: 'center',
   },
   textDataStyle: {
-    color: hijau,
+    color: ungu,
   },
   containerBoxHijau: {
     marginHorizontal: 22,
@@ -106,7 +106,7 @@ export const stylesDariGaya = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 20,
     borderLeftWidth: 3,
-    borderLeftColor: hijau,
+    borderLeftColor: ungu,
     elevation: 2,
     marginVertical: 5,
     backgroundColor: putih,
