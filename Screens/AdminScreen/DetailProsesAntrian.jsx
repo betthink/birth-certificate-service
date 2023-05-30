@@ -1,4 +1,13 @@
-import {View, Text, FlatList, TouchableOpacity, Linking} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Linking,
+  Image,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import TextInputMassage from '../Components/TextInputMassage';
 import {stylesDariGaya} from '../Components/ImportedStyles';
@@ -6,12 +15,20 @@ import ButtonBack from '../Components/ButtonBack';
 import GreenButton from '../Components/GreenButton';
 import axios from 'axios';
 import {ipAdress} from '../Components/Url';
-import {putih, ungu} from '../../Assets/StylingComponent/Coloring';
+import {
+  Grey,
+  Kuning,
+  Purple,
+  putih,
+  ungu,
+} from '../../Assets/StylingComponent/Coloring';
+import {AntDesign, FontAwsome} from '../Components/Icons';
 
 const DetailProsesAntrian = ({route, navigation}) => {
   const {IdAntrian, Nama, IdAdmin} = route.params;
   const [dataUpload, setdataUpload] = useState(null);
   const [IdUser, setIdUser] = useState(null);
+  const [file, setfile] = useState(null);
   const [waktuPendaftaran, setwaktuPendaftaran] = useState(null);
   const [valuInput, setvaluInput] = useState('');
   const KirimPesan = async () => {
@@ -43,10 +60,11 @@ const DetailProsesAntrian = ({route, navigation}) => {
       });
 
       const data = res.data;
-      // console.log(data);
+      console.log(data, 'Ini data file');
 
       setdataUpload(data);
       setIdUser(data[0].IdUser);
+      setfile(data[0].fileCompresed);
       setwaktuPendaftaran(data[0].dateUpload);
     } catch (error) {
       console.log(error);
@@ -80,9 +98,9 @@ const DetailProsesAntrian = ({route, navigation}) => {
   };
   const downloadFileWithUrl = async () => {
     // Cek apakah URL dapat dibuka
-    const url = `${ipAdress}/aplikasiLayananAkta/download/downloadFiles.php?IdAnak=${IdAntrian}`
+    const url = `${ipAdress}/aplikasiLayananAkta/download/downloadFiles.php?IdAnak=${IdAntrian}`;
     const supported = await Linking.canOpenURL(url);
-    
+
     if (supported) {
       // Buka URL di browser eksternal
       await Linking.openURL(url);
@@ -98,74 +116,136 @@ const DetailProsesAntrian = ({route, navigation}) => {
       <View style={[stylesDariGaya.headerBox]}>
         <ButtonBack buttontext={'Kembali'} />
       </View>
-      <View style={[{paddingHorizontal: 20}]}>
+      {/* image heaer */}
+      <View style={[{backgroundColor: putih}]}>
+        <Image
+          style={[
+            {width: 300, height: 200, resizeMode: 'cover', alignSelf: 'center'},
+          ]}
+          source={require('../../Assets/Images/writing.png')}
+        />
+      </View>
+      <View
+        style={[
+          {
+            paddingHorizontal: 20,
+            marginTop: 20,
+            backgroundColor: Purple,
+            flex: 1,
+            paddingVertical: 20,
+          },
+        ]}>
         {/* top content */}
-        <View>
-          <View
-            style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
-            <Text>Id User :</Text>
-            <Text>{IdUser}</Text>
+        <ScrollView>
+          {/* Id user */}
+          <View style={[styleLoc.ListTopContent]}>
+            <Text style={[styleLoc.labelTopContent]}>Id User :</Text>
+            <Text style={[styleLoc.FontTopContent]}>{IdUser}</Text>
           </View>
-          <View
-            style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
-            <Text>Waktu Upload :</Text>
-            <Text>{waktuPendaftaran}</Text>
+          {/* Waktu upload */}
+          <View style={[styleLoc.ListTopContent]}>
+            <Text style={[styleLoc.labelTopContent]}>Waktu Upload :</Text>
+            <Text style={[styleLoc.FontTopContent]}>{waktuPendaftaran}</Text>
           </View>
-          <View
-            style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
-            <Text>Nama :</Text>
-            <Text>{Nama}</Text>
+          {/* Nama */}
+          <View style={[styleLoc.ListTopContent]}>
+            <Text style={[styleLoc.labelTopContent]}>Nama :</Text>
+            <Text style={[styleLoc.FontTopContent]}>{Nama}</Text>
           </View>
-          <Text>Id antrian :{IdAntrian}</Text>
+          {/* Id antrian */}
+          <View style={[styleLoc.ListTopContent]}>
+            <Text style={[styleLoc.labelTopContent]}>Id antrian</Text>
+            <Text style={[styleLoc.FontTopContent]}>{IdAntrian}</Text>
+          </View>
           <TouchableOpacity
             onPress={() => navigation.navigate('FormulirScreen', {IdAntrian})}
             style={[
-              {backgroundColor: ungu, height: 30, justifyContent: 'center'},
+              {
+                backgroundColor: ungu,
+                padding: 20,
+                justifyContent: 'flex-start',
+                borderBottomWidth: 4,
+                borderColor: Kuning,
+                flexDirection: 'row',
+              },
             ]}>
-            <Text style={[{color: putih}]}>Formulir</Text>
+            <Text style={[{color: putih, marginRight: 20, fontSize: 17}]}>
+              Formulir
+            </Text>
+            <AntDesign color={putih} name="filetext1" size={20} />
           </TouchableOpacity>
-        </View>
-        <FlatList
-          data={dataUpload}
-          renderItem={({item}) => (
+          <View
+            style={[
+              {
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                backgroundColor: putih,
+                paddingVertical: 20,
+                paddingHorizontal: 20,
+              },
+            ]}>
             <View
               style={[
                 {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
-                  backgroundColor: putih,
-                  paddingVertical: 20,
+                  backgroundColor: Kuning,
+                  paddingHorizontal: 40,
+                  flex: 1,
+                  alignItems: 'center',
+                  borderLeftWidth: 4,
+                  borderColor: ungu,
                 },
               ]}>
-              <View>
-                {/* <Text>{item.IdAnak}</Text> */}
-                <Text>{item.fileCompresed}</Text>
-              
-              </View>
-              <View>
-                <GreenButton
+              {/* <Text>{item.IdAnak}</Text> */}
+              <Text style={[{fontSize: 20, color: ungu}]}>
+                {file}
+              </Text>
+              <FontAwsome name="file-zip-o" size={40} color={ungu} />
+            </View>
+            <View style={[{padding: 20, backgroundColor: ungu}]}>
+              <TouchableOpacity onPress={() => downloadFileWithUrl()}>
+                <AntDesign color={putih} name="download" size={20} />
+              </TouchableOpacity>
+              {/* <GreenButton
                   actionOnclick={() => downloadFileWithUrl()}
                   ButtonText={'Download'}
-                />
-              </View>
+                /> */}
             </View>
+          </View>
+        </ScrollView>
+
+        {/* <FlatList
+          data={dataUpload}
+          renderItem={({item}) => (
+           
           )}
-        />
+        /> */}
         <View
           style={[
             {
               flexDirection: 'row',
               justifyContent: 'space-between',
               marginTop: 20,
+              marginBottom: 50,
             },
           ]}>
           <TextInputMassage setValue={setvaluInput} valuInput={valuInput} />
           <GreenButton
-            ButtonText={'Kirim'}
-            actionOnclick={() => KirimPesan()}
+            // ButtonText={'Kirim'}
+            // actionOnclick={() => KirimPesan()}
+            ButtonText={'Selesai'}
+            actionOnclick={async () => {
+              try {
+                await KirimPesan();
+                await SelesaikanAntrian();
+              } catch (error) {
+                console.log(error);
+              }
+            }}
           />
         </View>
-        <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
+        {/* <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
           <GreenButton
             width={'40%'}
             ButtonText={'Selesai'}
@@ -177,10 +257,27 @@ const DetailProsesAntrian = ({route, navigation}) => {
               }
             }}
           />
-        </View>
+        </View> */}
       </View>
     </View>
   );
 };
 
 export default DetailProsesAntrian;
+const styleLoc = StyleSheet.create({
+  FontTopContent: {
+    color: putih,
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  ListTopContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderColor: Grey,
+  },
+  labelTopContent: {
+    color: Grey,
+  },
+});

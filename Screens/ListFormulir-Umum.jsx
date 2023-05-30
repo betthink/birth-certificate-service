@@ -49,11 +49,11 @@ const ListFormulir = ({navigation, route}) => {
         justifyContent: 'space-between',
       }}>
       <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-        <AntDesign color={putih} name="profile" size={40} />
+        <AntDesign color={putih} name="folderopen" size={40} />
         {/* <Text>{item.IdAnak}</Text> */}
-        <Text style={[{marginLeft: 20}]}>{item.Nama}</Text>
+        <Text style={[{marginLeft: 20, color: putih}]}>{item.Nama}</Text>
       </View>
-      <AntDesign color={putih} name="right" size={30} />
+      {/* <AntDesign color={putih} name="folderopen" size={30} /> */}
     </TouchableOpacity>
   );
   useEffect(() => {
@@ -70,18 +70,19 @@ const ListFormulir = ({navigation, route}) => {
         <View
           style={[
             {
-              backgroundColor: hijau,
+              backgroundColor: ungu,
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
-              margin: 20
+              margin: 20,
             },
           ]}>
           <Text>Belum ada data</Text>
         </View>
       ) : (
-        <View style={[{paddingHorizontal: 20}]}>
+        <View style={[{paddingHorizontal: 20, marginTop: 20, marginBottom: 20}]}>
           <FlatList
+          contentContainerStyle={[{paddingBottom: 80}]}
             data={data}
             renderItem={renderItem}
             keyExtractor={item => item.IdAnak}

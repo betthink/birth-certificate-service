@@ -8,6 +8,7 @@ import {fotoUrl} from '../../Assets/Url';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {
+  Purple,
   hijau,
   hitam,
   pinkGelap,
@@ -17,6 +18,7 @@ import {
   ungu,
 } from '../../Assets/StylingComponent/Coloring';
 import {ipAdress} from '../Components/Url';
+import {ConfirmationModal, styleModal} from '../Components/ModalKonfirmasi';
 // import {ipAdress} from '../Components/Url';
 
 // add file
@@ -36,16 +38,22 @@ async function openDocument() {
 }
 
 const ProfileAdminScreen = ({navigation, route}) => {
+  const {Id} = route.params;
+  // console.log(Id, "Id dari params");
   const [password, setpassword] = useState('');
   const [nik, setnik] = useState('');
-  const [Id, setId] = useState('');
-  const [StatusLayanan, setStatusLayanan] = useState('');
+  // const [Id, setId] = useState('');
+
   const [nomortelepon, setnomortelepon] = useState('');
   const [nama, setnama] = useState('');
   const [email, setemail] = useState('');
   const [fotoProfile, setfotoProfile] = useState('');
-  const [valueStatus, setvalueStatus] = useState(StatusLayanan);
-  const [ubahBoolean, setubahBoolean] = useState(null);
+  // const [valueStatus, setvalueStatus] = useState(StatusLayanan);
+  const [valDefaultLayanan, setvalDefaultLayanan] = useState(null);
+  const [ubahBoolean, setubahBoolean] = useState(
+    valDefaultLayanan == 0 ? false : true,
+  );
+console.log(ubahBoolean, "Ini nilai bolean");
   const ambilCookie = () => {
     AsyncStorage.getItem('userData').then(value => {
       AsyncStorage.getItem('userData');
@@ -59,31 +67,37 @@ const ProfileAdminScreen = ({navigation, route}) => {
         StatusLayanan,
         NIK,
       } = JSON.parse(value);
-      setId(Id);
+      // setId(Id);
       setnama(Nama);
       setpassword(Password);
-      setStatusLayanan(StatusLayanan);
+
       setnik(NIK);
       setemail(Email);
       setnomortelepon(NomorTelp);
       setfotoProfile(FotoProfile);
+      // console.log(Id, "ini Id async");
     });
   };
-  // ?UseeEffect=
-  useEffect(() => {
-    ambilCookie();
-    // getNewData();
-
-    // console.log('Ini status layaannanan', StatusLayanan);
-    // console.log('Ini valueAntrian', valueAntrian);
-    // console.log('Log dari useeffect', valueStatus);
-    console.log(ubahBoolean, 'ini new bool setelah pembaruan');
-  }, [valueStatus, ubahBoolean]);
+  const getDataUSer = async () => {
+    const res = await axios({
+      method: 'POST',
+      // data: {Id: Id},
+      url: `${ipAdress}/aplikasiLayananAkta/api/apiDataUserAdmin.php`,
+    });
+    let data;
+    data = res.data;
+    console.log(Id, 'Ini Id dari params');
+    // console.log(data, "Ini data");
+    const filteredData = data.filter(item => item.Id === Id);
+    // const datafilter = data[0].filter(d => d.Id == Id);
+    const statusFiltered = filteredData[0].StatusLayanan;
+    console.log(filteredData[0].StatusLayanan, 'Filtered');
+    setvalDefaultLayanan(statusFiltered);
+  };
 
   const ubahBolean = async () => {
-    const newBool = valueStatus === 1 ? 0 : 1;
-    setubahBoolean(newBool);
-
+    // const newBool = valueStatus === 1 ? 0 : 1;
+    setubahBoolean(!ubahBoolean);
   };
 
   // function on off antrian
@@ -95,7 +109,7 @@ const ProfileAdminScreen = ({navigation, route}) => {
         method: 'POST',
         data: {
           Id: Id,
-          StatusLayanan: 0,
+          StatusLayanan: ubahBoolean ? 1 : 0,
         },
         url: `${ipAdress}/aplikasiLayananAkta/update/BukaTutupAntrian.php`,
         headers: {'Content-Type': 'multipart/form-data'},
@@ -104,11 +118,13 @@ const ProfileAdminScreen = ({navigation, route}) => {
       console.log(res.data);
 
       if (StatusLayanan == 1) {
-        console.log('antrian Terbuka');
-        setvalueStatus(1);
+        alert('antrian Terbuka');
+        navigation.replace('ProfileAdminScreen', {Id})
+        // setvalueStatus(1);
       } else {
-        console.log('antrian Tertutup');
-        setvalueStatus(0);
+        alert('antrian Terbuka');
+        navigation.replace('ProfileAdminScreen', {Id})
+        // setvalueStatus(0);
       }
     } catch (error) {
       alert('koneksi sedang tidak bagus, sihlakan coba lagi?');
@@ -116,39 +132,33 @@ const ProfileAdminScreen = ({navigation, route}) => {
     }
   }
 
-  // tampilkan lagi data user /
+  // modal atribute
+  const [modalVisible, setModalVisible] = useState(false);
 
-  // const getNewData = async () => {
-  //   const url = `${ipAdress}/aplikasiLayananAkta/api/apiDataUserAdmin.php`;
-  //   await axios({
-  //     method: 'POST',
-  //     url: `${url}`,
-  //   })
-  //     .then(res => {
-  //       let data = res.data;
+  const handleCancel = () => {
+    setModalVisible(false);
+  };
 
-  //       const datafilter = data.filter(d => d.Id == Id);
-  //       // const {StatusLayanan} = datafilter;
-  //       // const {StatusLayanan} = data;
+  const handleConfirm = async () => {
+    // Lakukan aksi konfirmasi di sini
+    await ubahBolean();
+    await kelolaBukaTutupAntrian();
+    setModalVisible(false);
+  };
 
-  //       const statusLayanan = datafilter.map(item => item.StatusLayanan);
-  //       const statusLayananIndex = statusLayanan[0];
-  //       setvalueStatus(statusLayananIndex);
-  //       console.log(statusLayananIndex);
-  //     })
-  //     .catch(err => console.log(err));
-  // };
+  // ?UseeEffect=
+  useEffect(() => {
+    console.log(valDefaultLayanan, 'ini di valDefaultLayanan');
+    const reloadPage = navigation.addListener('focus', async () => {
+      // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
+      await ambilCookie();
+      await getDataUSer();
 
-  // const changeAntrian = async () => {
-  //   try {
-  //     // await ubahBolean();
-  //     await kelolaBukaTutupAntrian();
-  //     // await getNewData();
-  //   } catch (error) {
-  //     console.error('Terjadi kesalahan:', error);
-  //   }
-  // };
+      // await fetchData();
+    });
 
+    return reloadPage;
+  }, [ubahBoolean, valDefaultLayanan]);
 
   return (
     <View style={{flex: 1, backgroundColor: putihGelap}}>
@@ -201,7 +211,9 @@ const ProfileAdminScreen = ({navigation, route}) => {
               }}>
               <Image
                 style={[{width: 80, height: 80, borderRadius: 45}]}
-                source={{uri: `${ipAdress}/aplikasiLayananAkta/uploads/FotoProfile/${nik}/${fotoProfile}`}}
+                source={{
+                  uri: `${ipAdress}/aplikasiLayananAkta/uploads/FotoProfile/${nik}/${fotoProfile}`,
+                }}
                 // source={{
                 //   uri: fotoUrl,
                 // }}
@@ -222,6 +234,14 @@ const ProfileAdminScreen = ({navigation, route}) => {
         </View>
         {/* Data pribadi  */}
         <ScrollView style={{marginTop: 20}}>
+          {/* modal */}
+          <View style={styleModal.container}>
+            <ConfirmationModal
+              visible={modalVisible}
+              onCancel={handleCancel}
+              onConfirm={handleConfirm}
+            />
+          </View>
           <View style={[stylesDariGaya.listData]}>
             <Text>Password</Text>
             <Text style={[stylesDariGaya.textDataStyle]}>{password}</Text>
@@ -245,7 +265,9 @@ const ProfileAdminScreen = ({navigation, route}) => {
           </View>
           <View style={[stylesDariGaya.listData]}>
             <Text>Status Antrian</Text>
-            <Text style={[stylesDariGaya.textDataStyle]}>{StatusLayanan == 1 ? 'Buka' : 'Tutup'}</Text>
+            <Text style={[stylesDariGaya.textDataStyle]}>
+              {valDefaultLayanan == 1 ? 'Buka' : 'Tutup'}
+            </Text>
           </View>
         </ScrollView>
         {/* *buttons */}
@@ -265,7 +287,7 @@ const ProfileAdminScreen = ({navigation, route}) => {
                 await tampilkanDataById();
               } catch (error) {}
             }}
-            style={[styleButtons.buttons, {backgroundColor: hijau}]}>
+            style={[styleButtons.buttons, {backgroundColor: ungu}]}>
             <MaterialIcon name="edit" color={putih} />
             <Text style={[{color: putih}]}>Edit Akun</Text>
           </TouchableOpacity>
@@ -273,19 +295,33 @@ const ProfileAdminScreen = ({navigation, route}) => {
           <TouchableOpacity
             onPress={async () => {
               try {
-                await ubahBolean();
-                await kelolaBukaTutupAntrian();
+                setModalVisible(true);
+
+                // await kelolaBukaTutupAntrian();
                 // console.log('presed');
               } catch (error) {
                 console.log(error);
               }
-            }}
-            style={[styleButtons.buttons, {backgroundColor: '#454545'}]}>
-            <MaterialIcon name="logout" color={putih} />
-            {valueStatus == 1 ? (
-              <Text style={[{color: putih}]}> Terbuka</Text>
+            }}>
+            {ubahBoolean ? (
+              <View style={[styleButtons.buttons, {backgroundColor: hijau}]}>
+                <MaterialIcon name="logout" color={putih} />
+
+                <Text style={[{color: putih}]}> Terbuka</Text>
+              </View>
             ) : (
-              <Text style={[{color: putih}]}>Tertutup</Text>
+              <View
+                style={[
+                  styleButtons.buttons,
+                  {
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'salmon',
+                  },
+                ]}>
+                <MaterialIcon name="logout" color={putih} />
+                <Text style={[{color: putih}]}>Tertutup</Text>
+              </View>
             )}
           </TouchableOpacity>
           {/* buttons Log out */}

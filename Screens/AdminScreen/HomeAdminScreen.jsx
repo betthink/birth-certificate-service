@@ -18,14 +18,19 @@ import {ipAdress} from '../Components/Url';
 const HomeAdminScreen = ({navigation}) => {
   const [linkProfile, setlinkProfile] = useState(null);
   const [Nik, setNik] = useState(null);
+  const [Nama, setNama] = useState(null);
+  const [IdUserAsync, setIdUserAsync] = useState(null);
   // console.log(linkProfile, 'ini link profile');
   const ambilAsyncStorage = () => {
     AsyncStorage.getItem('userData').then(value => {
       AsyncStorage.getItem('userData');
-      const {FotoProfile, NIK} = JSON.parse(value);
+      const {FotoProfile, NIK, Nama, Id} = JSON.parse(value);
     
       setlinkProfile(FotoProfile);
       setNik(NIK);
+      setNama(Nama);
+      setIdUserAsync(Id);
+
       // console.log(FotoProfile, 'Ini Url fotoProfile');
     });
   };
@@ -120,12 +125,12 @@ const HomeAdminScreen = ({navigation}) => {
             <Text style={[stylesDariGaya.TextMediumBold,] }>
               Selamat datang Admin
             </Text>
-            <Text style={[stylesDariGaya.TextBold]}>Username!</Text>
+            <Text style={[stylesDariGaya.TextBold, {color: ungu}]}>{Nama}</Text>
           </View>
           {/* fotoProfile */}
           <View style={{padding: 2, backgroundColor: ungu, borderRadius: 30}}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('ProfileAdminScreen')}>
+              onPress={() => navigation.navigate('ProfileAdminScreen' , {Id : IdUserAsync})}>
               <Image
                 style={[stylesDariGaya.fotoProfile]}
                 // source={require('../../Assets/Images/album.png')}

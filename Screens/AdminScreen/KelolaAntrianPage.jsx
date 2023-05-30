@@ -62,7 +62,7 @@ function KelTerdaftar({}) {
     <View style={[{flex: 1}]}>
       {leng >= 1 ? (
         <FlatList
-        style={[{marginTop: 20}]}
+          style={[{marginTop: 20}]}
           data={dataAntrianTerdaftar}
           renderItem={({item}) => (
             <View
@@ -117,7 +117,7 @@ function KelTerdaftar({}) {
               justifyContent: 'center',
               alignItems: 'center',
               flex: 1,
-              backgroundColor: 'salmon',
+              backgroundColor: ungu,
             },
           ]}>
           <Text style={[{color: putih, fontSize: 16, letterSpacing: 1}]}>
@@ -220,7 +220,8 @@ function KelDiproses() {
   }, []);
   return (
     <View style={[{flex: 1}]}>
-      <ScrollView contentContainerStyle={[{flex: 1, backgroundColor: putihGelap}]}>
+      <ScrollView
+        contentContainerStyle={[{flex: 1, backgroundColor: putihGelap}]}>
         {/* antrian Valid */}
         <View
           style={[
@@ -286,7 +287,12 @@ function KelDiproses() {
           ) : (
             <View
               style={[
-                {flex: 1, justifyContent: 'center', alignItems: 'center'},
+                {
+                  height: 500,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: ungu,
+                },
               ]}>
               <Text>Tidak ada antrian yang perlu di tangani</Text>
             </View>
@@ -321,7 +327,7 @@ function KelDiproses() {
                     backgroundColor: putih,
                     padding: 20,
                     borderLeftWidth: 2,
-                    borderColor: hijau,
+                    borderColor: ungu,
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'space-between',
@@ -406,42 +412,45 @@ function KelDitolak() {
             },
           ]}>
           <View style={[{marginTop: 20}]}>
-          <FlatList
-            data={dataAntrianDitolak}
-            renderItem={({item}) => (
-              <View
-                style={[
-                  {
-                    // marginHorizontal: 20,
-                    backgroundColor: putih,
-                    padding: 20,
-                    borderLeftWidth: 2,
-                    borderColor: ungu,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    marginVertical: 2,
-                  },
-                ]}>
-                <View>
-                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                    <Text>Nomor Antrian : </Text>
-                    <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
-                      {item.IdAntrian}
-                    </Text>
+            <FlatList
+              data={dataAntrianDitolak}
+              renderItem={({item}) => (
+                <View
+                  style={[
+                    {
+                      // marginHorizontal: 20,
+                      backgroundColor: putih,
+                      padding: 20,
+                      borderLeftWidth: 2,
+                      borderColor: ungu,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      marginVertical: 2,
+                    },
+                  ]}>
+                  <View>
+                    <View
+                      style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                      <Text>Nomor Antrian : </Text>
+                      <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
+                        {item.IdAntrian}
+                      </Text>
+                    </View>
+                    <View
+                      style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                      <Text>Nama anak: </Text>
+                      <Text>{item.Nama}</Text>
+                    </View>
                   </View>
-                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                    <Text>Nama anak: </Text>
-                    <Text>{item.Nama}</Text>
+                  <View>
+                    <Text>Status</Text>
+                    <Text>{item.Status}</Text>
                   </View>
                 </View>
-                <View>
-                  <Text>Status</Text>
-                  <Text>{item.Status}</Text>
-                </View>
-              </View>
-            )}
-          /></View>
+              )}
+            />
+          </View>
         </ScrollView>
       )}
     </View>
@@ -483,7 +492,7 @@ function DaftarPenerima() {
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: 'salmon',
+              backgroundColor: ungu,
             },
           ]}>
           <Text style={[{fontSize: 16, letterSpacing: 1, color: putih}]}>
@@ -501,7 +510,7 @@ function DaftarPenerima() {
             },
           ]}>
           <FlatList
-          style={[{marginTop: 20}]}
+            style={[{marginTop: 20}]}
             data={dataAntrianSelesai}
             renderItem={({item}) => (
               <View
@@ -521,7 +530,8 @@ function DaftarPenerima() {
                 <View>
                   <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
                     <Text>Id Pengambilan : </Text>
-                    <Text style={[{fontWeight: 'bold', fontSize: 20, color: ungu}]}>
+                    <Text
+                      style={[{fontWeight: 'bold', fontSize: 20, color: ungu}]}>
                       {item.IdPengambilan}
                     </Text>
                   </View>
@@ -534,9 +544,17 @@ function DaftarPenerima() {
                   <Text>Status</Text>
                   <Text>{item.Status}</Text>
                 </View> */}
-                <TouchableOpacity style={[{width: 30, borderWidth: 2, borderColor: ungu, borderRadius: 15}]} onPress={()=>console.log("press")}>
-                 
-                  <MaterialIcons size={25} name='done' />
+                <TouchableOpacity
+                  style={[
+                    {
+                      width: 30,
+                      borderWidth: 2,
+                      borderColor: ungu,
+                      borderRadius: 15,
+                    },
+                  ]}
+                  onPress={() => console.log('press')}>
+                  <MaterialIcons size={25} name="done" />
                 </TouchableOpacity>
               </View>
             )}

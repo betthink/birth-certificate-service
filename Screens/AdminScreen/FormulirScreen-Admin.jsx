@@ -4,14 +4,16 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ButtonBack from '../Components/ButtonBack';
 import {stylesDariGaya} from '../Components/ImportedStyles';
 import axios from 'axios';
 import {ipAdress} from '../Components/Url';
-import {hijau, putih, ungu} from '../../Assets/StylingComponent/Coloring';
+import {Grey, hijau, putih, ungu} from '../../Assets/StylingComponent/Coloring';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+// import { Image } from 'react-native-svg';
 const FormulirScreen = ({route}) => {
   const [showDataBayi, setshowDataBayi] = useState(false);
   const [showDataIbu, setshowDataIbu] = useState(false);
@@ -89,9 +91,9 @@ const FormulirScreen = ({route}) => {
   return (
     <View>
       <View style={[stylesDariGaya.headerBox]}>
-        <ButtonBack buttontext={'Kembali'} />
+        <ButtonBack buttontext={'Data Formulir'} />
       </View>
-      <View style={[{paddingHorizontal: 20}]}>
+      <View>
         {dataBayi == null ? (
           <View>
             <Text>Tidak ada data</Text>
@@ -99,19 +101,24 @@ const FormulirScreen = ({route}) => {
         ) : (
           <ScrollView contentContainerStyle={[{paddingBottom: 230}]}>
             {/* content bayi */}
-            <View>
+            {/* image header */}
+            <View style={[{flex: 1, backgroundColor: putih}]}>
+              <Image
+                style={[{width: 200, height: 200, alignSelf: 'center'}]}
+                resizeMode="cover"
+                source={require('../../Assets/Images/ReviewData.png')}
+              />
+            </View>
+            <View style={[style.borderList, {marginTop: 20}]}>
               <TouchableOpacity
                 onPress={() => setshowDataBayi(!showDataBayi)}
-                style={[
-                  {
-                    flexDirection: 'row',
-                    backgroundColor: ungu,
-                    padding: 20,
-                    justifyContent: 'space-between',
-                  },
-                ]}>
-                <Text>Data Bayi</Text>
-                <MaterialIcon name={(!showDataBayi)? "chevron-right" : 'chevron-down' } size={20} />
+                style={[style.styleList]}>
+                <Text style={[style.normalFont]}>Data Bayi</Text>
+                <MaterialIcon
+                  color={putih}
+                  name={!showDataBayi ? 'chevron-right' : 'chevron-down'}
+                  size={20}
+                />
               </TouchableOpacity>
               {showDataBayi && (
                 <ScrollView>
@@ -186,19 +193,16 @@ const FormulirScreen = ({route}) => {
               )}
             </View>
             {/* content Ibu */}
-            <View>
+            <View style={[style.borderList]}>
               <TouchableOpacity
                 onPress={() => setshowDataIbu(!showDataIbu)}
-                style={[
-                  {
-                    flexDirection: 'row',
-                    backgroundColor: ungu,
-                    padding: 20,
-                    justifyContent: 'space-between',
-                  },
-                ]}>
-                <Text>Data Ibu</Text>
-                <MaterialIcon name={(!showDataIbu)? "chevron-right" : 'chevron-down' }  size={20} />
+                style={[style.styleList]}>
+                <Text style={[style.normalFont]}>Data Ibu</Text>
+                <MaterialIcon
+                  color={putih}
+                  name={!showDataIbu ? 'chevron-right' : 'chevron-down'}
+                  size={20}
+                />
               </TouchableOpacity>
               {showDataIbu && (
                 <ScrollView>
@@ -248,19 +252,16 @@ const FormulirScreen = ({route}) => {
               )}
             </View>
             {/* content Ayah */}
-            <View>
+            <View style={[style.borderList]}>
               <TouchableOpacity
                 onPress={() => setshowDataAyah(!showDataAyah)}
-                style={[
-                  {
-                    flexDirection: 'row',
-                    backgroundColor: ungu,
-                    padding: 20,
-                    justifyContent: 'space-between',
-                  },
-                ]}>
-                <Text>Data Ayah</Text>
-                <MaterialIcon name={(!showDataAyah)? "chevron-right" : 'chevron-down' }  size={20} />
+                style={[style.styleList]}>
+                <Text style={[style.normalFont]}>Data Ayah</Text>
+                <MaterialIcon
+                  color={putih}
+                  name={!showDataAyah ? 'chevron-right' : 'chevron-down'}
+                  size={20}
+                />
               </TouchableOpacity>
               {showDataAyah && (
                 <ScrollView>
@@ -310,19 +311,16 @@ const FormulirScreen = ({route}) => {
               )}
             </View>
             {/* content Saksi 1 */}
-            <View>
+            <View style={[style.borderList]}>
               <TouchableOpacity
                 onPress={() => setshowDataSaksi1(!showDataSaksi1)}
-                style={[
-                  {
-                    flexDirection: 'row',
-                    backgroundColor: ungu,
-                    padding: 20,
-                    justifyContent: 'space-between',
-                  },
-                ]}>
-                <Text>Data Saksi 1</Text>
-                <MaterialIcon name={(!showDataSaksi1)? "chevron-right" : 'chevron-down' }  size={20} />
+                style={[style.styleList]}>
+                <Text style={[style.normalFont]}>Data Saksi 1</Text>
+                <MaterialIcon
+                  color={putih}
+                  name={!showDataSaksi1 ? 'chevron-right' : 'chevron-down'}
+                  size={20}
+                />
               </TouchableOpacity>
               {showDataSaksi1 && (
                 <ScrollView>
@@ -356,7 +354,7 @@ const FormulirScreen = ({route}) => {
                     <Text>Alamat : </Text>
                     <Text style={[style.fontstyle]}>{dataSaksi1.Alamat}</Text>
                   </View>
-             
+
                   {/* Kewarganegaraan */}
                   <View style={[style.containerEachData]}>
                     <Text>Kewarganegaraan : </Text>
@@ -368,19 +366,16 @@ const FormulirScreen = ({route}) => {
               )}
             </View>
             {/* content Saksi 2 */}
-            <View>
+            <View style={[style.borderList]}>
               <TouchableOpacity
                 onPress={() => setshowDataSaksi2(!showDataSaksi2)}
-                style={[
-                  {
-                    flexDirection: 'row',
-                    backgroundColor: ungu,
-                    padding: 20,
-                    justifyContent: 'space-between',
-                  },
-                ]}>
-                <Text>Data Saksi 2</Text>
-                <MaterialIcon name={(!showDataSaksi2)? "chevron-right" : 'chevron-down' }  size={20} />
+                style={[style.styleList]}>
+                <Text style={[style.normalFont]}>Data Saksi 2</Text>
+                <MaterialIcon
+                  color={putih}
+                  name={!showDataSaksi2 ? 'chevron-right' : 'chevron-down'}
+                  size={20}
+                />
               </TouchableOpacity>
               {showDataSaksi2 && (
                 <ScrollView>
@@ -414,7 +409,7 @@ const FormulirScreen = ({route}) => {
                     <Text>Alamat : </Text>
                     <Text style={[style.fontstyle]}>{dataSaksi2.Alamat}</Text>
                   </View>
-             
+
                   {/* Kewarganegaraan */}
                   <View style={[style.containerEachData]}>
                     <Text>Kewarganegaraan : </Text>
@@ -440,12 +435,27 @@ const style = StyleSheet.create({
     alignItems: 'center',
     //   height: 30,
     padding: 10,
-    backgroundColor: hijau,
+    backgroundColor: putih,
     elevation: 1,
   },
   fontstyle: {
-    fontSize: 20,
-    fontWeight: '600',
+    fontSize: 16,
+    fontWeight: '400',
+    color: ungu,
+  },
+  normalFont: {
     color: putih,
+  },
+  styleList: {
+    flexDirection: 'row',
+    backgroundColor: ungu,
+    padding: 20,
+    justifyContent: 'space-between',
+    marginBottom: 2,
+  },
+  borderList: {
+    borderLeftWidth: 3,
+    borderColor: hijau,
+    marginHorizontal: 20,
   },
 });
