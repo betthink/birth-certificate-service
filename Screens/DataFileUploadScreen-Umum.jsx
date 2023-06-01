@@ -4,7 +4,7 @@ import ButtonBack from './Components/ButtonBack';
 import {stylesDariGaya} from './Components/ImportedStyles';
 import ListUploadFile from './Components/ListUploadFile';
 import DefaultButtonBox from './Components/DefaultButtonBox';
-import {hijau} from '../Assets/StylingComponent/Coloring';
+import {hijau, ungu} from '../Assets/StylingComponent/Coloring';
 import DocumentPicker from 'react-native-document-picker';
 import {ipAdress} from './Components/Url';
 import axios from 'axios';
@@ -61,7 +61,7 @@ const DataFileUploadScreen = ({navigation, route}) => {
       const {message, value} = response.data;
       if(value == 1) {
         alert("Berhasil membuat antrian");
-        navigation.navigate("AntrianLayananScreen")
+     
       }
     } catch (error) {
       alert("Gagal membuat antrian");
@@ -77,19 +77,19 @@ const DataFileUploadScreen = ({navigation, route}) => {
         url: `${ipAdress}/aplikasiLayananAkta/addData/addDataAntrianValid.php`,
         headers: {'Content-Type': 'multipart/form-data'},
       });
+      const {value, message} = res.data;
+      if(value==1) {
+        console.log(message);
+        navigation.navigate("AntrianLayananScreen")
+      } else {
+        console.log(message);
+      }
       console.log(res.data, "ini data dari antrianValid");
     } catch (error) {}
   };
 
   useEffect(() => {
-    // console.log(FileKK[0].name, "Ini name useEf");
-    // if (FileKK == null) {
-    //   console.log(FileKK);
-    // } else {
-    //   console.log(FileKK.name);
-    // }
-    // FileKK == !null ? console.log(FileKK.uri) : null;
-    // console.log(IdAnak, IdUser);
+
   }, []);
 
   return (
@@ -103,40 +103,46 @@ const DataFileUploadScreen = ({navigation, route}) => {
         {/* KK */}
         <ListUploadFile
           titleList={FileKK == null ? 'ScanKK' : FileKK.name}
-          MaterialIconName={'file-document'}
+          MaterialIconName={FileKK == null? 'addfile' : 'check' }
           onPressAction={() => pickDocument(setFileKK)}
+          warna={FileKK == null ? ungu : hijau}
         />
         {/* KTP IBU */}
         <ListUploadFile
           titleList={FileKtpIbu == null ? 'Scan KTP Ibu' : FileKtpIbu.name}
-          MaterialIconName={'file-document'}
+          MaterialIconName={FileKtpIbu == null? 'addfile' : 'check' }
           onPressAction={() => pickDocument(setFileKtpIbu)}
+          warna={FileKtpIbu == null ? ungu : hijau}
         />
         {/* KTP Ayah */}
         <ListUploadFile
           titleList={FileKtpAyah == null ? 'Scan KTP Ayah' : FileKtpAyah.name}
-          MaterialIconName={'file-document'}
+          MaterialIconName={FileKtpAyah == null? 'addfile' : 'check' }
           onPressAction={() => pickDocument(setFileKtpAyah)}
+          warna={FileKtpAyah == null ? ungu : hijau}
         />
         {/* KTP Saksi1 */}
         <ListUploadFile
           titleList={FileSaksi1 == null ? 'Scan KTP Saksi1' : FileSaksi1.name}
-          MaterialIconName={'file-document'}
+          MaterialIconName={FileSaksi1 == null? 'addfile' : 'check' }
           onPressAction={() => pickDocument(setFileSaksi1)}
+          warna={FileSaksi1 == null ? ungu : hijau}
         />
         {/* KTP Saksi2 */}
         <ListUploadFile
           titleList={FileSaksi2 == null ? 'Scan KTP Saksi2' : FileSaksi2.name}
-          MaterialIconName={'file-document'}
+          MaterialIconName={FileSaksi2 == null? 'addfile' : 'check' }
           onPressAction={() => pickDocument(setFileSaksi2)}
+          warna={FileSaksi2 == null ? ungu : hijau}
         />
         {/* Ket NIkah */}
         <ListUploadFile
           titleList={
             FileKetNikah == null ? 'Scan Keterangan Nikah' : FileKetNikah.name
           }
-          MaterialIconName={'file-document'}
+          MaterialIconName={FileKetNikah == null? 'addfile' : 'check' }
           onPressAction={() => pickDocument(setFileKetNikah)}
+          warna={FileKetNikah == null ? ungu : hijau}
         />
         {/* Ket lahir anak */}
         <ListUploadFile
@@ -145,8 +151,9 @@ const DataFileUploadScreen = ({navigation, route}) => {
               ? 'Scan Keterangan lahir anak'
               : FileKetLahirAnak.name
           }
-          MaterialIconName={'file-document'}
+          MaterialIconName={FileKetLahirAnak == null? 'addfile' : 'check'}
           onPressAction={() => pickDocument(setFileKetLahirAnak)}
+          warna={FileKetLahirAnak == null ? ungu : hijau}
         />
         {/* button/ */}
         <DefaultButtonBox

@@ -138,6 +138,7 @@ const DataSaksi2Screen = ({navigation, route}) => {
           onChangeText={text => setNIK(text)}
           value={NIk}
           IconName={'id-card'}
+          InputType={"numeric"}
         />
         {/* Nama */}
         <TextInputBox

@@ -2,7 +2,7 @@ import {View, Text, TextInput} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { greenTea, ungu } from '../../Assets/StylingComponent/Coloring';
-const TextInputBox = ({Label, placeholderTitle, value, onChangeText, IconName}) => {
+const TextInputBox = ({Label, placeholderTitle, value, onChangeText, IconName,InputType}) => {
   return (
     <View style={[{marginTop: 15}]}>
       <Text style={[{fontWeight: 'bold', letterSpacing: 1}]}>{Label}</Text>
@@ -24,6 +24,7 @@ const TextInputBox = ({Label, placeholderTitle, value, onChangeText, IconName}) 
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholderTitle}
+          keyboardType={InputType}
         />
       </View>
     </View>

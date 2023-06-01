@@ -116,13 +116,17 @@ const PemberitahuanScreen = ({navigation, route}) => {
                   <View
                     style={[
                       {
-                        paddingHorizontal: 100,
-                        paddingVertical: 50,
+                        // paddingHorizontal: 100,
+                        // paddingVertical: 50,
                         backgroundColor: putih,
-                        flex: 1,
+                        width: '100%',
                       },
                     ]}>
-                    <Text>{item.Pemberitahuan}</Text>
+                    <Text style={[{padding: 10}]}>
+                      {item.Pemberitahuan == 0
+                        ? 'Belum ada Pemberitahuan'
+                        : item.Pemberitahuan}
+                    </Text>
                   </View>
                 </View>
               )}

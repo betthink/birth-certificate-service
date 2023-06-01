@@ -1,24 +1,25 @@
 import {View, Text, TextInput} from 'react-native';
 import React, {useState} from 'react';
-import {hijau, putih} from '../../Assets/StylingComponent/Coloring';
+import {Grey, greenTea, hijau, hitam, putih} from '../../Assets/StylingComponent/Coloring';
 
 const TextInputMassage = ({setValue, valuInput}) => {
   return (
-    <View>
+    <View style={[{flex: 1}]}>
       <TextInput
         multiline
         style={[
           {
-            borderBottomWidth: 2,
-            borderLeftWidth: 2,
-            borderColor: putih,
+            // borderBottomWidth: 2,
+            // borderLeftWidth: 2,
+            // borderColor: putih,
             flex: 1,
-            width: 250 , paddingHorizontal: 20, color: putih
+            paddingHorizontal: 20, color: hitam
+            , backgroundColor: putih
           },
         ]}
         onChangeText={text => setValue(text)}
         value={valuInput}
-        placeholderTextColor={putih}
+        placeholderTextColor={Grey}
         
         placeholder="Isi pesan disini"
       />

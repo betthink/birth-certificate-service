@@ -148,6 +148,9 @@ console.log(ubahBoolean, "Ini nilai bolean");
 
   // ?UseeEffect=
   useEffect(() => {
+    if (valDefaultLayanan == null) {
+      
+    }
     console.log(valDefaultLayanan, 'ini di valDefaultLayanan');
     const reloadPage = navigation.addListener('focus', async () => {
       // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini

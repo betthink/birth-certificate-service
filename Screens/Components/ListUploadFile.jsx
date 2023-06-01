@@ -4,7 +4,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {hijau, ungu} from '../../Assets/StylingComponent/Coloring';
 import { TextInput } from 'react-native-gesture-handler';
-const ListUploadFile = ({titleList, MaterialIconName, onPressAction}) => {
+import { AntDesign } from './Icons';
+const ListUploadFile = ({titleList, MaterialIconName, onPressAction, warna}) => {
   return (
     <View
       style={[
@@ -21,12 +22,12 @@ const ListUploadFile = ({titleList, MaterialIconName, onPressAction}) => {
         },
       ]}>
       <View style={[{flexDirection: 'row', alignItems: 'center', width: "50%"}]}>
-        <MaterialIcon name={MaterialIconName} size={30} color={ungu} />
+        <AntDesign name={MaterialIconName} size={30} color={warna} />
         {/* <TextInput editable={false} value={titleList} /> */}
         <Text>{titleList}</Text>
       </View>
       <TouchableOpacity onPress={onPressAction}>
-        <Icon name={'ios-add-circle-outline'} size={30} color={hijau} />
+        <AntDesign name={'upload'} size={30} color={hijau} />
       </TouchableOpacity>
     </View>
   );

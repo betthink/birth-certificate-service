@@ -255,11 +255,7 @@ const DataBayiScreen = ({route, navigation}) => {
                 />
                 {/* dropJenis Kelamin */}
                 <View style={[{zIndex: -1}, style.containerDropdownAndIcon]}>
-                  <FeaherIcon
-                    style={[{color: ungu}]}
-                    name="users"
-                    size={20}
-                  />
+                  <FeaherIcon style={[{color: ungu}]} name="users" size={20} />
                   <DropdownSelect
                     Label="Jenis Kelamin"
                     placeholder={'Pilih Jenis Kelamin'}
@@ -303,11 +299,7 @@ const DataBayiScreen = ({route, navigation}) => {
                 </View>
                 {/* drop Usutan kelahiran */}
                 <View style={[{zIndex: -3}, style.containerDropdownAndIcon]}>
-                  <FeaherIcon
-                    style={[{color: ungu}]}
-                    name="users"
-                    size={20}
-                  />
+                  <FeaherIcon style={[{color: ungu}]} name="users" size={20} />
                   <DropdownSelect
                     placeholder={'Pilih Urutan Kelahiran'}
                     Label="Urutan Kelahiran"
@@ -387,7 +379,7 @@ const DataBayiScreen = ({route, navigation}) => {
                             height: 50,
                             borderEndWidth: 2,
                             borderBottomWidth: 2,
-                            borderColor: greenTea,
+                            borderColor: ungu,
                             // paddingHorizontal: 20,
                             // marginLeft: 10,
                             flex: 1,
@@ -431,9 +423,11 @@ const DataBayiScreen = ({route, navigation}) => {
                     value={BeratBayi}
                     onChangeText={text => setBeratBayi(text)}
                     IconName={'baby'}
+                    InputType={"numeric"}
                   />
                 </View>
                 <TextInputBox
+                  InputType={'numeric'}
                   IconName={'baby'}
                   Label={'Panjang Bayi'}
                   placeholderTitle={'*Gunakan satuan centimeter/cm'}

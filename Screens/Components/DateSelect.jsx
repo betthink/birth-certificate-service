@@ -20,7 +20,7 @@ const DateSelect = ({
   return (
     <View style={[{flex: 1}]}>
       {/* <Text>DateSelect</Text> */}
-      <View style={[{height: 50, borderEndWidth: 2,borderBottomWidth: 2, borderColor: ungu}]}>
+      <View style={[{height: 50,borderBottomWidth: 2, borderColor: ungu}]}>
         <TouchableOpacity
           style={[
             {

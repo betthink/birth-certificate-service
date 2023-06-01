@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TextInput,
   ScrollView,
+  ActivityIndicator,
   Button,
   useWindowDimensions,
 } from 'react-native';
@@ -14,6 +15,8 @@ import {stylesDariGaya} from '../Components/ImportedStyles';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {
+  Grey,
+  Kuning,
   hijau,
   pinkGelap,
   putih,
@@ -32,6 +35,7 @@ import {useNavigation, useRoute, useIsFocused} from '@react-navigation/native';
 // const isFocused = useIsFocused();
 
 function KelTerdaftar({}) {
+  const [isLoading, setisLoading] = useState(true);
   const navigation = useNavigation();
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   let [dataAntrianTerdaftar, setdataAntrianTerdaftar] = useState();
@@ -46,11 +50,17 @@ function KelTerdaftar({}) {
         data = data.filter(d => d.Status == 'Terdaftar');
         // console.log(data, "ini data antrian terdaftar");
         setLeng(data.length);
+
+        data = data.sort((a, b) => b.IdAntrian - a.IdAntrian);
         setdataAntrianTerdaftar(data);
+        console.log(data, 'Ini List antrian Terdaftar  reversed');
       })
       .catch(err => console.log(err));
   };
   useEffect(() => {
+    setTimeout(() => {
+      setisLoading(false);
+    }, 3000);
     const reloadPage = navigation.addListener('focus', () => {
       // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
       getDataAntrianTerdaftar();
@@ -60,6 +70,19 @@ function KelTerdaftar({}) {
   }, []);
   return (
     <View style={[{flex: 1}]}>
+      {isLoading && (
+        <View
+          style={[
+            {
+              backgroundColor: ungu,
+              flex: 1000,
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+          ]}>
+          <ActivityIndicator size="large" color="#fff" />
+        </View>
+      )}
       {leng >= 1 ? (
         <FlatList
           style={[{marginTop: 20}]}
@@ -132,6 +155,7 @@ function KelTerdaftar({}) {
 function KelDiproses() {
   const navigation = useNavigation();
   const [IdAdmin, setIdAdmin] = useState(null);
+  const [isLoading, setisLoading] = useState(true);
   const ambilAsyncStorage = () => {
     AsyncStorage.getItem('userData').then(value => {
       AsyncStorage.getItem('userData');
@@ -141,6 +165,7 @@ function KelDiproses() {
   };
   const [dataAntrianValid, setdataAntrianValid] = useState();
   const [Jumlah, setJumlah] = useState(0);
+  const [refresh, setRefresh] = useState(false);
   const getDataAntrianValid = () => {
     axios({
       method: 'POST',
@@ -205,10 +230,13 @@ function KelDiproses() {
     // console.log(Id, 'Ini data sorted');
     // await ambilAntrianTerbaru();
     sendProsesAntrian(Id);
-    navigation.navigate('LayananDiproses');
+    setRefresh(!refresh);
   };
 
   useEffect(() => {
+    setTimeout(() => {
+      setisLoading(false);
+    }, 3000);
     ambilAsyncStorage();
     const reloadPage = navigation.addListener('focus', () => {
       // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
@@ -217,9 +245,22 @@ function KelDiproses() {
     });
 
     return reloadPage;
-  }, []);
+  }, [refresh]);
   return (
     <View style={[{flex: 1}]}>
+      {isLoading && (
+        <View
+          style={[
+            {
+              backgroundColor: ungu,
+              flex: 1000,
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+          ]}>
+          <ActivityIndicator size="large" color="#fff" />
+        </View>
+      )}
       <ScrollView
         contentContainerStyle={[{flex: 1, backgroundColor: putihGelap}]}>
         {/* antrian Valid */}
@@ -234,47 +275,6 @@ function KelDiproses() {
           ]}>
           <Text style={[{fontSize: 20}]}>Jumlah Antrian Menunggu:</Text>
           <Text style={[{fontSize: 20}]}>{Jumlah}</Text>
-          {/* <View style={[{justifyContent: 'center', alignItems: 'center'}]}>
-            <Text>Antrian Valid</Text>
-            <Text>Admin {IdAdmin}</Text>
-          </View>
-          <FlatList
-            data={dataAntrianValid}
-            renderItem={({item}) => (
-              <View
-                style={[
-                  {
-                    elevation: 2,
-                    // marginHorizontal: 20,
-                    backgroundColor: putih,
-                    padding: 20,
-                    borderLeftWidth: 2,
-                    borderColor: hijau,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    marginVertical: 2,
-                  },
-                ]}>
-                <View>
-                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                    <Text>Nomor Antrian : </Text>
-                    <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
-                      {item.IdAntrian}
-                    </Text>
-                  </View>
-                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                    <Text>Nama anak: </Text>
-                    <Text>{item.Nama}</Text>
-                  </View>
-                </View>
-                <View>
-                  <Text>Status</Text>
-                  <Text>{item.Status}</Text>
-                </View>
-              </View>
-            )}
-          /> */}
         </View>
         {/* antrian diproses */}
         <View style={[{marginHorizontal: 20, marginTop: 10, flex: 1}]}>
@@ -288,13 +288,14 @@ function KelDiproses() {
             <View
               style={[
                 {
-                  height: 500,
+                  // height: 500,
+                  flex: 1,
                   justifyContent: 'center',
                   alignItems: 'center',
                   backgroundColor: ungu,
                 },
               ]}>
-              <Text>Tidak ada antrian yang perlu di tangani</Text>
+              <Text>Tidak ada antrian yang perlu di panggil</Text>
             </View>
           )}
 
@@ -362,6 +363,7 @@ function KelDitolak() {
   const navigation = useNavigation();
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   let [dataAntrianDitolak, setdataAntrianDitolak] = useState();
+  const [isLoading, setisLoading] = useState(true);
   let [leng, setLeng] = useState(0);
   const getDataAntrianDitolak = () => {
     axios({
@@ -378,6 +380,9 @@ function KelDitolak() {
       .catch(err => console.log(err));
   };
   useEffect(() => {
+    setTimeout(() => {
+      setisLoading(false);
+    }, 3000);
     const reloadPage = navigation.addListener('focus', () => {
       // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
       getDataAntrianDitolak();
@@ -387,6 +392,19 @@ function KelDitolak() {
   }, []);
   return (
     <View style={[{flex: 1}]}>
+      {isLoading && (
+        <View
+          style={[
+            {
+              backgroundColor: ungu,
+              flex: 1000,
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+          ]}>
+          <ActivityIndicator size="large" color="#fff" />
+        </View>
+      )}
       {leng < 1 ? (
         <View
           style={[
@@ -460,6 +478,8 @@ function DaftarPenerima() {
   const navigation = useNavigation();
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   let [dataAntrianSelesai, setdataAntrianSelesai] = useState();
+  const [isLoading, setisLoading] = useState(true);
+  const [refresh, setrefresh] = useState(false);
   let [leng, setLeng] = useState(0);
   const getDataAntrianSelesai = () => {
     axios({
@@ -471,20 +491,65 @@ function DaftarPenerima() {
         data = data.filter(d => d.Status == 'Selesai');
         // console.log(data, "ini data antrian terdaftar");
         setLeng(data.length);
+        // console.log(data, 'Ini Daftar Penerima');
         setdataAntrianSelesai(data);
       })
       .catch(err => console.log(err));
   };
+  // Akta diterima
+
+  const aktaDiterima = async IdAntrian => {
+    const formData = new FormData();
+    formData.append('IdAntrian', IdAntrian);
+    const res = await axios.post(
+      `${ipAdress}/aplikasiLayananAkta/update/AktaDiterima.php`,
+
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
+    const data = res.data;
+    const {value, message} = data;
+    // console.log(refresh);
+    // console.log(message, "ini massage");
+ if(value==1) {
+  alert(message)
+  setrefresh(!refresh);
+  
+ } else {
+  alert(message)
+ }
+  };
   useEffect(() => {
+    console.log(refresh);
+    setTimeout(() => {
+      setisLoading(false);
+    }, 3000);
     const reloadPage = navigation.addListener('focus', () => {
       // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
       getDataAntrianSelesai();
     });
 
     return reloadPage;
-  }, []);
+  }, [refresh]);
   return (
     <View style={[{flex: 1}]}>
+      {isLoading && (
+        <View
+          style={[
+            {
+              backgroundColor: ungu,
+              flex: 1000,
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+          ]}>
+          <ActivityIndicator size="large" color="#fff" />
+        </View>
+      )}
       {leng < 1 ? (
         <View
           style={[
@@ -539,6 +604,10 @@ function DaftarPenerima() {
                     <Text>Nama anak: </Text>
                     <Text style={[{color: ungu}]}>{item.Nama}</Text>
                   </View>
+                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                    <Text>ID Antrian: </Text>
+                    <Text style={[{color: ungu}]}>{item.IdAntrian}</Text>
+                  </View>
                 </View>
                 {/* <View>
                   <Text>Status</Text>
@@ -553,7 +622,7 @@ function DaftarPenerima() {
                       borderRadius: 15,
                     },
                   ]}
-                  onPress={() => console.log('press')}>
+                  onPress={() => aktaDiterima(item.IdAntrian)}>
                   <MaterialIcons size={25} name="done" />
                 </TouchableOpacity>
               </View>

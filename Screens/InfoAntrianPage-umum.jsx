@@ -272,13 +272,13 @@ function AntrianDiproses({navigation}) {
       {value < 1 ? (
         <ImageBackground
           source={require(`../Assets/Images/Sleeping.png`)}
-          style={[{flex: 1, resizeMode: 'cover'}]}>
+          style={[{flex: 1, resizeMode: 'center'}]}>
           <View
             style={[
               {
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: hijau,
+                backgroundColor: ungu,
                 padding: 20,
               },
             ]}>

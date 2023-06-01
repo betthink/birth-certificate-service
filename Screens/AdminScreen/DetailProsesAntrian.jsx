@@ -36,7 +36,7 @@ const DetailProsesAntrian = ({route, navigation}) => {
       method: 'POST',
       url: `${ipAdress}/aplikasiLayananAkta/update/KirimPesanPemberitahuan.php`,
       data: {
-        Id: IdUser,
+        IdAnak: IdAntrian,
         Pemberitahuan: valuInput,
       },
       headers: {'Content-Type': 'multipart/form-data'},
@@ -70,6 +70,16 @@ const DetailProsesAntrian = ({route, navigation}) => {
       console.log(error);
     }
   };
+  const getDataBayiDanAntrian = async () => {
+    const res = await axios({
+      method: 'POST',
+      url: `${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`,
+    });
+    const data= res.data;
+    const filter = data.filter(d=> d.IdAntrian == IdAntrian);
+
+    console.log(filter, 'Ini data dayi join Filter');
+  };
   const SelesaikanAntrian = async () => {
     try {
       const res = await axios({
@@ -84,7 +94,7 @@ const DetailProsesAntrian = ({route, navigation}) => {
       // console.log(res.data);
       const {value, message} = res.data;
       console.log('Ini Id pengambilan', `${IdUser} ${IdAntrian} ${IdAdmin}`);
-      console.log(res.data);
+      console.log(res.data,"selesaikan layanan");
       if (value == 1) {
         alert(message);
         navigation.goBack();
@@ -110,6 +120,7 @@ const DetailProsesAntrian = ({route, navigation}) => {
   };
   useEffect(() => {
     getDataFile();
+    getDataBayiDanAntrian();
   }, []);
   return (
     <View style={[{flex: 1}]}>
@@ -198,9 +209,7 @@ const DetailProsesAntrian = ({route, navigation}) => {
                 },
               ]}>
               {/* <Text>{item.IdAnak}</Text> */}
-              <Text style={[{fontSize: 20, color: ungu}]}>
-                {file}
-              </Text>
+              <Text style={[{fontSize: 20, color: ungu}]}>{file}</Text>
               <FontAwsome name="file-zip-o" size={40} color={ungu} />
             </View>
             <View style={[{padding: 20, backgroundColor: ungu}]}>

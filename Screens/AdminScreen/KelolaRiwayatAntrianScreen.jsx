@@ -23,7 +23,7 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
       .then(res => {
         let data = res.data;
         // console.log(data, "ini data riwayat");
-        data = data.filter(d => d.Status == 'Selesai');
+        data = data.filter(d => d.Status == 'Diterima');
         console.log(data, 'ini data antrian riwayat');
         setDataAntrian(data);
       })
