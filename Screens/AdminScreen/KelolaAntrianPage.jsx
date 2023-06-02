@@ -70,7 +70,7 @@ function KelTerdaftar({}) {
   }, []);
   return (
     <View style={[{flex: 1}]}>
-      {isLoading && (
+      {isLoading ?(
         <View
           style={[
             {
@@ -82,7 +82,7 @@ function KelTerdaftar({}) {
           ]}>
           <ActivityIndicator size="large" color="#fff" />
         </View>
-      )}
+      ) : (   <>
       {leng >= 1 ? (
         <FlatList
           style={[{marginTop: 20}]}
@@ -144,10 +144,11 @@ function KelTerdaftar({}) {
             },
           ]}>
           <Text style={[{color: putih, fontSize: 16, letterSpacing: 1}]}>
-            Tidak ada data
+            Tidak ada Antrian
           </Text>
         </View>
-      )}
+      )}</>)}
+   
     </View>
   );
 }

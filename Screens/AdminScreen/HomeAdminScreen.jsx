@@ -1,6 +1,7 @@
 import {View, Text, TouchableOpacity, Image, Dimensions, ImageBackground} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
+  Purple,
   hijau,
   putih,
   putihGelap,
@@ -72,14 +73,14 @@ const HomeAdminScreen = ({navigation}) => {
     {
       name: 'Valid',
       population: totalDataValid,
-      color: 'purple',
+      color: 'blue',
       legendFontColor: 'white',
       legendFontSize: 11,
     },
     {
       name: 'Diproses',
       population: totalDataDiproses,
-      color: '#581845',
+      color: Purple,
       legendFontColor: 'white',
       legendFontSize: 11,
     },
@@ -93,7 +94,7 @@ const HomeAdminScreen = ({navigation}) => {
     {
       name: 'Selesai',
       population: totalDataSelesai,
-      color: 'green',
+      color: hijau,
       legendFontColor: 'white',
       legendFontSize: 11,
     },

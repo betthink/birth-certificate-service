@@ -2,7 +2,7 @@ import {View, Text, Modal, TouchableOpacity, Dimensions} from 'react-native';
 import React from 'react';
 import {hijau, ungu} from '../../Assets/StylingComponent/Coloring';
 
-const ModalCompon = ({stateValueModal, onPresAction}) => {
+const ModalCompon = ({stateValueModal, onPresAction, cancel}) => {
   const WIDTH = Dimensions.get('window').width;
   const Heigt = 150;
   return (
@@ -28,7 +28,7 @@ const ModalCompon = ({stateValueModal, onPresAction}) => {
                 flex: 1
               },
             ]}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={cancel}>
               <Text style={[{padding: 30, backgroundColor:'salmon', borderRadius: 20}]}>Batal?</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={onPresAction} style={[{   alignItems: 'center', justifyContent: 'center',}]}>

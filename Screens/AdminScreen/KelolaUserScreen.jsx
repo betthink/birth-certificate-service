@@ -1,12 +1,13 @@
-import {View, Text, FlatList, Image, TouchableOpacity} from 'react-native';
+import {View, Text, FlatList, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {hijau, putih, putihGelap} from '../../Assets/StylingComponent/Coloring';
+import {hijau, putih, putihGelap, ungu} from '../../Assets/StylingComponent/Coloring';
 import {stylesDariGaya} from '../Components/ImportedStyles';
 import {fotoUrl} from '../../Assets/Url';
 import axios from 'axios';
 import {ipAdress} from '../Components/Url';
 export default function KelolaUserScreen({navigation}) {
   const [dataApi, setDataApi] = useState([]);
+  const [isloading, setisloading] = useState(true);
 
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataUsers.php`;
   const getApi = () => {
@@ -20,7 +21,9 @@ export default function KelolaUserScreen({navigation}) {
       .catch(err => console.log(err));
   };
   useEffect(() => {
-
+setTimeout(()=> {
+  setisloading(false)
+}, 1000)
     const reloadPage = navigation.addListener('focus', () => {
       // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
       getApi();
@@ -40,8 +43,10 @@ export default function KelolaUserScreen({navigation}) {
         ]}>
         <Text style={[stylesDariGaya.TextBold]}>Kelola User</Text>
       </View>
-      {/* list Account */}
-      <View style={{paddingHorizontal: 22}}>
+      {isloading ? ( <View
+          style={[{justifyContent: 'center', alignItems: 'center', flex: 1}]}>
+          <ActivityIndicator size="large" color={ungu} />
+        </View>) : (  <View style={{paddingHorizontal: 22}}>
         <FlatList
         style={[{marginTop: 20}]}
           data={dataApi}
@@ -78,7 +83,9 @@ export default function KelolaUserScreen({navigation}) {
             </TouchableOpacity>
           )}
         />
-      </View>
+      </View>)}
+      {/* list Account */}
+    
     </View>
   );
 }

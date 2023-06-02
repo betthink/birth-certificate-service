@@ -35,9 +35,22 @@ const DataFileUploadScreen = ({navigation, route}) => {
   };
   const uploadFile = async () => {
     try {
+      if (
+        !FileKK ||
+        !FileKtpIbu ||
+        !FileKtpAyah ||
+        !FileKetNikah ||
+        !FileKetLahirAnak ||
+        !FileSaksi1 ||
+        !FileSaksi2
+      ) {
+        // Menampilkan pesan kesalahan jika ada input yang kosong
+        alert('Mohon upload semua Berkas');
+        return;
+      }
 
       const formData = new FormData();
-    
+
       formData.append('KK', FileKK);
       formData.append('KTP_Ibu', FileKtpIbu);
       formData.append('KTP_Ayah', FileKtpAyah);
@@ -57,20 +70,32 @@ const DataFileUploadScreen = ({navigation, route}) => {
         },
       );
 
-      console.log(response.data, "Ini nilai dari res data Uploads");
+      console.log(response.data, 'Ini nilai dari res data Uploads');
       const {message, value} = response.data;
-      if(value == 1) {
-        alert("Berhasil membuat antrian");
-     
+      if (value == 1) {
+        alert('Berhasil membuat antrian');
       }
     } catch (error) {
-      alert("Gagal membuat antrian");
+      alert('Gagal membuat antrian');
       console.log('Document Picker Error:', error);
     }
   };
   // add to tabel antrianValid
   const addToAntrianValid = async () => {
     try {
+      if (
+        !FileKK ||
+        !FileKtpIbu ||
+        !FileKtpAyah ||
+        !FileKetNikah ||
+        !FileKetLahirAnak ||
+        !FileSaksi1 ||
+        !FileSaksi2
+      ) {
+        // Menampilkan pesan kesalahan jika ada input yang kosong
+        alert('Mohon upload semua Berkas');
+        return;
+      }
       const res = await axios({
         method: 'POST',
         data: {IdAntrian: IdAnak, IdUser},
@@ -78,19 +103,17 @@ const DataFileUploadScreen = ({navigation, route}) => {
         headers: {'Content-Type': 'multipart/form-data'},
       });
       const {value, message} = res.data;
-      if(value==1) {
+      if (value == 1) {
         console.log(message);
-        navigation.navigate("AntrianLayananScreen")
+        navigation.navigate('AntrianLayananScreen');
       } else {
         console.log(message);
       }
-      console.log(res.data, "ini data dari antrianValid");
+      console.log(res.data, 'ini data dari antrianValid');
     } catch (error) {}
   };
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <View style={[{flex: 1}]}>
@@ -103,35 +126,35 @@ const DataFileUploadScreen = ({navigation, route}) => {
         {/* KK */}
         <ListUploadFile
           titleList={FileKK == null ? 'ScanKK' : FileKK.name}
-          MaterialIconName={FileKK == null? 'addfile' : 'check' }
+          MaterialIconName={FileKK == null ? 'addfile' : 'check'}
           onPressAction={() => pickDocument(setFileKK)}
           warna={FileKK == null ? ungu : hijau}
         />
         {/* KTP IBU */}
         <ListUploadFile
           titleList={FileKtpIbu == null ? 'Scan KTP Ibu' : FileKtpIbu.name}
-          MaterialIconName={FileKtpIbu == null? 'addfile' : 'check' }
+          MaterialIconName={FileKtpIbu == null ? 'addfile' : 'check'}
           onPressAction={() => pickDocument(setFileKtpIbu)}
           warna={FileKtpIbu == null ? ungu : hijau}
         />
         {/* KTP Ayah */}
         <ListUploadFile
           titleList={FileKtpAyah == null ? 'Scan KTP Ayah' : FileKtpAyah.name}
-          MaterialIconName={FileKtpAyah == null? 'addfile' : 'check' }
+          MaterialIconName={FileKtpAyah == null ? 'addfile' : 'check'}
           onPressAction={() => pickDocument(setFileKtpAyah)}
           warna={FileKtpAyah == null ? ungu : hijau}
         />
         {/* KTP Saksi1 */}
         <ListUploadFile
           titleList={FileSaksi1 == null ? 'Scan KTP Saksi1' : FileSaksi1.name}
-          MaterialIconName={FileSaksi1 == null? 'addfile' : 'check' }
+          MaterialIconName={FileSaksi1 == null ? 'addfile' : 'check'}
           onPressAction={() => pickDocument(setFileSaksi1)}
           warna={FileSaksi1 == null ? ungu : hijau}
         />
         {/* KTP Saksi2 */}
         <ListUploadFile
           titleList={FileSaksi2 == null ? 'Scan KTP Saksi2' : FileSaksi2.name}
-          MaterialIconName={FileSaksi2 == null? 'addfile' : 'check' }
+          MaterialIconName={FileSaksi2 == null ? 'addfile' : 'check'}
           onPressAction={() => pickDocument(setFileSaksi2)}
           warna={FileSaksi2 == null ? ungu : hijau}
         />
@@ -140,7 +163,7 @@ const DataFileUploadScreen = ({navigation, route}) => {
           titleList={
             FileKetNikah == null ? 'Scan Keterangan Nikah' : FileKetNikah.name
           }
-          MaterialIconName={FileKetNikah == null? 'addfile' : 'check' }
+          MaterialIconName={FileKetNikah == null ? 'addfile' : 'check'}
           onPressAction={() => pickDocument(setFileKetNikah)}
           warna={FileKetNikah == null ? ungu : hijau}
         />
@@ -151,7 +174,7 @@ const DataFileUploadScreen = ({navigation, route}) => {
               ? 'Scan Keterangan lahir anak'
               : FileKetLahirAnak.name
           }
-          MaterialIconName={FileKetLahirAnak == null? 'addfile' : 'check'}
+          MaterialIconName={FileKetLahirAnak == null ? 'addfile' : 'check'}
           onPressAction={() => pickDocument(setFileKetLahirAnak)}
           warna={FileKetLahirAnak == null ? ungu : hijau}
         />
@@ -159,7 +182,7 @@ const DataFileUploadScreen = ({navigation, route}) => {
         <DefaultButtonBox
           Title={'Submit'}
           TitleColor={hijau}
-          onClickAction={async() => {
+          onClickAction={async () => {
             await uploadFile();
             await addToAntrianValid();
             // navigation.navigate("AntrianLayananScreen")

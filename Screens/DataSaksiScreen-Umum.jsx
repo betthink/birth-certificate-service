@@ -59,6 +59,21 @@ const DataSaksiScreen = ({navigation, route}) => {
   const [konfirmasi, setkonfirmasi] = useState(false);
   async function addDataSaksi() {
     try {
+      if (
+  
+        !NIk||
+        !Nama||
+        !TempatKelahiran||
+        !Alamat||
+        !vKewarganegaraan||
+        !newDateString||
+        !Kebangsaan
+      ) {
+        // Menampilkan pesan kesalahan jika ada input yang kosong
+        alert('Mohon lengkapi semua input');
+        setkonfirmasi(false);
+        return;
+      }
       const res = await axios({
         method: 'POST',
         data: {
@@ -204,6 +219,7 @@ const DataSaksiScreen = ({navigation, route}) => {
         />
       </ScrollView>
       <ModalCompon
+      cancel={()=>setkonfirmasi(false)}
         stateValueModal={konfirmasi}
         onPresAction={async () => {
           try {

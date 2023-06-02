@@ -155,6 +155,23 @@ const DataBayiScreen = ({route, navigation}) => {
   // function add dataBayi
   async function addDataBayi() {
     try {
+      if (
+        // !Password ||
+        !getTime||
+        !newDateString||
+        !Nama ||
+        !vJenisKelamin||
+        !vTempatPersalinan||
+        !vUrutanKelahiran||
+        !BeratBayi||
+        !PanjangBayi||
+        !TempatKelahiran
+      ) {
+        // Menampilkan pesan kesalahan jika ada input yang kosong
+        alert('Mohon lengkapi semua input');
+        setkonfirmasi(false);
+        return;
+      }
       const res = await axios({
         method: 'POST',
         data: {
@@ -173,18 +190,7 @@ const DataBayiScreen = ({route, navigation}) => {
         url: `${ipAdress}/aplikasiLayananAkta/addData/addDataBayi.php`,
         headers: {'Content-Type': 'multipart/form-data'},
       });
-      console.log(
-        getTime,
-        newDateString,
-        Nama,
-        vJenisKelamin,
-        vTempatPersalinan,
-        vUrutanKelahiran,
-        vPenolongKelahiran,
-        BeratBayi,
-        PanjangBayi,
-        TempatKelahiran,
-      );
+
       const {value, message, IdAnak} = res.data;
       // console.log(res.data);
       if (value == 1) {
@@ -244,18 +250,7 @@ const DataBayiScreen = ({route, navigation}) => {
               {/* container content */}
               <ScrollView
                 style={[{flex: 1, paddingHorizontal: 20, paddingVertical: 10}]}>
-                {/* <Image
-                  style={[
-                    {
-                      resizeMode: 'center',
-                      width: '100%',
-                      height: 200,
-                      borderBottomWidth: 2,
-                      borderColor: 'salmon',
-                    },
-                  ]}
-                  source={require('../Assets/Images/fillFormulir.png')}
-                /> */}
+       
                 <TextInputBox
                   Label={'Nama'}
                   IconName={'user'}
@@ -453,6 +448,7 @@ const DataBayiScreen = ({route, navigation}) => {
               </ScrollView>
               {/* Modal/Pop up  */}
               <ModalCompon
+              cancel={()=>setkonfirmasi(false)}
                 onPresAction={async () => {
                   try {
                     await addDataBayi();

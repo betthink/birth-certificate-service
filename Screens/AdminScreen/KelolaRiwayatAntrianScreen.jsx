@@ -1,4 +1,10 @@
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {
   hijau,
@@ -15,6 +21,7 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
   // * Fungsi tampilkan data user by id
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   const [dataAntrian, setDataAntrian] = useState();
+  const [isloading, setisloading] = useState(true);
   const getApi = () => {
     axios({
       method: 'POST',
@@ -30,6 +37,9 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
       .catch(err => console.log(err));
   };
   useEffect(() => {
+    setTimeout(() => {
+      setisloading(false);
+    }, 1000);
     // ambilAsyncStorage();
     const reloadPage = navigation.addListener('focus', () => {
       // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
@@ -50,41 +60,54 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
         <Text style={[stylesDariGaya.TextMediumBold]}>Riwayat Antrian</Text>
       </View>
       {/* list */}
-      <View style={{paddingHorizontal: 22}}>
-        <FlatList
-          data={dataAntrian}
-          renderItem={({item}) => (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('DetailAntrian', {detailAntrian: item})
-              }
-              style={{
-                height: 70,
-                borderLeftWidth: 3,
-                borderBottomWidth: 2,
-                borderLeftColor: ungu,
-                marginTop: 20,
-                borderBottomColor: 'grey',
-                paddingHorizontal: 10,
-                // flexDirection: 'row',
-                justifyContent: 'center',
-                // alignItems: 'center'
-              }}>
-              <Text style={{fontSize: 18}}>{item.id}</Text>
-              <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
-                <Text>Id Antrian : </Text>
-                <Text style={{textAlign: 'right', color: hitam}}>
-                  {item.IdAntrian}
-                </Text>
-              </View>
-              <View style={[{flexDirection : 'row', justifyContent: 'space-between'}]}>
-              <Text>Waktu Pendaftaran</Text>
-                <Text style={{color: ungu}}>{item.WaktuPendaftaran} </Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
-      </View>
+      {isloading ? (
+        <View
+          style={[{justifyContent: 'center', alignItems: 'center', flex: 1}]}>
+          <ActivityIndicator size="large" color={ungu} />
+        </View>
+      ) : (
+        <View style={{paddingHorizontal: 22}}>
+          <FlatList
+            data={dataAntrian}
+            renderItem={({item}) => (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('DetailAntrian', {detailAntrian: item})
+                }
+                style={{
+                  height: 70,
+                  borderLeftWidth: 3,
+                  borderBottomWidth: 2,
+                  borderLeftColor: ungu,
+                  marginTop: 20,
+                  borderBottomColor: 'grey',
+                  paddingHorizontal: 10,
+                  // flexDirection: 'row',
+                  justifyContent: 'center',
+                  // alignItems: 'center'
+                }}>
+                <Text style={{fontSize: 18}}>{item.id}</Text>
+                <View
+                  style={[
+                    {flexDirection: 'row', justifyContent: 'space-between'},
+                  ]}>
+                  <Text>Id Antrian : </Text>
+                  <Text style={{textAlign: 'right', color: hitam}}>
+                    {item.IdAntrian}
+                  </Text>
+                </View>
+                <View
+                  style={[
+                    {flexDirection: 'row', justifyContent: 'space-between'},
+                  ]}>
+                  <Text>Waktu Pendaftaran</Text>
+                  <Text style={{color: ungu}}>{item.WaktuPendaftaran} </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      )}
     </View>
   );
 }

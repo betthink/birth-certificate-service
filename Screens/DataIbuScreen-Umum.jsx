@@ -60,6 +60,21 @@ const DataIbuScreen = ({navigation, route}) => {
   // function add data ibu
   async function addDataIbu() {
     try {
+      if (
+        // !Password ||
+        !NIk||
+        !Nama||
+        !TempatKelahiran||
+        !Alamat||
+        !vKewarganegaraan||
+        !newDateString||
+        !Kebangsaan
+      ) {
+        // Menampilkan pesan kesalahan jika ada input yang kosong
+        alert('Mohon lengkapi semua input');
+        setkonfirmasi(false);
+        return;
+      }
       const res = await axios({
         method: 'POST',
         data: {
@@ -201,6 +216,7 @@ const DataIbuScreen = ({navigation, route}) => {
         />
       </ScrollView>
       <ModalCompon
+      cancel={()=>setkonfirmasi(false)}
         stateValueModal={konfirmasi}
         onPresAction={async () => {
           try {

@@ -57,10 +57,13 @@ const CekDataPage = ({route, navigation}) => {
   };
   const getDataAntrianTerdaftar = async () => {
     try {
+      const formData = new FormData();
+
+      formData.append('IdAnak', IdAntrian);
       const res = await axios({
         method: 'POST',
         url: `${ipAdress}/aplikasiLayananAkta/api/apiFileUploadZip.php`,
-        data: {IdAnak: IdAntrian},
+        data:formData,
         headers: {'Content-Type': 'multipart/form-data'},
       });
 

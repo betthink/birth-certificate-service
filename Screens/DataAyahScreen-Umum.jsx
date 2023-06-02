@@ -15,24 +15,24 @@ const DataAyahScreen = ({navigation,route}) => {
   // Id dari router
   const {IdAnak, IdUser} = route.params;
   // NIk atribute
-  const [NIk, setNIK] = useState('');
+  const [NIk, setNIK] = useState(null);
   // Nama atribute
-  const [Nama, setNama] = useState('');
+  const [Nama, setNama] = useState(null);
   // TempatKelahiran atribute
-  const [TempatKelahiran, setTempatKelahiran] = useState('');
+  const [TempatKelahiran, setTempatKelahiran] = useState(null);
   // Alamat atribute
-  const [Alamat, setAlamat] = useState('');
+  const [Alamat, setAlamat] = useState(null);
   // atribute  Kewrganegaraan
   const [openKW, setopenKW] = useState(false);
-  const [vKewarganegaraan, setvKewarganegaraan] = useState('');
+  const [vKewarganegaraan, setvKewarganegaraan] = useState(null);
   const [dataKewarganegaraan, setdataKewarganegaraan] = useState([
     {label: 'WNI', value: 'WNI'},
     {label: 'WNA', value: 'WNA'},
   ]);
   // atribute Kebangsaan
-  const [Kebangsaan, setKebangsaan] = useState('');
+  const [Kebangsaan, setKebangsaan] = useState(null);
   // atribute Pekerjaan
-  const [Pekerjaan, setPekerjaan] = useState('');
+  const [Pekerjaan, setPekerjaan] = useState(null);
   // date select atribute
   const [date, setDate] = useState(new Date());
   const [DatePickerVisibility, setDatePickerVisibility] = useState(false);
@@ -58,6 +58,22 @@ const DataAyahScreen = ({navigation,route}) => {
   // function add data ibu
   async function addDataAyah() {
     try {
+      if (
+        // !Password ||
+        !NIk||
+        !Nama||
+        !TempatKelahiran||
+        !Alamat||
+        !vKewarganegaraan||
+        !newDateString||
+        !Pekerjaan||
+        !Kebangsaan
+      ) {
+        // Menampilkan pesan kesalahan jika ada input yang kosong
+        alert('Mohon lengkapi semua input');
+        setkonfirmasi(false);
+        return;
+      }
       const res = await axios({
         method: 'POST',
         data: {
@@ -197,6 +213,7 @@ const DataAyahScreen = ({navigation,route}) => {
         />
       </ScrollView>
       <ModalCompon
+      cancel={()=>setkonfirmasi(false)}
         stateValueModal={konfirmasi}
         onPresAction={async () => {
           try {

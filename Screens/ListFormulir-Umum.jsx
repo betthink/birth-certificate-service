@@ -1,7 +1,13 @@
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import React from 'react';
 import {useState, useEffect} from 'react';
-import {hijau, putih, ungu} from '../Assets/StylingComponent/Coloring';
+import {Grey, hijau, putih, ungu} from '../Assets/StylingComponent/Coloring';
 import {ipAdress} from './Components/Url';
 import axios from 'axios';
 import ButtonBack from './Components/ButtonBack';
@@ -11,6 +17,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 const ListFormulir = ({navigation, route}) => {
   const {IdUser} = route.params;
   const [data, setData] = useState(null);
+  const [lengdata, setlengdata] = useState(null);
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataBayi.php`;
   const getApi = () => {
     axios({
@@ -19,6 +26,12 @@ const ListFormulir = ({navigation, route}) => {
     })
       .then(res => {
         // console.log(res.data.filter((val)=>IdUser==val.IdUser));
+        let data;
+        data = res.data.filter(val => IdUser == val.IdUser);
+        console.log(data.length, 'Data');
+        data = data.length;
+        setlengdata(data);
+
         setData(res.data.filter(val => IdUser == val.IdUser));
       })
       .catch(err => console.log(err));
@@ -28,16 +41,6 @@ const ListFormulir = ({navigation, route}) => {
       onPress={() =>
         navigation.navigate('FormulirScreen', {
           IdAntrian: item.IdAnak,
-          // Nama: item.Nama,
-          // JenisKelamin: item.JenisKelamin,
-          // TempatPersalinan: item.TempatPersalinwan,
-          // TempatKelahiran: item.TempatKelahiran,
-          // DateKelahiran: item.DateKelahiran,
-          // TimeKelahiran: item.TimeKelahiran,
-          // UrutanKelahiran: item.UrutanKelahiran,
-          // PenolongBayi: item.PenolongBayi,
-          // BeratBayi: item.BeratBayi,
-          // PanjangBayi: item.PanjangBayi,
         })
       }
       style={{
@@ -58,36 +61,47 @@ const ListFormulir = ({navigation, route}) => {
   );
   useEffect(() => {
     getApi();
-    console.log(data);
-    console.log(IdUser);
+    // console.log(data);
+    // console.log(IdUser);
   }, []);
   return (
     <View style={[{flex: 1, backgroundColor: putih}]}>
       <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
         <ButtonBack buttontext={'List Formulir'} />
       </View>
-      {data == null ? (
-        <View
-          style={[
-            {
-              backgroundColor: ungu,
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              margin: 20,
-            },
-          ]}>
-          <Text>Belum ada data</Text>
-        </View>
+      {lengdata == 0 ? (
+        <ImageBackground resizeMode='center' source={require('../Assets/Images/fillFormulir.png')} style={[{flex: 1, justifyContent: 'center', alignItems: 'center'}]}>
+          <Text style={[{fontWeight: '700', fontSize: 17, padding: 10, backgroundColor: Grey}]}>Belum ada formulir</Text>
+        </ImageBackground>
       ) : (
-        <View style={[{paddingHorizontal: 20, marginTop: 20, marginBottom: 20}]}>
-          <FlatList
-          contentContainerStyle={[{paddingBottom: 80}]}
-            data={data}
-            renderItem={renderItem}
-            keyExtractor={item => item.IdAnak}
-          />
-        </View>
+        <>
+          {data == null ? (
+            <View
+              style={[
+                {
+                  backgroundColor: ungu,
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  margin: 20,
+                },
+              ]}>
+              <Text>Belum ada data</Text>
+            </View>
+          ) : (
+            <View
+              style={[
+                {paddingHorizontal: 20, marginTop: 20, marginBottom: 20},
+              ]}>
+              <FlatList
+                contentContainerStyle={[{paddingBottom: 80}]}
+                data={data}
+                renderItem={renderItem}
+                keyExtractor={item => item.IdAnak}
+              />
+            </View>
+          )}
+        </>
       )}
     </View>
   );
