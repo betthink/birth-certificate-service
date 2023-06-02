@@ -36,6 +36,7 @@ const RegisterAkunScreen = ({navigation}) => {
       });
       setData(result);
       setUriFoto(result.uri);
+      console.log(result);
       // console.log(result.name, 'ini nama dari result');
     } catch (error) {
       console.log(error);
@@ -43,6 +44,19 @@ const RegisterAkunScreen = ({navigation}) => {
   };
   async function RegistrasiAkun() {
     try {
+      if (
+        !Password ||
+        !Nama ||
+        !Email ||
+        !NIK ||
+        !NomorTelp ||
+        !FotoProfile ||
+        !UriFoto
+      ) {
+        // Menampilkan pesan kesalahan jika ada input yang kosong
+        alert('Mohon lengkapi semua input');
+        return;
+      }
       const formData = new FormData();
 
       formData.append('Password', Password);
@@ -71,20 +85,7 @@ const RegisterAkunScreen = ({navigation}) => {
       } else {
         alert(message);
       }
-      // switch (value) {
-      //   case '1':
-      //     alert('Akun Berhasil Didaftarkan');
-      //     navigation.navigate('Login');
-      //     break;
-      //   case '3':
-      //     alert('Nik sudah digunakan');
-      //     break;
-      //   case '2':
-      //     alert(message);
-      //     break;
-      //   case '0':
-      //     alert(message);
-      // }
+
     } catch (error) {
       alert('koneksi sedang tidak bagus, sihlakan coba lagi?');
       console.log(error);
@@ -92,21 +93,7 @@ const RegisterAkunScreen = ({navigation}) => {
     // console.log(res.data['message']);
   }
   const sizeIcon = 30;
-  // * add file
-  // async function openDocument() {
-  //   try {
-  //     // console.log(test.pickSingle());
-  //     const doc = await pickSingle();
-  //     // console.log(doc);
-  //   } catch (err) {
-  //     console.log(err);
-  //     if (isCancel(err)) {
-  //       console.log('canceled', err);
-  //     } else {
-  //       console.log(err);
-  //     }
-  //   }
-  // }
+  
 
   return (
     <View style={{backgroundColor: putih, flex: 1}}>
@@ -157,6 +144,7 @@ const RegisterAkunScreen = ({navigation}) => {
             <Feather name="hash" size={sizeIcon} color={ungu} />
             <View style={[StyleForm.pdLef]}>
               <TextInput
+               keyboardType="numeric"
                 onChangeText={text => setNIK(text)}
                 value={NIK}
                 style={[stylesDariGaya.formInput, StyleForm.textInput]}
@@ -218,11 +206,11 @@ const RegisterAkunScreen = ({navigation}) => {
             pickDocument(setFotoProfile);
             // console.log("hgh");
           }}>
-          {/* {UriFoto == null ? (
+          {UriFoto == null ? (
             <View style={[{width: 50, height: 50}]} />
           ) : (
-            <Image size={50} source={require(`${UriFoto}`)} />
-          )} */}
+            <Image style={[{height: 70, width: 70, resizeMode: 'cover', borderRadius: 50}]}  source={{uri: `${UriFoto}`}} />
+          )}
  
           <MaterialIcon
             style={{position: 'absolute', top: 5, right: 0}}

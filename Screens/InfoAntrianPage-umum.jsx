@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -124,6 +125,7 @@ function AntrianTerdaftar({navigation}) {
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   let [dataAntrianTerdaftar, setdataAntrianTerdaftar] = useState();
   let [leng, setLeng] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const getApiTerdaftar = () => {
     axios({
       method: 'POST',
@@ -139,6 +141,9 @@ function AntrianTerdaftar({navigation}) {
       .catch(err => console.log(err));
   };
   useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
     const reloadPage = navigation.addListener('focus', () => {
       // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
       getApiTerdaftar();
@@ -150,87 +155,102 @@ function AntrianTerdaftar({navigation}) {
 
   return (
     <View style={[{flex: 1, justifyContent: 'center'}]}>
-      {leng < 1 ? (
+      {isLoading ? (
         <View
-          style={[{flex: 1, justifyContent: 'center', alignItems: 'center'}]}>
-          <Image
-            style={{
-              flex: 1,
-              alignSelf: 'center',
-              paddingVertical: 80,
-              // backgroundColor: greenTea,
-              marginBottom: 10,
-            }}
-            source={pngQueue}
-            resizeMode="contain"
-          />
-          <View style={[{flex: 1}]}>
-            <Text style={[{fontSize: 20}]}>Belum ada antrian</Text>
-          </View>
+          style={[{justifyContent: 'center', alignItems: 'center', flex: 1}]}>
+          <ActivityIndicator size="large" color={ungu} />
         </View>
       ) : (
-        <View style={[{flex: 1, backgroundColor: ungu}]}>
-          <Image
-            style={{
-              // flex: 1,
-              height: 100,
-              alignSelf: 'center',
-              paddingVertical: 80,
-              backgroundColor: ungu,
-              // marginBottom: 10,
-            }}
-            source={pngQueue}
-            resizeMode="contain"
-          />
-          <View
-            style={[
-              {
-                flex: 1,
-                backgroundColor: Grey,
-                paddingTop: 20,
-                borderTopLeftRadius: 30,
-                borderTopRightRadius: 30,
-              },
-            ]}>
-            <FlatList
-              data={dataAntrianTerdaftar}
-              renderItem={({item}) => (
-                <View
-                  style={[
-                    {
-                      marginHorizontal: 20,
-                      backgroundColor: putih,
-                      padding: 20,
-                      borderLeftWidth: 2,
-                      borderColor: ungu,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      marginVertical: 2,
-                    },
-                  ]}>
-                  <View>
+        <>
+          {leng < 1 ? (
+            <View
+              style={[
+                {flex: 1, justifyContent: 'center', alignItems: 'center'},
+              ]}>
+              <Image
+                style={{
+                  flex: 1,
+                  alignSelf: 'center',
+                  paddingVertical: 80,
+                  // backgroundColor: greenTea,
+                  marginBottom: 10,
+                }}
+                source={pngQueue}
+                resizeMode="contain"
+              />
+              <View style={[{flex: 1}]}>
+                <Text style={[{fontSize: 20}]}>Belum ada antrian</Text>
+              </View>
+            </View>
+          ) : (
+            <View style={[{flex: 1, backgroundColor: ungu}]}>
+              <Image
+                style={{
+                  // flex: 1,
+                  height: 100,
+                  alignSelf: 'center',
+                  paddingVertical: 80,
+                  backgroundColor: ungu,
+                  // marginBottom: 10,
+                }}
+                source={pngQueue}
+                resizeMode="contain"
+              />
+              <View
+                style={[
+                  {
+                    flex: 1,
+                    backgroundColor: Grey,
+                    paddingTop: 20,
+                    borderTopLeftRadius: 30,
+                    borderTopRightRadius: 30,
+                  },
+                ]}>
+                <FlatList
+                  data={dataAntrianTerdaftar}
+                  renderItem={({item}) => (
                     <View
-                      style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                      <Text>Nama anak: </Text>
-                      <Text>{item.Nama}</Text>
+                      style={[
+                        {
+                          marginHorizontal: 20,
+                          backgroundColor: putih,
+                          padding: 20,
+                          borderLeftWidth: 2,
+                          borderColor: ungu,
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          marginVertical: 2,
+                        },
+                      ]}>
+                      <View>
+                        <View
+                          style={[
+                            {flexDirection: 'row', alignItems: 'center'},
+                          ]}>
+                          <Text>Nama anak: </Text>
+                          <Text>{item.Nama}</Text>
+                        </View>
+                        <View
+                          style={[
+                            {flexDirection: 'row', alignItems: 'center'},
+                          ]}>
+                          <Text style={[{color: Grey, fontSize: 10}]}>
+                            *Menunggu untuk verivikasi data{' '}
+                          </Text>
+                        </View>
+                      </View>
+                      <View>
+                        <Text>Status</Text>
+                        <Text>{item.Status}</Text>
+                      </View>
                     </View>
-                    <View
-                      style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                      <Text style={[{color: Grey, fontSize: 10}]}>
-                        *Menunggu untuk verivikasi data{' '}
-                      </Text>
-                    </View>
-                  </View>
-                  <View>
-                    <Text>Status</Text>
-                    <Text>{item.Status}</Text>
-                  </View>
-                </View>
-              )}
-            />
-          </View>
-        </View>
+                  )}
+                />
+              </View>
+            </View>
+          )}
+        </>
       )}
     </View>
   );
@@ -239,6 +259,7 @@ function AntrianTerdaftar({navigation}) {
 function AntrianDiproses({navigation}) {
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   const [dataAntrian, setDataAntrian] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   let [value, setValue] = useState(0);
   const getApiDiproses = () => {
     axios({
@@ -259,6 +280,9 @@ function AntrianDiproses({navigation}) {
       .catch(err => console.log(err));
   };
   useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
     const reloadPage = navigation.addListener('focus', () => {
       // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
       getApiDiproses();
@@ -269,81 +293,95 @@ function AntrianDiproses({navigation}) {
   return (
     // {dataAntrian.length < 1 ()}
     <View style={[{flex: 1}]}>
-      {value < 1 ? (
-        <ImageBackground
-          source={require(`../Assets/Images/Sleeping.png`)}
-          style={[{flex: 1, resizeMode: 'center'}]}>
-          <View
-            style={[
-              {
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: ungu,
-                padding: 20,
-              },
-            ]}>
-            <Text style={[{color: putih, fontSize: 16, fontWeight: 'bold'}]}>
-              Belum ada antrian yang sedang diproses{' '}
-            </Text>
-          </View>
-        </ImageBackground>
+      {isLoading ? (
+        <View
+          style={[{justifyContent: 'center', alignItems: 'center', flex: 1}]}>
+          <ActivityIndicator size="large" color={ungu} />
+        </View>
       ) : (
-        <View style={[{flex: 1, marginTop: 20}]}>
-          <FlatList
-            data={dataAntrian}
-            renderItem={({item}) => (
+        <>
+          {value < 1 ? (
+            <ImageBackground
+              source={require(`../Assets/Images/Sleeping.png`)}
+              style={[{flex: 1, resizeMode: 'center'}]}>
               <View
                 style={[
                   {
-                    flex: 1,
-                    marginHorizontal: 20,
-                    backgroundColor: putih,
-                    padding: 20,
-                    borderLeftWidth: 2,
-                    borderColor: ungu,
-                    flexDirection: 'row',
+                    justifyContent: 'center',
                     alignItems: 'center',
-                    justifyContent: 'space-between',
-                    marginVertical: 2,
+                    backgroundColor: ungu,
+                    padding: 20,
                   },
                 ]}>
-                <View>
-                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                    <Text>Nomor Antrian : </Text>
-                    <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
-                      {item.IdAntrian}
-                    </Text>
-                  </View>
-                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                    <Text>Nama anak: </Text>
-                    <Text style={[[{color: ungu}]]}>{item.Nama}</Text>
-                  </View>
-                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                    {item.Status == 'Valid' ? (
-                      <Text style={[styleLocal.textGreySmall]}>
-                        *Antrian anda sedang menunggu
-                      </Text>
-                    ) : (
-                      <Text style={[styleLocal.textGreySmall, {width: '80%'}]}>
-                        *Antrian anda sedang Dalam tahap pembuatan akta
-                      </Text>
-                    )}
-                  </View>
-                </View>
-                {/* <View>
+                <Text
+                  style={[{color: putih, fontSize: 16, fontWeight: 'bold'}]}>
+                  Belum ada antrian yang sedang diproses{' '}
+                </Text>
+              </View>
+            </ImageBackground>
+          ) : (
+            <View style={[{flex: 1, marginTop: 20}]}>
+              <FlatList
+                data={dataAntrian}
+                renderItem={({item}) => (
+                  <View
+                    style={[
+                      {
+                        flex: 1,
+                        marginHorizontal: 20,
+                        backgroundColor: putih,
+                        padding: 20,
+                        borderLeftWidth: 2,
+                        borderColor: ungu,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginVertical: 2,
+                      },
+                    ]}>
+                    <View>
+                      <View
+                        style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                        <Text>Nomor Antrian : </Text>
+                        <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
+                          {item.IdAntrian}
+                        </Text>
+                      </View>
+                      <View
+                        style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                        <Text>Nama anak: </Text>
+                        <Text style={[[{color: ungu}]]}>{item.Nama}</Text>
+                      </View>
+                      <View
+                        style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                        {item.Status == 'Valid' ? (
+                          <Text style={[styleLocal.textGreySmall]}>
+                            *Antrian anda sedang menunggu
+                          </Text>
+                        ) : (
+                          <Text
+                            style={[styleLocal.textGreySmall, {width: '80%'}]}>
+                            *Antrian anda sedang Dalam tahap pembuatan akta
+                          </Text>
+                        )}
+                      </View>
+                    </View>
+                    {/* <View>
                   <Text>{item.Status}</Text>
                 </View> */}
-                <View>
-                  <AntIcon
-                    name="loading1"
-                    size={20}
-                    style={[{color: ungu}]}
-                  />
-                </View>
-              </View>
-            )}
-          />
-        </View>
+                    <View>
+                      <AntIcon
+                        name="loading1"
+                        size={20}
+                        style={[{color: ungu}]}
+                      />
+                    </View>
+                  </View>
+                )}
+              />
+            </View>
+          )}
+        </>
       )}
     </View>
   );
@@ -353,6 +391,7 @@ const AntrianDitolak = ({navigation}) => {
   const url = ` ${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`;
   const [dataAntrian, setDataAntrian] = useState();
   let [lengt, setLengt] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const getApiDitolak = () => {
     axios({
       method: 'POST',
@@ -368,6 +407,9 @@ const AntrianDitolak = ({navigation}) => {
       .catch(err => console.log(err));
   };
   useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
     const reloadPage = navigation.addListener('focus', () => {
       // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
       getApiDitolak();
@@ -378,49 +420,74 @@ const AntrianDitolak = ({navigation}) => {
 
   return (
     <View style={[{flex: 1}]}>
-      {lengt < 1 ? (
+      {isLoading ? (
         <View
-          style={[{flex: 1, justifyContent: 'center', alignItems: 'center'}]}>
-          <Text>Belum ada antrian ditolak</Text>
+          style={[{justifyContent: 'center', alignItems: 'center', flex: 1}]}>
+          <ActivityIndicator size="large" color={ungu} />
         </View>
       ) : (
-        <View style={[{marginTop: 20}]}>
-          <FlatList
-            data={dataAntrian}
-            renderItem={({item}) => (
-              <View
-                style={[
-                  {
-                    marginHorizontal: 20,
-                    backgroundColor: putih,
-                    padding: 20,
-                    borderLeftWidth: 2,
-                    borderColor: ungu,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    marginVertical: 2,
-                  },
-                ]}>
-                <View>
-                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                    <Text>Nomor Antrian : </Text>
-                    <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
-                      {item.IdAntrian}
-                    </Text>
+        <>
+          {lengt < 1 ? (
+            <View
+              style={[
+                {flex: 1, justifyContent: 'center', alignItems: 'center'},
+              ]}>
+              <Text>Belum ada antrian ditolak</Text>
+            </View>
+          ) : (
+            <View style={[{marginTop: 20}]}>
+              <FlatList
+                data={dataAntrian}
+                renderItem={({item}) => (
+                  <View
+                    style={[
+                      {
+                        marginHorizontal: 20,
+                        backgroundColor: putih,
+                        padding: 20,
+                        borderLeftWidth: 2,
+                        borderColor: ungu,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginVertical: 2,
+                      },
+                    ]}>
+                    <View>
+                      <View
+                        style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                        <Text>Nomor Antrian : </Text>
+                        <Text style={[{fontWeight: 'bold', fontSize: 20}]}>
+                          {item.IdAntrian}
+                        </Text>
+                      </View>
+                      <View
+                        style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                        <Text>Nama anak: </Text>
+                        <Text>{item.Nama}</Text>
+                      </View>
+                    </View>
+                    <View
+                      style={[
+                        {
+                          width: 30,
+                          height: 30,
+                          borderWidth: 2,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          borderRadius: 15,
+                          borderColor: Purple,
+                          backgroundColor: Grey,
+                        },
+                      ]}>
+                      <MaterialIcon name="cancel" size={20} />
+                    </View>
                   </View>
-                  <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                    <Text>Nama anak: </Text>
-                    <Text>{item.Nama}</Text>
-                  </View>
-                </View>
-                <View style={[{width: 30, height: 30, borderWidth: 2, justifyContent: 'center', alignItems: 'center', borderRadius: 15, borderColor: Purple, backgroundColor: Grey}]}>
-                <MaterialIcon name="cancel" size={20} />
-                </View>
-              </View>
-            )}
-          />
-        </View>
+                )}
+              />
+            </View>
+          )}
+        </>
       )}
     </View>
   );

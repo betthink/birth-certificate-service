@@ -5,9 +5,6 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  Modal,
-  Dimensions,
-  ImageBackground,
   ActivityIndicator,
   Image,
 } from 'react-native';
@@ -52,8 +49,15 @@ const DataBayiScreen = ({route, navigation}) => {
         // console.log(data, "ini data antrian terdaftar");
 
         const StatusLayanan = res.data[0].StatusLayanan;
-        setdataAdmin(StatusLayanan);
-        console.log(StatusLayanan);
+        let data = res.data;
+        data = data.map(obj => obj.StatusLayanan);
+
+        const sum = data.reduce((accumulator, currentValue) => {
+          return accumulator + parseInt(currentValue);
+        }, 0);
+        console.log(sum, 'Ini akumulasi');
+
+        setdataAdmin(sum);
       })
       .catch(err => console.log(err));
   };
@@ -227,7 +231,13 @@ const DataBayiScreen = ({route, navigation}) => {
                   alignItems: 'center',
                 },
               ]}>
-              <Text>Antrian sedang Ditutup</Text>
+              <Text style={[{fontSize: 17, alignSelf: 'center'}]}>
+                Antrian sedang Ditutup
+              </Text>
+              <Image
+                style={[{resizeMode: 'center', flex: 1}]}
+                source={require('../Assets/Images/tired.png')}
+              />
             </View>
           ) : (
             <>
@@ -423,7 +433,7 @@ const DataBayiScreen = ({route, navigation}) => {
                     value={BeratBayi}
                     onChangeText={text => setBeratBayi(text)}
                     IconName={'baby'}
-                    InputType={"numeric"}
+                    InputType={'numeric'}
                   />
                 </View>
                 <TextInputBox

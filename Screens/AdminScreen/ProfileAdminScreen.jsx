@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, Image, StyleSheet, Switch} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {stylesDariGaya} from '../Components/ImportedStyles';
@@ -38,6 +38,7 @@ async function openDocument() {
 }
 
 const ProfileAdminScreen = ({navigation, route}) => {
+
   const {Id} = route.params;
   // console.log(Id, "Id dari params");
   const [password, setpassword] = useState('');
@@ -48,12 +49,8 @@ const ProfileAdminScreen = ({navigation, route}) => {
   const [nama, setnama] = useState('');
   const [email, setemail] = useState('');
   const [fotoProfile, setfotoProfile] = useState('');
-  // const [valueStatus, setvalueStatus] = useState(StatusLayanan);
   const [valDefaultLayanan, setvalDefaultLayanan] = useState(null);
-  const [ubahBoolean, setubahBoolean] = useState(
-    valDefaultLayanan == 0 ? false : true,
-  );
-console.log(ubahBoolean, "Ini nilai bolean");
+
   const ambilCookie = () => {
     AsyncStorage.getItem('userData').then(value => {
       AsyncStorage.getItem('userData');
@@ -86,7 +83,7 @@ console.log(ubahBoolean, "Ini nilai bolean");
     });
     let data;
     data = res.data;
-    console.log(Id, 'Ini Id dari params');
+    // console.log(Id, 'Ini Id dari params');
     // console.log(data, "Ini data");
     const filteredData = data.filter(item => item.Id === Id);
     // const datafilter = data[0].filter(d => d.Id == Id);
@@ -95,42 +92,70 @@ console.log(ubahBoolean, "Ini nilai bolean");
     setvalDefaultLayanan(statusFiltered);
   };
 
-  const ubahBolean = async () => {
-    // const newBool = valueStatus === 1 ? 0 : 1;
-    setubahBoolean(!ubahBoolean);
-  };
+  const [updatedLayanan, setUpdatedLayanan] = useState(null);
+
+const switchStatusAntrian = async () => {
+  setvalDefaultLayanan((prevValue) => (prevValue == 1 ? 0 : 1));
+  setUpdatedLayanan((prevValue) => (prevValue === 1 ? 0 : 1));
+
+  const formData = new FormData();
+  formData.append('Id', Id);
+  formData.append('StatusLayanan', updatedLayanan);
+
+  try {
+    const res = await axios.post(
+      `${ipAdress}/aplikasiLayananAkta/update/BukaTutupAntrian.php`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+
+    const output = res.data;
+    console.log(output, 'Ini output data');
+    getDataUSer();
+  } catch (error) {
+    console.error(error);
+  }
+};
+  // const ubahBolean = async () => {
+  //   // const newBool = valueStatus === 1 ? 0 : 1;
+  //   setubahBoolean(!ubahBoolean);
+  // };
 
   // function on off antrian
-  async function kelolaBukaTutupAntrian() {
-    console.log(ubahBoolean);
-    try {
-      console.log('ini harusnya kedua');
-      const res = await axios({
-        method: 'POST',
-        data: {
-          Id: Id,
-          StatusLayanan: ubahBoolean ? 1 : 0,
-        },
-        url: `${ipAdress}/aplikasiLayananAkta/update/BukaTutupAntrian.php`,
-        headers: {'Content-Type': 'multipart/form-data'},
-      });
-      const {value, message, StatusLayanan} = res.data;
-      console.log(res.data);
+  // async function kelolaBukaTutupAntrian() {
+  //   console.log(ubahBoolean);
+  //   try {
+  //     console.log('ini harusnya kedua');
+  //     const res = await axios({
+  //       method: 'POST',
+  //       data: {
+  //         Id: Id,
+  //         StatusLayanan: ubahBoolean ? 1 : 0,
+  //       },
+  //       url: `${ipAdress}/aplikasiLayananAkta/update/BukaTutupAntrian.php`,
+  //       headers: {'Content-Type': 'multipart/form-data'},
+  //     });
+  //     const {value, message, StatusLayanan} = res.data;
+  //     console.log(res.data);
 
-      if (StatusLayanan == 1) {
-        alert('antrian Terbuka');
-        navigation.replace('ProfileAdminScreen', {Id})
-        // setvalueStatus(1);
-      } else {
-        alert('antrian Terbuka');
-        navigation.replace('ProfileAdminScreen', {Id})
-        // setvalueStatus(0);
-      }
-    } catch (error) {
-      alert('koneksi sedang tidak bagus, sihlakan coba lagi?');
-      console.log(error);
-    }
-  }
+  //     if (StatusLayanan == 1) {
+  //       alert('antrian Terbuka');
+  //       navigation.replace('ProfileAdminScreen', {Id})
+  //       // setvalueStatus(1);
+  //     } else {
+  //       alert('antrian Terbuka');
+  //       navigation.replace('ProfileAdminScreen', {Id})
+  //       // setvalueStatus(0);
+  //     }
+  //   } catch (error) {
+  //     alert('koneksi sedang tidak bagus, sihlakan coba lagi?');
+  //     console.log(error);
+  //   }
+  // }
 
   // modal atribute
   const [modalVisible, setModalVisible] = useState(false);
@@ -161,7 +186,7 @@ console.log(ubahBoolean, "Ini nilai bolean");
     });
 
     return reloadPage;
-  }, [ubahBoolean, valDefaultLayanan]);
+  }, [ valDefaultLayanan]);
 
   return (
     <View style={{flex: 1, backgroundColor: putihGelap}}>
@@ -306,26 +331,12 @@ console.log(ubahBoolean, "Ini nilai bolean");
                 console.log(error);
               }
             }}>
-            {ubahBoolean ? (
-              <View style={[styleButtons.buttons, {backgroundColor: hijau}]}>
-                <MaterialIcon name="logout" color={putih} />
-
-                <Text style={[{color: putih}]}> Terbuka</Text>
-              </View>
-            ) : (
-              <View
-                style={[
-                  styleButtons.buttons,
-                  {
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: 'salmon',
-                  },
-                ]}>
-                <MaterialIcon name="logout" color={putih} />
-                <Text style={[{color: putih}]}>Tertutup</Text>
-              </View>
-            )}
+         <Switch
+        trackColor={{ false: '#767577', true: '#81b0ff' }}
+        thumbColor={valDefaultLayanan==1 ? hijau : '#f4f3f4'}
+        ios_backgroundColor="#3e3e3e"
+        onValueChange={switchStatusAntrian}
+        value={valDefaultLayanan ==1} />
           </TouchableOpacity>
           {/* buttons Log out */}
           <TouchableOpacity
