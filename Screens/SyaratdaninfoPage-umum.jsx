@@ -36,7 +36,7 @@ export default function SyaratScreen({navigation}) {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: putihGelap}}>
       <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
-        <ButtonBack buttontext={'Infromasi Syarat'} />
+        <ButtonBack buttontext={'Infromasi Syarat dan Ketentuan'} />
       </View>
       <View style={[{resizeMode: 'cover', flex: 1}]}>
         {/* <Image  /> */}

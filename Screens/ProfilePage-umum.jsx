@@ -150,7 +150,7 @@ const ProfileUmumScreen = ({navigation, route}) => {
           <TouchableOpacity
             onPress={() => navigation.navigate('ListFormulir', {IdUser: Id})}
             style={[{justifyContent: 'center', flex: 1, backgroundColor: ungu,  alignItems :'center', padding: 20}]}>
-            <Text style={[{color: putih}]}>formulir</Text>
+            <Text style={[{color: putih}]}>Lihat formulir</Text>
           </TouchableOpacity>
  
           <View style={[stylesDariGaya.listData]}>

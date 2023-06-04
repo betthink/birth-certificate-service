@@ -102,7 +102,7 @@ const PemberitahuanScreen = ({navigation, route}) => {
                       setSelectedId(item.IdAnak); // Menampilkan item.Pemberitahuan
                     }
                   }}>
-                  <Text style={[{color: putih}]}>{item.IdAnak}</Text>
+                  <Text style={[{color: putih}]}>{item.Nama}</Text>
                   {item.Pemberitahuan == 0 ? (
                     <Feather name="bell-off" size={20} color={Grey} />
                   ) : (

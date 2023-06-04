@@ -3,13 +3,14 @@ import React, {useEffect, useState} from 'react';
 import ButtonBack from './Components/ButtonBack';
 import {stylesDariGaya} from './Components/ImportedStyles';
 import TextInputBox from './Components/TextInputBox';
-import {putih} from '../Assets/StylingComponent/Coloring';
+import {putih, ungu} from '../Assets/StylingComponent/Coloring';
 import DateSelect from './Components/DateSelect';
 import DefaultButtonBox from './Components/DefaultButtonBox';
 import DropdownSelect from './Components/DropdownSelect';
 import ModalCompon from './Components/ModalCompon';
 import axios from 'axios';
 import { ipAdress } from './Components/Url';
+import { IonIcon } from './Components/Icons';
 
 const DataAyahScreen = ({navigation,route}) => {
   // Id dari router
@@ -106,7 +107,7 @@ const DataAyahScreen = ({navigation,route}) => {
       );
       // console.log(res.data);
       if (value == 1) {
-        alert('Akun Berhasil Didaftarkan');
+        alert('Data Berhasil Didaftarkan');
         setkonfirmasi(false);
         navigation.navigate('DataSaksiScreen', {IdAnak, IdUser});
       } else {
@@ -128,7 +129,7 @@ const DataAyahScreen = ({navigation,route}) => {
   return (
     <SafeAreaView style={[{backgroundColor: putih, flex: 1}]}>
       <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
-        <ButtonBack buttontext={'Data Ayah'} />
+        <ButtonBack buttontext={'Input Data Ayah'} />
       </View>
       <ScrollView
         contentContainerStyle={{paddingVertical: 20}}
@@ -171,14 +172,16 @@ const DataAyahScreen = ({navigation,route}) => {
           display={'calendar'}
         />
         {/* Alamat */}
+        <View style={[]}>
         <TextInputBox
           Label={'Alamat'}
           placeholderTitle={'*Jalan/street'}
           onChangeText={text => setAlamat(text)}
           value={Alamat}
           IconName={'house-user'}
-        />
-        <View style={[{zIndex: 1}]}>
+        /></View>
+        <View style={[{zIndex: 1, marginTop: 20, flexDirection: 'row', alignItems: 'center'}]}>
+        <IonIcon style={[{color: ungu}]} name="ios-flag-sharp" size={20} />
           <DropdownSelect
             placeholder={'Pilih Kewarganegaraan'}
             Label="*Kewarganegaraan"
@@ -209,7 +212,7 @@ const DataAyahScreen = ({navigation,route}) => {
         {/* button */}
         <DefaultButtonBox
           onClickAction={() => setkonfirmasi(true)}
-          Title={'Submit'}
+          Title={'Selanjutnya'}
         />
       </ScrollView>
       <ModalCompon

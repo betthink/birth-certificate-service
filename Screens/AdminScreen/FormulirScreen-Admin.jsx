@@ -91,7 +91,7 @@ const FormulirScreen = ({route}) => {
   return (
     <View>
       <View style={[stylesDariGaya.headerBox]}>
-        <ButtonBack buttontext={'Data Formulir'} />
+        <ButtonBack buttontext={'Detil Data Formulir'} />
       </View>
       <View>
         {dataBayi == null ? (

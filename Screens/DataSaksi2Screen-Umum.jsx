@@ -3,13 +3,14 @@ import React, {useEffect, useState} from 'react';
 import ButtonBack from './Components/ButtonBack';
 import {stylesDariGaya} from './Components/ImportedStyles';
 import TextInputBox from './Components/TextInputBox';
-import {putih} from '../Assets/StylingComponent/Coloring';
+import {putih, ungu} from '../Assets/StylingComponent/Coloring';
 import DateSelect from './Components/DateSelect';
 import DefaultButtonBox from './Components/DefaultButtonBox';
 import DropdownSelect from './Components/DropdownSelect';
 import ModalCompon from './Components/ModalCompon';
 import axios from 'axios';
 import {ipAdress} from './Components/Url';
+import {IonIcon} from './Components/Icons';
 
 const DataSaksi2Screen = ({navigation, route}) => {
   // Id raouter
@@ -59,13 +60,12 @@ const DataSaksi2Screen = ({navigation, route}) => {
   async function addDataSaksi2() {
     try {
       if (
-  
-        !NIk||
-        !Nama||
-        !TempatKelahiran||
-        !Alamat||
-        !vKewarganegaraan||
-        !newDateString||
+        !NIk ||
+        !Nama ||
+        !TempatKelahiran ||
+        !Alamat ||
+        !vKewarganegaraan ||
+        !newDateString ||
         !Kebangsaan
       ) {
         // Menampilkan pesan kesalahan jika ada input yang kosong
@@ -107,7 +107,7 @@ const DataSaksi2Screen = ({navigation, route}) => {
         setkonfirmasi(false);
         navigation.navigate('DataFileUploadScreen', {IdAnak, IdUser});
       } else {
-        alert(message,"gagal");
+        alert(message, 'gagal');
         setkonfirmasi(false);
       }
     } catch (error) {
@@ -141,7 +141,7 @@ const DataSaksi2Screen = ({navigation, route}) => {
   return (
     <SafeAreaView style={[{backgroundColor: putih, flex: 1}]}>
       <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
-        <ButtonBack buttontext={'Data Saksi 2'} />
+        <ButtonBack buttontext={'Input Data Saksi 2'} />
       </View>
       <ScrollView
         contentContainerStyle={{paddingVertical: 20}}
@@ -153,7 +153,7 @@ const DataSaksi2Screen = ({navigation, route}) => {
           onChangeText={text => setNIK(text)}
           value={NIk}
           IconName={'id-card'}
-          InputType={"numeric"}
+          InputType={'numeric'}
         />
         {/* Nama */}
         <TextInputBox
@@ -191,7 +191,17 @@ const DataSaksi2Screen = ({navigation, route}) => {
           value={Alamat}
           IconName={'house-user'}
         />
-        <View style={[{zIndex: 1}]}>
+        <View
+          style={[
+            {
+              zIndex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 20,
+            },
+          ]}>
+          <IonIcon color={ungu} name="ios-flag-sharp" size={20} />
+
           <DropdownSelect
             placeholder={'Pilih Kewarganegaraan'}
             Label="Kewarganegaraan"
@@ -215,16 +225,15 @@ const DataSaksi2Screen = ({navigation, route}) => {
         {/* button */}
         <DefaultButtonBox
           onClickAction={() => setkonfirmasi(true)}
-          Title={'Lanjut'}
+          Title={'Selanjutnya'}
         />
       </ScrollView>
       <ModalCompon
-      cancel={()=> setkonfirmasi(false)}
+        cancel={() => setkonfirmasi(false)}
         stateValueModal={konfirmasi}
         onPresAction={async () => {
           try {
             await addDataSaksi2();
-           
           } catch (error) {}
         }}
       />

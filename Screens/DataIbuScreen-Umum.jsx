@@ -9,9 +9,10 @@ import DefaultButtonBox from './Components/DefaultButtonBox';
 import DropdownSelect from './Components/DropdownSelect';
 import ModalCompon from './Components/ModalCompon';
 import axios from 'axios';
-import Icon from 'react-native-vector-icons/FontAwesome'
-import { ipAdress } from './Components/Url';
-import { Image } from 'react-native-svg';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {ipAdress} from './Components/Url';
+import {Image} from 'react-native-svg';
+import {IonIcon} from './Components/Icons';
 const DataIbuScreen = ({navigation, route}) => {
   // ambil Id anak dari route
   const {IdAnak, IdUser} = route.params;
@@ -62,12 +63,12 @@ const DataIbuScreen = ({navigation, route}) => {
     try {
       if (
         // !Password ||
-        !NIk||
-        !Nama||
-        !TempatKelahiran||
-        !Alamat||
-        !vKewarganegaraan||
-        !newDateString||
+        !NIk ||
+        !Nama ||
+        !TempatKelahiran ||
+        !Alamat ||
+        !vKewarganegaraan ||
+        !newDateString ||
         !Kebangsaan
       ) {
         // Menampilkan pesan kesalahan jika ada input yang kosong
@@ -103,15 +104,15 @@ const DataIbuScreen = ({navigation, route}) => {
         newDateString,
         Kebangsaan,
         Pekerjaan,
-        IdUser
+        IdUser,
       );
       // console.log(res.data);
       if (value == 1) {
-        alert('Akun Berhasil Didaftarkan');
+        alert('Data Berhasil Didaftarkan');
         setkonfirmasi(false);
-        navigation.navigate('DataAyahScreen', {IdAnak,IdUser});
+        navigation.navigate('DataAyahScreen', {IdAnak, IdUser});
       } else {
-        alert(message);
+        alert('gagal mendaftarkan data');
         setkonfirmasi(false);
       }
     } catch (error) {
@@ -122,13 +123,12 @@ const DataIbuScreen = ({navigation, route}) => {
   }
 
   useEffect(() => {
-    console.log(IdAnak, "Dialahalamn data ibu dan id: ", IdUser );
-  }, [
-  ]);
+    console.log(IdAnak, 'Dialahalamn data ibu dan id: ', IdUser);
+  }, []);
   return (
     <SafeAreaView style={[{backgroundColor: putih, flex: 1}]}>
       <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
-        <ButtonBack buttontext={'Data Ibu'} />
+        <ButtonBack buttontext={'Input Data Ibu'} />
       </View>
       <ScrollView
         contentContainerStyle={{paddingVertical: 20}}
@@ -140,7 +140,7 @@ const DataIbuScreen = ({navigation, route}) => {
           onChangeText={text => setNIK(text)}
           value={NIk}
           IconName={'id-card'}
-          InputType={"numeric"}
+          InputType={'numeric'}
         />
         {/* Nama */}
         <TextInputBox
@@ -160,19 +160,20 @@ const DataIbuScreen = ({navigation, route}) => {
         />
         {/* date Select */}
         <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-        {/* <Text style={[{paddingRight: 5}]}>TTL</Text> */}
-        <Icon size={20} color={ungu} name={"calendar"} />
-        <DateSelect
-          openCalendar={() => OpenDate()}
-          onChange={onChangeDate}
-          valueinTextInput={newDateString}
-          value={date}
-          visible={DatePickerVisibility}
-          // IconName="calendar"
-          placeholder={'yyyy-mm-dd'}
-          mode={'date'}
-          display={'calendar'}
-        /></View>
+          {/* <Text style={[{paddingRight: 5}]}>TTL</Text> */}
+          <Icon size={20} color={ungu} name={'calendar'} />
+          <DateSelect
+            openCalendar={() => OpenDate()}
+            onChange={onChangeDate}
+            valueinTextInput={newDateString}
+            value={date}
+            visible={DatePickerVisibility}
+            // IconName="calendar"
+            placeholder={'yyyy-mm-dd'}
+            mode={'date'}
+            display={'calendar'}
+          />
+        </View>
         {/* Alamat */}
         <TextInputBox
           Label={'Alamat'}
@@ -181,7 +182,16 @@ const DataIbuScreen = ({navigation, route}) => {
           value={Alamat}
           IconName={'house-user'}
         />
-        <View style={[{zIndex: 1}]}>
+        <View
+          style={[
+            {
+              zIndex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 20,
+            },
+          ]}>
+          <IonIcon color={ungu} name="ios-flag-sharp" size={20} />
           <DropdownSelect
             placeholder={'Pilih Kewarganegaraan'}
             Label="Kewarganegaraan"
@@ -212,11 +222,11 @@ const DataIbuScreen = ({navigation, route}) => {
         {/* button */}
         <DefaultButtonBox
           onClickAction={() => setkonfirmasi(true)}
-          Title={'Lanjutkan'}
+          Title={'Selanjutnya'}
         />
       </ScrollView>
       <ModalCompon
-      cancel={()=>setkonfirmasi(false)}
+        cancel={() => setkonfirmasi(false)}
         stateValueModal={konfirmasi}
         onPresAction={async () => {
           try {

@@ -180,7 +180,7 @@ const DataFileUploadScreen = ({navigation, route}) => {
         />
         {/* button/ */}
         <DefaultButtonBox
-          Title={'Submit'}
+          Title={'Daftar'}
           TitleColor={hijau}
           onClickAction={async () => {
             await uploadFile();

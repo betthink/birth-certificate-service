@@ -16,7 +16,7 @@ const Login = ({navigation, route}) => {
   const [PasswordHook, setPasswordHook] = useState('');
   async function loginFunc() {
     if (!NamaHook) {
-      alert('masukan username anda!');
+      alert('masukan nama anda!');
       return;
     } else if (!PasswordHook) {
       alert('masukan password anda!');

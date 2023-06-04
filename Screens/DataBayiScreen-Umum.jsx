@@ -194,7 +194,7 @@ const DataBayiScreen = ({route, navigation}) => {
       const {value, message, IdAnak} = res.data;
       // console.log(res.data);
       if (value == 1) {
-        alert('Akun Berhasil Didaftarkan');
+        alert('Data Berhasil Didaftarkan');
         setkonfirmasi(false);
         console.log('ini id baru anank', IdAnak);
         navigation.navigate('DataIbuScreen', {IdAnak, IdUser: Id});
@@ -225,7 +225,7 @@ const DataBayiScreen = ({route, navigation}) => {
       ) : (
         <>
           <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
-            <ButtonBack buttontext={'Data Bayi'} />
+            <ButtonBack buttontext={'Input Data Bayi'} />
           </View>
           {dataAdmin == 0 ? (
             <View
@@ -443,7 +443,7 @@ const DataBayiScreen = ({route, navigation}) => {
                 <DefaultButtonBox
                   TitleColor={'#fff'}
                   onClickAction={() => setkonfirmasi(true)}
-                  Title={'Lanjutkan'}
+                  Title={'Selanjutnya'}
                 />
               </ScrollView>
               {/* Modal/Pop up  */}
