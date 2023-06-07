@@ -75,7 +75,8 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
                   navigation.navigate('DetailAntrian', {detailAntrian: item})
                 }
                 style={{
-                  height: 70,
+                  // height: 70,
+                  paddingVertical: 5,
                   borderLeftWidth: 3,
                   borderBottomWidth: 2,
                   borderLeftColor: ungu,
@@ -92,8 +93,26 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
                     {flexDirection: 'row', justifyContent: 'space-between'},
                   ]}>
                   <Text>Id Antrian : </Text>
-                  <Text style={{textAlign: 'right', color: hitam}}>
+                  <Text style={{textAlign: 'right', color: ungu}}>
                     {item.IdAntrian}
+                  </Text>
+                </View>
+                <View
+                  style={[
+                    {flexDirection: 'row', justifyContent: 'space-between'},
+                  ]}>
+                  <Text>Waktu Terima : </Text>
+                  <Text style={{textAlign: 'right', color: ungu}}>
+                    {item.WaktuTerima}
+                  </Text>
+                </View>
+                <View
+                  style={[
+                    {flexDirection: 'row', justifyContent: 'space-between'},
+                  ]}>
+                  <Text>IdPengambilan : </Text>
+                  <Text style={{textAlign: 'right', color: ungu}}>
+                    {item.IdPengambilan}
                   </Text>
                 </View>
                 <View
