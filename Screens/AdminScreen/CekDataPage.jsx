@@ -6,7 +6,7 @@ import {
   Platform,
   Linking,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 // import RNFetchBlob from 'rn-fetch-blob';
 import React, {useState, useEffect} from 'react';
@@ -63,7 +63,7 @@ const CekDataPage = ({route, navigation}) => {
       const res = await axios({
         method: 'POST',
         url: `${ipAdress}/aplikasiLayananAkta/api/apiFileUploadZip.php`,
-        data:formData,
+        data: formData,
         headers: {'Content-Type': 'multipart/form-data'},
       });
 
@@ -146,7 +146,7 @@ const CekDataPage = ({route, navigation}) => {
   return (
     <View style={[{flex: 1}]}>
       <View style={[stylesDariGaya.headerBox]}>
-        <ButtonBack buttontext={'Cek Data'} />
+        <ButtonBack buttontext={'Cek Detil Data'} />
       </View>
       <View
         style={[
@@ -163,7 +163,9 @@ const CekDataPage = ({route, navigation}) => {
       </View>
       <View style={[{padding: 20}]}>
         {/* top content */}
-
+        <TouchableOpacity  onPress={()=>navigation.navigate('FormulirScreen', {IdAntrian: IdAntrian})} style={[{padding: 10, backgroundColor: ungu, justifyContent: 'center', alignItems: 'center'}]}>
+          <Text style={[{color: putih}]}>Lihat Folmulir</Text>
+        </TouchableOpacity>
         <View style={[{backgroundColor: putih, marginTop: 10, padding: 10}]}>
           <View
             style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>

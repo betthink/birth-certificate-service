@@ -4,7 +4,7 @@ import ButtonBack from './Components/ButtonBack';
 import {stylesDariGaya} from './Components/ImportedStyles';
 import ListUploadFile from './Components/ListUploadFile';
 import DefaultButtonBox from './Components/DefaultButtonBox';
-import {hijau, ungu} from '../Assets/StylingComponent/Coloring';
+import {hijau, putih, ungu} from '../Assets/StylingComponent/Coloring';
 import DocumentPicker from 'react-native-document-picker';
 import {ipAdress} from './Components/Url';
 import axios from 'axios';
@@ -123,6 +123,10 @@ const DataFileUploadScreen = ({navigation, route}) => {
       {/* content */}
       <ScrollView
         contentContainerStyle={[{paddingHorizontal: 20, paddingVertical: 20}]}>
+        <View style={[{padding: 2, backgroundColor: ungu}]}>
+          <Text style={[{color: putih}]}>File yang bisa di gunakan hanya dengan format PDF</Text>
+        </View>
+
         {/* KK */}
         <ListUploadFile
           titleList={FileKK == null ? 'ScanKK' : FileKK.name}

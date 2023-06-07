@@ -229,7 +229,7 @@ const switchStatusAntrian = async () => {
                 alignItems: 'center',
                 flexDirection: 'row',
                 borderWidth: 4,
-                borderColor: pinkGelap,
+                borderColor: ungu,
                 borderRadius: 50,
                 position: 'absolute',
                 top: -30,
@@ -246,12 +246,12 @@ const switchStatusAntrian = async () => {
                 //   uri: fotoUrl,
                 // }}
               />
-              <MaterialIcon
+              {/* <MaterialIcon
                 style={{position: 'absolute', top: 5, right: 0}}
                 name="add-circle"
                 size={20}
-                color={'#24CE9E'}
-              />
+                color={hitam}
+              /> */}
             </TouchableOpacity>
             <View
               style={{position: 'absolute', bottom: 5, alignItems: 'center'}}>

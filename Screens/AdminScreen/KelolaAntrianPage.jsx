@@ -193,6 +193,7 @@ function KelDiproses() {
         // console.log(data, "ini data antrian terdaftar");
         // setLeng(data.length);
         setdataAntrianDiproses(data);
+        console.log();
       })
       .catch(err => console.log(err));
   };
