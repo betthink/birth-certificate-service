@@ -48,6 +48,8 @@ export const stylesDariGaya = StyleSheet.create({
     marginTop: 5,
     height: 50,
     backgroundColor: putih,
+    paddingHorizontal: 15,
+    
   },
   headerBox: {
     // backgroundColor: hijau,

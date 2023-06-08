@@ -111,6 +111,7 @@ const RegisterAkunScreen = ({navigation}) => {
             <MaterialIcon name="person" size={sizeIcon} color={ungu} />
             <View style={[StyleForm.pdLef]}>
               <TextInput
+              
                 onChangeText={text => setNama(text)}
                 value={Nama}
                 style={[stylesDariGaya.formInput, StyleForm.textInput]}
