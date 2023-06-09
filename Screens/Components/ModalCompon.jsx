@@ -1,6 +1,6 @@
 import {View, Text, Modal, TouchableOpacity, Dimensions} from 'react-native';
 import React from 'react';
-import {hijau, ungu} from '../../Assets/StylingComponent/Coloring';
+import {hijau, putih, ungu} from '../../Assets/StylingComponent/Coloring';
 
 const ModalCompon = ({stateValueModal, onPresAction, cancel}) => {
   const WIDTH = Dimensions.get('window').width;
@@ -19,6 +19,9 @@ const ModalCompon = ({stateValueModal, onPresAction, cancel}) => {
               borderRadius: 10,
             },
           ]}>
+          <View style={[{paddingHorizontal: 20, justifyContent: 'center', alignItems: 'center'}]}>
+            <Text style={[{color: putih, fontSize: 14, textAlign: 'center'}]}> Anda yakin dengan data yang anda masukkan?</Text>
+          </View>
           <View
             style={[
               {
@@ -29,10 +32,10 @@ const ModalCompon = ({stateValueModal, onPresAction, cancel}) => {
               },
             ]}>
             <TouchableOpacity onPress={cancel}>
-              <Text style={[{padding: 30, backgroundColor:'salmon', borderRadius: 20}]}>Batal?</Text>
+              <Text style={[{padding: 30, backgroundColor:'salmon', borderRadius: 20}]}>Batal </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={onPresAction} style={[{   alignItems: 'center', justifyContent: 'center',}]}>
-              <Text style={[{padding: 30, backgroundColor:hijau, borderRadius: 20}]}>Konfirmasi?</Text>
+              <Text style={[{padding: 30, backgroundColor:hijau, borderRadius: 20, color: putih}]}>Yakin</Text>
             </TouchableOpacity>
             
           </View>

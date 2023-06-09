@@ -172,6 +172,11 @@ const DataSaksi2Screen = ({navigation, route}) => {
           IconName={'user'}
         />
         {/* date Select */}
+        <View style={[{marginTop: 10}]}>
+          <Text style={[{fontWeight: 'bold', fontSize: 15}]}>
+            Tanggal Lahir
+          </Text>
+        </View>
         <DateSelect
           openCalendar={() => OpenDate()}
           onChange={onChangeDate}

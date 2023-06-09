@@ -31,14 +31,14 @@ const PemberitahuanScreen = ({navigation, route}) => {
     try {
       const result = await axios({
         method: 'POST',
-        url: `${ipAdress}/aplikasiLayananAkta/api/apiDataBayi.php`,
+        url: `${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`,
       });
 
       let data = result.data;
       const datafilter = data.filter(d => d.IdUser == Id);
       console.log(datafilter, 'semua data filter by user');
       data = datafilter.length;
-      setdataleng(data)
+      setdataleng(data);
       setdataPemberitahuan(datafilter);
       // setdataIdUSer(datafilter[0].IdUser);
     } catch (error) {
@@ -53,14 +53,30 @@ const PemberitahuanScreen = ({navigation, route}) => {
     <SafeAreaView style={[{flex: 1}]}>
       {/* header box */}
       <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
-        <ButtonBack buttontext={'Pemberitahuann'} />
+        <ButtonBack buttontext={'Pemberitahuan'} />
       </View>
       {/* pemberitahuan */}
       {dataleng == 0 ? (
         <ImageBackground
           source={require('../Assets/Images/makeQueue.png')}
-          style={[{paddingHorizontal: 10, resizeMode: 'center', flex: 1, backgroundColor: Kuning, justifyContent: 'center'}]}>
-          <Text style={[{ fontSize: 20, padding: 20, backgroundColor: Grey, textAlign: 'center'}]}>
+          style={[
+            {
+              paddingHorizontal: 10,
+              resizeMode: 'center',
+              flex: 1,
+              backgroundColor: ungu,
+              justifyContent: 'center',
+            },
+          ]}>
+          <Text
+            style={[
+              {
+                fontSize: 20,
+                padding: 20,
+                backgroundColor: putih,
+                textAlign: 'center',
+              },
+            ]}>
             Sihlakan medaftar layanan terlebih dulu
           </Text>
           {/* <Image
@@ -159,6 +175,17 @@ const PemberitahuanScreen = ({navigation, route}) => {
                           ? 'Belum ada Pemberitahuan'
                           : item.Pemberitahuan}
                       </Text>
+                      <View
+                        style={[
+                          {
+                            padding: 10,
+                            backgroundColor: ungu,
+                            flexDirection: 'row',
+                          },
+                        ]}>
+                        <Text>Id Pengambilan: </Text>
+                        <Text style={[{color: putih}]}>{item.IdPengambilan == null ? 'Id belum didapat' : item.IdPengambilan}</Text>
+                      </View>
                     </View>
                   </View>
                 )}

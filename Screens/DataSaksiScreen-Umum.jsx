@@ -172,17 +172,22 @@ const DataSaksiScreen = ({navigation, route}) => {
           IconName={'user'}
         />
         {/* date Select */}
-        <DateSelect
-          openCalendar={() => OpenDate()}
-          onChange={onChangeDate}
-          valueinTextInput={newDateString}
-          value={date}
-          visible={DatePickerVisibility}
-          IconName="calendar"
-          placeholder={'yyyy-mm-dd'}
-          mode={'date'}
-          display={'calendar'}
-        />
+        <View style={[{marginTop: 10}]}>
+          <Text style={[{fontWeight: 'bold', fontSize: 15}]}>
+            Tanggal Lahir
+          </Text>
+          <DateSelect
+            openCalendar={() => OpenDate()}
+            onChange={onChangeDate}
+            valueinTextInput={newDateString}
+            value={date}
+            visible={DatePickerVisibility}
+            IconName="calendar"
+            placeholder={'yyyy-mm-dd'}
+            mode={'date'}
+            display={'calendar'}
+          />
+        </View>
         {/* Alamat */}
         <TextInputBox
           Label={'Alamat'}

@@ -9,10 +9,10 @@ import DefaultButtonBox from './Components/DefaultButtonBox';
 import DropdownSelect from './Components/DropdownSelect';
 import ModalCompon from './Components/ModalCompon';
 import axios from 'axios';
-import { ipAdress } from './Components/Url';
-import { IonIcon } from './Components/Icons';
+import {ipAdress} from './Components/Url';
+import {IonIcon} from './Components/Icons';
 
-const DataAyahScreen = ({navigation,route}) => {
+const DataAyahScreen = ({navigation, route}) => {
   // Id dari router
   const {IdAnak, IdUser} = route.params;
   // NIk atribute
@@ -61,13 +61,13 @@ const DataAyahScreen = ({navigation,route}) => {
     try {
       if (
         // !Password ||
-        !NIk||
-        !Nama||
-        !TempatKelahiran||
-        !Alamat||
-        !vKewarganegaraan||
-        !newDateString||
-        !Pekerjaan||
+        !NIk ||
+        !Nama ||
+        !TempatKelahiran ||
+        !Alamat ||
+        !vKewarganegaraan ||
+        !newDateString ||
+        !Pekerjaan ||
         !Kebangsaan
       ) {
         // Menampilkan pesan kesalahan jika ada input yang kosong
@@ -141,7 +141,7 @@ const DataAyahScreen = ({navigation,route}) => {
           onChangeText={text => setNIK(text)}
           value={NIk}
           IconName={'id-card'}
-          InputType={"numeric"}
+          InputType={'numeric'}
         />
         {/* Nama */}
         <TextInputBox
@@ -160,28 +160,40 @@ const DataAyahScreen = ({navigation,route}) => {
           IconName={'user'}
         />
         {/* date Select */}
-        <DateSelect
-          openCalendar={() => OpenDate()}
-          onChange={onChangeDate}
-          valueinTextInput={newDateString}
-          value={date}
-          visible={DatePickerVisibility}
-          IconName="calendar"
-          placeholder={'yyyy-mm-dd'}
-          mode={'date'}
-          display={'calendar'}
-        />
+        <View style={[{marginTop: 10}]}>
+          <Text style={[{fontWeight: 'bold', fontSize: 15}]}>Tanggal Lahir</Text>
+          <DateSelect
+            openCalendar={() => OpenDate()}
+            onChange={onChangeDate}
+            valueinTextInput={newDateString}
+            value={date}
+            visible={DatePickerVisibility}
+            IconName="calendar"
+            placeholder={'yyyy-mm-dd'}
+            mode={'date'}
+            display={'calendar'}
+          />
+        </View>
         {/* Alamat */}
         <View style={[]}>
-        <TextInputBox
-          Label={'Alamat'}
-          placeholderTitle={'*Jalan/street'}
-          onChangeText={text => setAlamat(text)}
-          value={Alamat}
-          IconName={'house-user'}
-        /></View>
-        <View style={[{zIndex: 1, marginTop: 20, flexDirection: 'row', alignItems: 'center'}]}>
-        <IonIcon style={[{color: ungu}]} name="ios-flag-sharp" size={20} />
+          <TextInputBox
+            Label={'Alamat'}
+            placeholderTitle={'*Jalan/street'}
+            onChangeText={text => setAlamat(text)}
+            value={Alamat}
+            IconName={'house-user'}
+          />
+        </View>
+        <View
+          style={[
+            {
+              zIndex: 1,
+              marginTop: 20,
+              flexDirection: 'row',
+              alignItems: 'center',
+            },
+          ]}>
+          <IonIcon style={[{color: ungu}]} name="ios-flag-sharp" size={20} />
           <DropdownSelect
             placeholder={'Pilih Kewarganegaraan'}
             Label="*Kewarganegaraan"
@@ -216,7 +228,7 @@ const DataAyahScreen = ({navigation,route}) => {
         />
       </ScrollView>
       <ModalCompon
-      cancel={()=>setkonfirmasi(false)}
+        cancel={() => setkonfirmasi(false)}
         stateValueModal={konfirmasi}
         onPresAction={async () => {
           try {
