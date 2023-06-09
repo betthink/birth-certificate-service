@@ -80,7 +80,7 @@ const Login = ({navigation, route}) => {
           </Text>
         </View>
         {/* Form Login */}
-        <View style={[{flex: 1, width: '90%', }]}>
+        <ScrollView style={[{flex: 1, width: '90%', }]}>
           <View style={[{marginTop: 20, justifyContent: 'center', alignItems: 'center'}]}>
             <TextInput
               style={[stylesDariGaya.formInput]}
@@ -131,7 +131,7 @@ const Login = ({navigation, route}) => {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </ScrollView>
       </View>
     </View>
   );

@@ -249,7 +249,7 @@ const DataBayiScreen = ({route, navigation}) => {
             <>
               {/* container content */}
               <ScrollView
-                style={[{flex: 1, paddingHorizontal: 20, paddingVertical: 10}]}>
+                style={[{flex: 1, paddingHorizontal: 20, paddingVertical: 10,}]}>
        
                 <TextInputBox
                   Label={'Nama'}
