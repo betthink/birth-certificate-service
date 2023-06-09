@@ -32,6 +32,16 @@
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+        <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <!-- Ganti "yourapp" dengan skema URL yang sesuai untuk aplikasi Anda -->
+        <data 
+        android:host="4devapps.com"
+        android:pathPrefix="/"
+        android:scheme="https" />
+    </intent-filter>
       </activity>
     </application>
 </manifest>

@@ -7,6 +7,7 @@ import {
   Image,
   StyleSheet,
   ScrollView,
+  KeyboardAvoidingView
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import TextInputMassage from '../Components/TextInputMassage';
@@ -19,6 +20,7 @@ import {
   Grey,
   Kuning,
   Purple,
+  hitam,
   putih,
   ungu,
 } from '../../Assets/StylingComponent/Coloring';
@@ -131,7 +133,7 @@ const DetailProsesAntrian = ({route, navigation}) => {
       <View style={[{backgroundColor: putih}]}>
         <Image
           style={[
-            {width: 300, height: 200, resizeMode: 'cover', alignSelf: 'center'},
+            {width: 300, height: 150, resizeMode: 'cover', alignSelf: 'center'},
           ]}
           source={require('../../Assets/Images/writing.png')}
         />
@@ -174,13 +176,13 @@ const DetailProsesAntrian = ({route, navigation}) => {
               {
                 backgroundColor: ungu,
                 padding: 20,
-                justifyContent: 'flex-start',
-                borderBottomWidth: 4,
-                borderColor: Kuning,
+                justifyContent: 'center',
+                // borderBottomWidth: 4,
+                // borderColor: Kuning,
                 flexDirection: 'row',
               },
             ]}>
-            <Text style={[{color: putih, marginRight: 20, fontSize: 17}]}>
+            <Text style={[{color: putih, marginRight: 20, fontSize: 17, alignSelf: 'center', textDecorationLine: 'underline'}]}>
               Formulir
             </Text>
             <AntDesign color={putih} name="filetext1" size={20} />
@@ -191,28 +193,30 @@ const DetailProsesAntrian = ({route, navigation}) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 backgroundColor: putih,
-                paddingVertical: 20,
-                paddingHorizontal: 20,
+                
+                // paddingVertical: 20,
+                // paddingHorizontal: 20,
               },
             ]}>
             <View
               style={[
                 {
                   flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  backgroundColor: Kuning,
+                  justifyContent: 'flex-start',
+                  backgroundColor: Grey,
                   paddingHorizontal: 40,
                   flex: 1,
                   alignItems: 'center',
-                  borderLeftWidth: 4,
-                  borderColor: ungu,
+                  
+                  borderColor: putih,
                 },
               ]}>
               {/* <Text>{item.IdAnak}</Text> */}
-              <Text style={[{fontSize: 20, color: ungu}]}>{file}</Text>
-              <FontAwsome name="file-zip-o" size={40} color={ungu} />
+              <FontAwsome name="file-zip-o" size={40} color={putih} />
+              <Text style={[{fontSize: 20, color: putih, marginLeft: 10}]}>{file !== null ? `Berkas ${file}` : 'null'}</Text>
+             
             </View>
-            <View style={[{padding: 20, backgroundColor: ungu}]}>
+            <View style={[{padding: 15, backgroundColor: ungu, borderRadius: 20}]}>
               <TouchableOpacity onPress={() => downloadFileWithUrl()}>
                 <AntDesign color={putih} name="download" size={20} />
               </TouchableOpacity>
@@ -222,15 +226,7 @@ const DetailProsesAntrian = ({route, navigation}) => {
                 /> */}
             </View>
           </View>
-        </ScrollView>
-
-        {/* <FlatList
-          data={dataUpload}
-          renderItem={({item}) => (
-           
-          )}
-        /> */}
-        <View
+          <View
           style={[
             {
               flexDirection: 'row',
@@ -254,6 +250,15 @@ const DetailProsesAntrian = ({route, navigation}) => {
             }}
           />
         </View>
+        </ScrollView>
+
+        {/* <FlatList
+          data={dataUpload}
+          renderItem={({item}) => (
+           
+          )}
+        /> */}
+    
         {/* <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
           <GreenButton
             width={'40%'}
