@@ -18,7 +18,7 @@ import {
 const TextInputMassage = ({setValue, valuInput}) => {
   return (
     <View style={[{flex: 1}]}>
-      <KeyboardAvoidingView style={[{flex: 1}]} behavior="height">
+      {/* <KeyboardAvoidingView style={[{flex: 1}]} behavior="height"> */}
         {/* <ScrollView
           contentContainerStyle={[{flex: 1}]}
           keyboardShouldPersistTaps="handled"> */}
@@ -38,7 +38,7 @@ const TextInputMassage = ({setValue, valuInput}) => {
             placeholder="Isi pesan disini"
           />
         {/* </ScrollView> */}
-      </KeyboardAvoidingView>
+      {/* </KeyboardAvoidingView> */}
     </View>
   );
 };

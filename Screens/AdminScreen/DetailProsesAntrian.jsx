@@ -7,7 +7,8 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  TextInput,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import TextInputMassage from '../Components/TextInputMassage';
@@ -77,8 +78,8 @@ const DetailProsesAntrian = ({route, navigation}) => {
       method: 'POST',
       url: `${ipAdress}/aplikasiLayananAkta/api/apiDataAntrianJoinDataBayi.php`,
     });
-    const data= res.data;
-    const filter = data.filter(d=> d.IdAntrian == IdAntrian);
+    const data = res.data;
+    const filter = data.filter(d => d.IdAntrian == IdAntrian);
 
     console.log(filter, 'Ini data dayi join Filter');
   };
@@ -96,7 +97,7 @@ const DetailProsesAntrian = ({route, navigation}) => {
       // console.log(res.data);
       const {value, message} = res.data;
       console.log('Ini Id pengambilan', `${IdUser} ${IdAntrian} ${IdAdmin}`);
-      console.log(res.data,"selesaikan layanan");
+      console.log(res.data, 'selesaikan layanan');
       if (value == 1) {
         alert(message);
         navigation.goBack();
@@ -182,7 +183,16 @@ const DetailProsesAntrian = ({route, navigation}) => {
                 flexDirection: 'row',
               },
             ]}>
-            <Text style={[{color: putih, marginRight: 20, fontSize: 17, alignSelf: 'center', textDecorationLine: 'underline'}]}>
+            <Text
+              style={[
+                {
+                  color: putih,
+                  marginRight: 20,
+                  fontSize: 17,
+                  alignSelf: 'center',
+                  textDecorationLine: 'underline',
+                },
+              ]}>
               Formulir
             </Text>
             <AntDesign color={putih} name="filetext1" size={20} />
@@ -193,7 +203,7 @@ const DetailProsesAntrian = ({route, navigation}) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 backgroundColor: putih,
-                
+
                 // paddingVertical: 20,
                 // paddingHorizontal: 20,
               },
@@ -207,16 +217,18 @@ const DetailProsesAntrian = ({route, navigation}) => {
                   paddingHorizontal: 40,
                   flex: 1,
                   alignItems: 'center',
-                  
+
                   borderColor: putih,
                 },
               ]}>
               {/* <Text>{item.IdAnak}</Text> */}
               <FontAwsome name="file-zip-o" size={40} color={putih} />
-              <Text style={[{fontSize: 20, color: putih, marginLeft: 10}]}>{file !== null ? `Berkas ${file}` : 'null'}</Text>
-             
+              <Text style={[{fontSize: 20, color: putih, marginLeft: 10}]}>
+                {file !== null ? `Berkas ${file}` : 'null'}
+              </Text>
             </View>
-            <View style={[{padding: 15, backgroundColor: ungu, borderRadius: 20}]}>
+            <View
+              style={[{padding: 15, backgroundColor: ungu, borderRadius: 20}]}>
               <TouchableOpacity onPress={() => downloadFileWithUrl()}>
                 <AntDesign color={putih} name="download" size={20} />
               </TouchableOpacity>
@@ -227,29 +239,56 @@ const DetailProsesAntrian = ({route, navigation}) => {
             </View>
           </View>
           <View
-          style={[
-            {
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginTop: 20,
-              marginBottom: 50,
-            },
-          ]}>
-          <TextInputMassage setValue={setvaluInput} valuInput={valuInput} />
-          <GreenButton
-            // ButtonText={'Kirim'}
-            // actionOnclick={() => KirimPesan()}
-            ButtonText={'Selesai'}
-            actionOnclick={async () => {
-              try {
-                await KirimPesan();
-                await SelesaikanAntrian();
-              } catch (error) {
-                console.log(error);
-              }
-            }}
-          />
-        </View>
+            style={[
+              {
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginTop: 20,
+                marginBottom: 50,
+                alignItems: 'center',
+              },
+            ]}>
+            <TextInput
+              style={[
+                {
+                  flex: 1,
+                  paddingHorizontal: 20,
+                  color: hitam,
+                  backgroundColor: putih,
+                  borderRadius: 20,
+                },
+              ]}
+              multiline
+              placeholder="Isi pesan disini"
+              value={valuInput}
+              onChangeText={text => setvaluInput(text)}
+            />
+            {/* <TextInputMassage setValue={setvaluInput} valuInput={valuInput} /> */}
+            <TouchableOpacity
+            style={[{padding: 20, backgroundColor: ungu, borderRadius: 10}]}
+              onPress={async () => {
+                try {
+                  await KirimPesan();
+                  await SelesaikanAntrian();
+                } catch (error) {
+                  console.log(error);
+                }
+              }}>
+              <Text style={[{color: putih}]}>Selesai</Text>
+            </TouchableOpacity>
+            {/* <GreenButton
+
+              ButtonText={'Selesai'}
+              actionOnclick={async () => {
+                try {
+                  await KirimPesan();
+                  await SelesaikanAntrian();
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            /> */}
+          </View>
         </ScrollView>
 
         {/* <FlatList
@@ -258,7 +297,7 @@ const DetailProsesAntrian = ({route, navigation}) => {
            
           )}
         /> */}
-    
+
         {/* <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
           <GreenButton
             width={'40%'}
