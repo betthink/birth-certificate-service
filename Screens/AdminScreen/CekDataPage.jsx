@@ -7,7 +7,10 @@ import {
   Linking,
   Image,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
+// import { KeyboardAvoidingView, KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 // import RNFetchBlob from 'rn-fetch-blob';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
@@ -20,6 +23,8 @@ import {
   Grey,
   Kuning,
   Purple,
+  hijau,
+  hitam,
   pinkGelap,
   putih,
   ungu,
@@ -154,6 +159,7 @@ const CekDataPage = ({route, navigation}) => {
             backgroundColor: putih,
             justifyContent: 'center',
             alignItems: 'center',
+            flex: 1,
           },
         ]}>
         <Image
@@ -161,95 +167,184 @@ const CekDataPage = ({route, navigation}) => {
           source={require('../../Assets/Images/readMail.png')}
         />
       </View>
-      <View style={[{padding: 20}]}>
+      <ScrollView
+        style={[
+          {
+            backgroundColor: putih,
+            marginTop: 10,
+            marginHorizontal: 20,
+            padding: 5,
+          },
+        ]}>
         {/* top content */}
-        <TouchableOpacity  onPress={()=>navigation.navigate('FormulirScreen', {IdAntrian: IdAntrian})} style={[{padding: 10, backgroundColor: ungu, justifyContent: 'center', alignItems: 'center'}]}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('FormulirScreen', {IdAntrian: IdAntrian})
+          }
+          style={[
+            {
+              padding: 10,
+              backgroundColor: ungu,
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+          ]}>
           <Text style={[{color: putih}]}>Lihat Folmulir</Text>
         </TouchableOpacity>
-        <View style={[{backgroundColor: putih, marginTop: 10, padding: 10}]}>
-          <View
-            style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
-            <Text>Id User :</Text>
-            <Text>{IdUser}</Text>
-          </View>
-          <View
-            style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
-            <Text>Waktu Upload :</Text>
-            <Text>{waktuPendaftaran}</Text>
-          </View>
-          <View
-            style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
-            <Text>Nama :</Text>
-            <Text>{Nama}</Text>
-          </View>
-          <View
-            style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
-            <Text>Id antrian :</Text>
-            <Text>{IdAntrian}</Text>
-          </View>
-          <View
+        {/* Id user */}
+        <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
+          <Text>Id User :</Text>
+          <Text>{IdUser}</Text>
+        </View>
+        {/* waktu */}
+        <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
+          <Text>Waktu Upload :</Text>
+          <Text>{waktuPendaftaran}</Text>
+        </View>
+        {/* nama */}
+        <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
+          <Text>Nama :</Text>
+          <Text>{Nama}</Text>
+        </View>
+        {/* Id */}
+        <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
+          <Text>Id antrian :</Text>
+          <Text>{IdAntrian}</Text>
+        </View>
+        {/* download */}
+        <View
+          style={[
+            {
+              width: '50%',
+              flexDirection: 'row',
+              alignSelf: 'center',
+              alignItems: 'center',
+              justifyContent: 'center',
+              // backgroundColor: Kuning,
+              borderLeftWidth: 2, borderColor: Kuning
+            },
+          ]}>
+          <Text style={[{ fontSize: 19, fontWeight: '900'}]}>{filezip}</Text>
+          <TouchableOpacity
+            onPress={() => openURL()}
             style={[
               {
-                flexDirection: 'row',
+                padding: 10,
+                borderRadius: 10,
+                backgroundColor: hijau,
+                justifyContent: 'center',
                 alignItems: 'center',
-                // backgroundColor: Kuning,
+                marginLeft: 20,
               },
             ]}>
-            <Text>{filezip}</Text>
-            <TouchableOpacity
-              onPress={() => openURL()}
-              style={[
-                {
-                  padding: 10,
-                  borderRadius: 20,
-                  backgroundColor: ungu,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginLeft: 20,
-                },
-              ]}>
-              <AntDesign name="download" size={20} color={putih} />
-            </TouchableOpacity>
-          </View>
+            <AntDesign name="download" size={20} color={putih} />
+          </TouchableOpacity>
         </View>
-      </View>
+        {/* text input */}
+
+        <TextInput
+          style={[
+            {
+              // borderTopWidth
+              flex: 1,
+              marginTop: 20,
+              padding: 20,
+              color: putih,
+              backgroundColor: ungu,
+              borderRadius: 20,
+            },
+          ]}
+          multiline
+          placeholderTextColor={putih}
+          placeholder="Isi pesan disini"
+          value={valuInput}
+          onChangeText={text => setvaluInput(text)}
+        />
+      </ScrollView>
+
+      {/* <TextInputMassage setValue={setvaluInput} valuInput={valuInput} /> */}
+
+      {/* button */}
       <View
         style={[
           {
-            backgroundColor: Purple,
-            flex: 1,
-            paddingHorizontal: 20,
-            paddingVertical: 10,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginHorizontal: 20,
+            marginBottom: 10,
           },
         ]}>
-        <TextInputMassage setValue={setvaluInput} valuInput={valuInput} />
+        {/* terima */}
+        <TouchableOpacity
+          style={[
+            {
+              backgroundColor: hijau,
+              width: '40%',
+              padding: 20,
+              marginTop: 20,
+              borderRadius: 40,
+              justifyContent: 'center',
+              alignItems: 'center',
+              alignSelf: 'center',
+            },
+          ]}
+          onPress={async () => {
+            try {
+              await TerimaAntrian();
+            } catch (error) {
+              console.log(error);
+            }
+          }}>
+          <Text style={[{color: putih}]}>Terima</Text>
+        </TouchableOpacity>
+        {/* tolak */}
+        <TouchableOpacity
+          style={[
+            {
+              backgroundColor: 'red',
+              width: '40%',
+              padding: 20,
+              borderRadius: 40,
+              marginTop: 20,
+              justifyContent: 'center',
+              alignItems: 'center',
+              alignSelf: 'center',
+            },
+          ]}
+          onPress={async () => {
+            try {
+              await KirimPesan();
+              await TolakAntrian();
+            } catch (error) {
+              console.log(error);
+            }
+          }}>
+          <Text style={[{color: putih}]}>Tolak</Text>
+        </TouchableOpacity>
+        {/* <GreenButton
+          width={'40%'}
+          ButtonText={'Terima'}
+          actionOnclick={async () => {
+            try {
+              await TerimaAntrian();
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        /> */}
 
-        <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
-          <GreenButton
-            width={'40%'}
-            ButtonText={'Terima'}
-            actionOnclick={async () => {
-              try {
-                await TerimaAntrian();
-              } catch (error) {
-                console.log(error);
-              }
-            }}
-          />
-
-          <GreenButton
-            width={'40%'}
-            ButtonText={'Tolak'}
-            actionOnclick={async () => {
-              try {
-                await KirimPesan();
-                await TolakAntrian();
-              } catch (error) {
-                console.log(error);
-              }
-            }}
-          />
-        </View>
+        {/* <GreenButton
+          width={'40%'}
+          ButtonText={'Tolak'}
+          actionOnclick={async () => {
+            try {
+              await KirimPesan();
+              await TolakAntrian();
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        /> */}
       </View>
     </View>
   );
