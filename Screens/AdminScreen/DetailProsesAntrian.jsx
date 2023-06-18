@@ -147,6 +147,7 @@ const DetailProsesAntrian = ({route, navigation}) => {
             backgroundColor: Purple,
             flex: 1,
             paddingVertical: 20,
+            marginHorizontal: 20
           },
         ]}>
         {/* top content */}
@@ -171,22 +172,32 @@ const DetailProsesAntrian = ({route, navigation}) => {
             <Text style={[styleLoc.labelTopContent]}>Id antrian</Text>
             <Text style={[styleLoc.FontTopContent]}>{IdAntrian}</Text>
           </View>
+          <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
+   
+          {/* button formulir */}
           <TouchableOpacity
             onPress={() => navigation.navigate('FormulirScreen', {IdAntrian})}
             style={[
               {
-                backgroundColor: ungu,
-                padding: 20,
+                backgroundColor: putih,
+                borderColor: Kuning,
+                borderLeftWidth: 4,
+                // padding: 20,
+                padding: 12,
+                alignSelf: 'center',
+                // borderRadius: 10,
                 justifyContent: 'center',
                 // borderBottomWidth: 4,
                 // borderColor: Kuning,
                 flexDirection: 'row',
+                marginBottom: 10,
+                marginTop: 10,
               },
             ]}>
             <Text
               style={[
                 {
-                  color: putih,
+                  color: ungu,
                   marginRight: 20,
                   fontSize: 17,
                   alignSelf: 'center',
@@ -195,48 +206,51 @@ const DetailProsesAntrian = ({route, navigation}) => {
               ]}>
               Formulir
             </Text>
-            <AntDesign color={putih} name="filetext1" size={20} />
+            <AntDesign color={ungu} name="filetext1" size={20} />
           </TouchableOpacity>
+          {/* download button */}
           <View
             style={[
               {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 backgroundColor: putih,
+                width: '50%',
+                alignSelf: 'center'
+                , borderLeftWidth: 4, borderColor: Kuning
 
                 // paddingVertical: 20,
                 // paddingHorizontal: 20,
               },
             ]}>
-            <View
+            <TouchableOpacity onPress={() => downloadFileWithUrl()}
               style={[
                 {
                   flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  backgroundColor: Grey,
+                  justifyContent: 'center',
+                  backgroundColor: putih,
                   paddingHorizontal: 40,
-                  flex: 1,
+                  // flex: 1,
                   alignItems: 'center',
 
                   borderColor: putih,
                 },
               ]}>
               {/* <Text>{item.IdAnak}</Text> */}
-              <FontAwsome name="file-zip-o" size={40} color={putih} />
-              <Text style={[{fontSize: 20, color: putih, marginLeft: 10}]}>
+              <FontAwsome name="file-zip-o" size={20} color={ungu} />
+              <Text style={[{fontSize: 17, color: hitam, marginLeft: 10}]}>
                 {file !== null ? `Berkas ${file}` : 'null'}
               </Text>
-            </View>
+            </TouchableOpacity>
+            {/* Incon download */}
             <View
               style={[{padding: 15, backgroundColor: ungu, borderRadius: 20}]}>
               <TouchableOpacity onPress={() => downloadFileWithUrl()}>
                 <AntDesign color={putih} name="download" size={20} />
               </TouchableOpacity>
-              {/* <GreenButton
-                  actionOnclick={() => downloadFileWithUrl()}
-                  ButtonText={'Download'}
-                /> */}
+          
             </View>
+          </View>
           </View>
           <View
             style={[
@@ -291,26 +305,7 @@ const DetailProsesAntrian = ({route, navigation}) => {
           </View>
         </ScrollView>
 
-        {/* <FlatList
-          data={dataUpload}
-          renderItem={({item}) => (
-           
-          )}
-        /> */}
-
-        {/* <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
-          <GreenButton
-            width={'40%'}
-            ButtonText={'Selesai'}
-            actionOnclick={async () => {
-              try {
-                await SelesaikanAntrian();
-              } catch (error) {
-                console.log(error);
-              }
-            }}
-          />
-        </View> */}
+    
       </View>
     </View>
   );
