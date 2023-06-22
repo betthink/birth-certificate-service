@@ -131,10 +131,11 @@ const CekDataPage = ({route, navigation}) => {
   };
   // download file
   const openURL = async () => {
-    // Cek apakah URL dapat dibuka
+    // Cek apakah URL dapat dibuka'
+    
     const url = `${ipAdress}/aplikasiLayananAkta/download/downloadFiles.php?IdAnak=${IdAntrian}`;
     const supported = await Linking.canOpenURL(url);
-
+    console.log(supported);
     if (supported) {
       // Buka URL di browser eksternal
       await Linking.openURL(url);
