@@ -197,7 +197,7 @@ const HomeUmum = ({navigation}) => {
             }}>
             {/* Syarat */}
             <TouchableOpacity
-              onPress={() => navigation.navigate('SyaratScreen')}
+              onPress={() => navigation.navigate('InformasiSyarat')}
               style={[styles.styleMenu, ]}>
               <FontAwsome name="book-open" size={30} style={{color: Grey}} />
               <Text style={{ color: putih}}>Syarat</Text>

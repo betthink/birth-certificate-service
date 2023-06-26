@@ -199,12 +199,12 @@ const CekDataPage = ({route, navigation}) => {
         </View>
         {/* waktu */}
         <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
-          <Text>Waktu Upload :</Text>
+          <Text>Waktu Pendaftaran :</Text>
           <Text>{waktuPendaftaran}</Text>
         </View>
         {/* nama */}
         <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
-          <Text>Nama :</Text>
+          <Text>Nama Bayi :</Text>
           <Text>{Nama}</Text>
         </View>
         {/* Id */}

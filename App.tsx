@@ -11,7 +11,7 @@ import ProfileUmumScreen from './Screens/ProfilePage-umum';
 import MenuUmum from './Screens/Components/MenuUmum';
 import AntrianLayananScreen from './Screens/InfoAntrianPage-umum';
 import AdminPageNavigation from './Screens/AdminScreen/AdminPageNavigation';
-import DetailAntrian from './Screens/AdminScreen/DetailAntrian';
+// import DetailAntrian from './Screens/AdminScreen/DetailAntrian';
 import ProfileAdminScreen from './Screens/AdminScreen/ProfileAdminScreen';
 import EditDataUserUmum from './Screens/AdminScreen/EditDataUserUmum';
 import SplashScreen from './Screens/SplashScreen';
@@ -32,6 +32,7 @@ import DetailProsesAntrian from './Screens/AdminScreen/DetailProsesAntrian';
 import CekDataPage from './Screens/AdminScreen/CekDataPage';
 import FormulirScreen from './Screens/AdminScreen/FormulirScreen-Admin';
 import ListFormulir from './Screens/ListFormulir-Umum';
+import InformasiSyarat from './Screens/InformasiSyarat-Umum';
 
 // import TimePicker from './Screens/datetime-component';
 const Stack = createNativeStackNavigator();
@@ -45,7 +46,7 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false, gestureEnabled: true,}}
-        initialRouteName="SplashScreen">
+        initialRouteName="InformasiSyarat">
         {/* <Stack.Screen name="DataFileUploadScreen" component={DataFileUploadScreen} /> */}
         <Stack.Screen name="FormulirScreen" component={FormulirScreen} />
         <Stack.Screen name="DetailProsesAntrian" component={DetailProsesAntrian} />
@@ -88,6 +89,7 @@ function App() {
           component={ProfileAdminScreen}
         />
         <Stack.Screen name="EditDataUserUmum" component={EditDataUserUmum} />
+        <Stack.Screen name="InformasiSyarat" component={InformasiSyarat} />
       </Stack.Navigator>
     </NavigationContainer>
   );
