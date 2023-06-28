@@ -40,6 +40,7 @@ const PemberitahuanScreen = ({navigation, route}) => {
       data = datafilter.length;
       setdataleng(data);
       setdataPemberitahuan(datafilter);
+      console.log(datafilter, "data pemberitahuan");
       // setdataIdUSer(datafilter[0].IdUser);
     } catch (error) {
       console.log(error);
@@ -112,10 +113,13 @@ const PemberitahuanScreen = ({navigation, route}) => {
                     },
                   ]}
                   onPress={() => {
-                    if (selectedId === item.IdAnak) {
+                    
+                    if (selectedId === item.IdAntrian) {
+                     
                       setSelectedId(null); // Menyembunyikan item.Pemberitahuan ketika item di-press lagi
                     } else {
-                      setSelectedId(item.IdAnak); // Menampilkan item.Pemberitahuan
+                      setSelectedId(item.IdAntrian); // Menampilkan item.Pemberitahuan
+                 
                     }
                   }}>
                   <Text style={[{color: putih}]}>{item.Nama}</Text>
@@ -125,7 +129,7 @@ const PemberitahuanScreen = ({navigation, route}) => {
                     <Feather name="bell" size={20} color={putih} />
                   )}
                 </TouchableOpacity>
-                {selectedId === item.IdAnak && (
+                {selectedId === item.IdAntrian && (
                   <View
                     style={[
                       {

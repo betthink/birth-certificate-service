@@ -232,10 +232,19 @@ function KelDiproses() {
     // console.log(Id, 'Ini data sorted');
     // await ambilAntrianTerbaru();
     sendProsesAntrian(Id);
-    setRefresh(!refresh);
+    setRefresh(true);
+
   };
 
+
+
   useEffect(() => {
+    if(refresh){
+      console.log("refresh");
+      setJumlah(false);
+      getDataAntrianValid();
+      getDataAntrianDiproses();
+    }
     setTimeout(() => {
       setisLoading(false);
     }, 3000);
