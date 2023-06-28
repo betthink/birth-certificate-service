@@ -46,7 +46,7 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false, gestureEnabled: true,}}
-        initialRouteName="InformasiSyarat">
+        initialRouteName="SplashScreen">
         {/* <Stack.Screen name="DataFileUploadScreen" component={DataFileUploadScreen} /> */}
         <Stack.Screen name="FormulirScreen" component={FormulirScreen} />
         <Stack.Screen name="DetailProsesAntrian" component={DetailProsesAntrian} />
