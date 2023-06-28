@@ -241,7 +241,7 @@ function KelDiproses() {
   useEffect(() => {
     if(refresh){
       console.log("refresh");
-      setJumlah(false);
+      setRefresh(false);
       getDataAntrianValid();
       getDataAntrianDiproses();
     }
