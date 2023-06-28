@@ -17,7 +17,6 @@ import EditDataUserUmum from './Screens/AdminScreen/EditDataUserUmum';
 import SplashScreen from './Screens/SplashScreen';
 import Login from './Screens/Login';
 import RegisterAkunScreen from './Screens/RegisterAkunScreen';
-
 import { LogBox } from 'react-native';
 import DataBayiScreenUmum from './Screens/DataBayiScreen-Umum';
 import DataIbuScreen from './Screens/DataIbuScreen-Umum';
@@ -46,7 +45,7 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false, gestureEnabled: true,}}
-        initialRouteName="InformasiSyarat">
+        initialRouteName="SplashScreen">
         {/* <Stack.Screen name="DataFileUploadScreen" component={DataFileUploadScreen} /> */}
         <Stack.Screen name="FormulirScreen" component={FormulirScreen} />
         <Stack.Screen name="DetailProsesAntrian" component={DetailProsesAntrian} />
