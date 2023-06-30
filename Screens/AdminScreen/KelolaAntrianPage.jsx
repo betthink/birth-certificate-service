@@ -661,7 +661,7 @@ function KelolaAntrianPage() {
         tabBarActiveTintColor: ungu,
         tabBarInactiveTintColor: 'grey',
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontSize: 11,
 
           color: putih,
         },
