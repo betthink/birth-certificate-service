@@ -17,7 +17,7 @@ const SplashScreen = ({navigation}) => {
             ? navigation.navigate('AdminPageNavigation')
             : navigation.navigate('HomeUmum');
         } else {
-          navigation.navigate('Login');
+          navigation.navigate('LandingPage');
         }
       });
     } catch (error) {}

@@ -33,8 +33,9 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
         // console.log(data, "ini data riwayat");
         data = data.filter(d => d.Status == 'Diterima');
         const jumlahData = data.length;
-        setjumlahData();
-        console.log(jumlahData, 'Ini jumlah data');
+        console.log(jumlahData, "Ini jumlah data");
+        setjumlahData(jumlahData);
+        // console.log(jumlahData, 'Ini jumlah data');
         console.log(data, 'ini data antrian riwayat');
         setDataAntrian(data);
       })
@@ -72,10 +73,11 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
       ) : (
         <View style={{paddingHorizontal: 22}}>
           {jumlahData == 0 ? (
-            <View style={[{justifyContent: 'center', alignItems: 'center', backgroundColor: ungu}]}>
+            <View style={[{justifyContent: 'center', alignItems: 'center', backgroundColor: ungu, flex: 1}]}>
               <Text> Belum ada data </Text>
             </View>
           ) : (
+          
             <FlatList
               data={dataAntrian}
               renderItem={({item}) => (

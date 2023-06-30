@@ -492,6 +492,7 @@ function DaftarPenerima() {
   const [isLoading, setisLoading] = useState(true);
   const [refresh, setrefresh] = useState(false);
   let [leng, setLeng] = useState(0);
+
   const getDataAntrianSelesai = () => {
     axios({
       method: 'POST',
@@ -528,14 +529,20 @@ function DaftarPenerima() {
     // console.log(message, "ini massage");
  if(value==1) {
   alert(message)
-  setrefresh(!refresh);
+  setrefresh(true);
   
  } else {
   alert(message)
  }
   };
   useEffect(() => {
-    console.log(refresh);
+    
+   if(refresh) {
+    getDataAntrianSelesai();
+    setrefresh(false);
+   } else {
+    console.log(refresh, "ini belum refresh")
+   }
     setTimeout(() => {
       setisLoading(false);
     }, 3000);

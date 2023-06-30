@@ -10,21 +10,21 @@ import {
 import React from 'react';
 import HeaderCloud from './Components/HeaderCloud';
 import {stylesDariGaya} from './Components/ImportedStyles';
-import Orang from '../Assets/Images/cardPerson.png';
-import { hijau, putih } from '../Assets/StylingComponent/Coloring';
+import Orang from '../Assets/Images/landingpage.png';
+import { hijau, putih, ungu } from '../Assets/StylingComponent/Coloring';
 
 const LandingPage = ({navigation}) => {
   return (
     <View style={{backgroundColor: putih, flex: 1}}>
-      <HeaderCloud />
+      {/* <HeaderCloud /> */}
       {/* wrapSemua content dibawah */}
-      <View style={{paddingHorizontal: 22, alignItems: 'center'}}>
+      <View style={{paddingHorizontal: 22, alignItems: 'center', marginTop:50}}>
         {/* wrapp Text Banner */}
         <View
           style={{
             width: 340,
             borderWidth: 2,
-            borderColor: hijau,
+            borderColor: ungu,
             padding: 20,
           }}>
           <Text style={[stylesDariGaya.textCenter, stylesDariGaya.TextBold]}>
@@ -42,7 +42,7 @@ const LandingPage = ({navigation}) => {
         </View>
         {/* gambar orang */}
         <View style={{marginTop: 14}}>
-          <Image source={Orang} resizeMode="contain"></Image>
+          <Image style={[{width: 300, height: 300}]} source={Orang} resizeMode="contain"/>
         </View>
         {/* Tombols */}
     
