@@ -112,6 +112,13 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
                     style={[
                       {flexDirection: 'row', justifyContent: 'space-between'},
                     ]}>
+                    <Text>Waktu Pendaftaran</Text>
+                    <Text style={{color: ungu}}>{item.WaktuPendaftaran} </Text>
+                  </View>
+                  <View
+                    style={[
+                      {flexDirection: 'row', justifyContent: 'space-between'},
+                    ]}>
                     <Text>Waktu Terima : </Text>
                     <Text style={{textAlign: 'right', color: ungu}}>
                       {item.WaktuTerima}
@@ -121,18 +128,12 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
                     style={[
                       {flexDirection: 'row', justifyContent: 'space-between'},
                     ]}>
-                    <Text>IdPengambilan : </Text>
+                    <Text>Id Pengambilan : </Text>
                     <Text style={{textAlign: 'right', color: ungu}}>
                       {item.IdPengambilan}
                     </Text>
                   </View>
-                  <View
-                    style={[
-                      {flexDirection: 'row', justifyContent: 'space-between'},
-                    ]}>
-                    <Text>Waktu Pendaftaran</Text>
-                    <Text style={{color: ungu}}>{item.WaktuPendaftaran} </Text>
-                  </View>
+                
                 </TouchableOpacity>
               )}
             />

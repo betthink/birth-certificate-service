@@ -1,4 +1,11 @@
-import {View, Text, TouchableOpacity, Image, Dimensions, ImageBackground} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+  ImageBackground,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
   Purple,
@@ -26,7 +33,7 @@ const HomeAdminScreen = ({navigation}) => {
     AsyncStorage.getItem('userData').then(value => {
       AsyncStorage.getItem('userData');
       const {FotoProfile, NIK, Nama, Id} = JSON.parse(value);
-    
+
       setlinkProfile(FotoProfile);
       setNik(NIK);
       setNama(Nama);
@@ -110,7 +117,6 @@ const HomeAdminScreen = ({navigation}) => {
     });
 
     return reloadPage;
-    
   }, []);
 
   return (
@@ -123,28 +129,28 @@ const HomeAdminScreen = ({navigation}) => {
         {/* textt */}
         <View style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
           <View>
-            <Text style={[stylesDariGaya.TextMediumBold,] }>
+            <Text style={[stylesDariGaya.TextMediumBold]}>
               Selamat datang Admin
             </Text>
             <Text style={[stylesDariGaya.TextBold, {color: ungu}]}>{Nama}</Text>
           </View>
           {/* fotoProfile */}
-          <View style={{padding: 2, backgroundColor: ungu, borderRadius: 30}}>
+          <View style={{ borderRadius: 35}}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('ProfileAdminScreen' , {Id : IdUserAsync})}>
+              onPress={() =>
+                navigation.navigate('ProfileAdminScreen', {Id: IdUserAsync})
+              }>
               <Image
-                style={[stylesDariGaya.fotoProfile]}
+                style={[{width: 70, height: 70}]}
                 // source={require('../../Assets/Images/album.png')}
-                source={{
-                  uri: `${ipAdress}/aplikasiLayananAkta/uploads/FotoProfile/${Nik}/${linkProfile}`,
-                }}
+                source={require('../../Assets/Images/user.png')}
               />
             </TouchableOpacity>
           </View>
         </View>
       </View>
-      <View 
-      // source={require('../../Assets/Images/manageData.png')}
+      <View
+        // source={require('../../Assets/Images/manageData.png')}
         style={[
           {
             justifyContent: 'center',
@@ -170,7 +176,7 @@ const HomeAdminScreen = ({navigation}) => {
           absolute
           style={{
             // marginVertical: 8,
-            
+
             borderRadius: 16,
           }}
         />

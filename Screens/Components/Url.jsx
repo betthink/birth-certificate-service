@@ -1,5 +1,5 @@
 // export const ipAdress = "localhost";
-// export const ipAdress = "10.191.254.79";
+// export const ipAdress = "192.168.1.13";
 // export const ipAdress = "https://appaktadev.000webhostapp.com"; // 
 // export const ipAdress = "https://appaktakelahiran.000webhostapp.com"; //new db created 23 05 2023
 // export const ipAdress = "https://applayananaakta.000webhostapp.com"; //new db created 24 05 2023 wiskeyLarso
