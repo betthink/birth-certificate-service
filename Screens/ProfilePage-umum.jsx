@@ -5,7 +5,7 @@ import {stylesDariGaya} from './Components/ImportedStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {pickSingle, isCancel} from 'react-native-document-picker';
 import {fotoUrl} from '../Assets/Url';
-import axios from 'axios';
+import axios, {Axios} from 'axios';
 import {
   hijau,
   hitam,
@@ -38,22 +38,54 @@ const ProfileUmumScreen = ({navigation, route}) => {
   // * ini adalah Id
   const {
     Id,
-    Nama,
-    NIK,
-    NomorTelp,
-    Password,
-    StatusLayanan,
-    Email,
-    FotoProfile,
-    Level,
+    // Nama,
+    // NIK,
+    // NomorTelp,
+    // Password,
+    // StatusLayanan,
+    // Email,
+    // FotoProfile,
+    Level
   } = route.params;
+  // const [Id, setId]= useState('');
+  const [NIK, setNIK] = useState('');
+  const [Nama, setNama] = useState('');
+  const [NomorTelp, setNomorTelp] = useState('');
+  const [Password, setPassword] = useState('');
+  const [Email, setEmail] = useState('');
+  const [FotoProfile, setFotoProfile] = useState('');
+  // const [Level, setLevel] = useState('');
+  // const [StatusLayanan, setStatusLayanan] = useState('');
+  const getApi = () => {
+    axios({
+      method: 'POST',
+      url: `${ipAdress}/aplikasiLayananAkta/api/apiDataUsers.php`,
+    }).then(res => {
+      let dataUser = res.data;
+      dataUser = dataUser.filter(d => d.Id == Id);
+      const {Nama, NIK, NomorTelp, Password, Email, FotoProfile, Level} =
+        dataUser[0];
+      setNIK(NIK);
+      setNama(Nama);
+      setNomorTelp(NomorTelp);
+      setPassword(Password);
+      setEmail(Email);
+      // setLevel(Level);
+    });
+  };
   useEffect(() => {
-    // tampilkanDataById();
+    const reloadPage = navigation.addListener('focus', () => {
+      // Fungsi yang ingin Anda jalankan ketika masuk ke halaman ini
+      getApi();
+    });
+
+    return reloadPage;
   }, []);
 
   // * Fungsi hapus akun user umum by id
   async function deleteDataById() {
     try {
+      console.log(Id, "Ini Id");
       const res = await axios({
         method: 'POST',
         data: {
@@ -63,6 +95,7 @@ const ProfileUmumScreen = ({navigation, route}) => {
         headers: {'Content-Type': 'multipart/form-data'},
       });
       const {value} = res.data;
+      console.log(res.data, "Ini res");
       // console.log(value,"ini value")
       if (value == 1) {
         alert('Berhasil dihapus');
@@ -149,10 +182,18 @@ const ProfileUmumScreen = ({navigation, route}) => {
         <ScrollView style={{marginTop: 20}}>
           <TouchableOpacity
             onPress={() => navigation.navigate('ListFormulir', {IdUser: Id})}
-            style={[{justifyContent: 'center', flex: 1, backgroundColor: ungu,  alignItems :'center', padding: 20}]}>
+            style={[
+              {
+                justifyContent: 'center',
+                flex: 1,
+                backgroundColor: ungu,
+                alignItems: 'center',
+                padding: 20,
+              },
+            ]}>
             <Text style={[{color: putih}]}>Lihat formulir</Text>
           </TouchableOpacity>
- 
+
           <View style={[stylesDariGaya.listData]}>
             <Text>Nama</Text>
             <Text style={[stylesDariGaya.textDataStyle]}>{Nama}</Text>
@@ -161,12 +202,12 @@ const ProfileUmumScreen = ({navigation, route}) => {
             <Text>NIK</Text>
             <Text style={[stylesDariGaya.textDataStyle]}>{NIK}</Text>
           </View>
-         
+
           <View style={[stylesDariGaya.listData]}>
             <Text>No. Telp</Text>
             <Text style={[stylesDariGaya.textDataStyle]}>{NomorTelp}</Text>
           </View>
-        
+
           <View style={[stylesDariGaya.listData]}>
             <Text>Email</Text>
             <Text style={[stylesDariGaya.textDataStyle]}>{Email}</Text>
