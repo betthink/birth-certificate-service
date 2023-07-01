@@ -114,10 +114,10 @@ function KelTerdaftar({}) {
                   <Text>{item.Nama}</Text>
                 </View>
               </View>
-              <View>
+              {/* <View>
                 <Text>Status</Text>
                 <Text>{item.Status}</Text>
-              </View>
+              </View> */}
 
               <TouchableOpacity
                 onPress={() =>
@@ -127,7 +127,7 @@ function KelTerdaftar({}) {
                     Nama: item.Nama,
                   })
                 }
-                style={[{padding: 10, backgroundColor: ungu, height: 50}]}>
+                style={[{padding: 10, backgroundColor: ungu, height: 40, borderRadius: 10, alignItems: 'center', justifyContent: 'center'}]}>
                 <Text style={[{color: putih}]}>Cek Data</Text>
               </TouchableOpacity>
             </View>
@@ -306,7 +306,7 @@ function KelDiproses() {
                   backgroundColor: ungu,
                 },
               ]}>
-              <Text>Tidak ada antrian yang perlu di panggil</Text>
+              <Text style={[{color: putih}]}>Tidak ada antrian yang perlu di panggil</Text>
             </View>
           )}
 

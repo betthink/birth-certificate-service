@@ -41,6 +41,7 @@ const CekDataPage = ({route, navigation}) => {
   const [waktuPendaftaran, setwaktuPendaftaran] = useState(null);
   const [valuInput, setvaluInput] = useState('');
   const [filezip, setfilezip] = useState(null);
+  const {dataRiwayat} = route.params;
 
   const KirimPesan = async () => {
     const res = await axios({
@@ -132,7 +133,7 @@ const CekDataPage = ({route, navigation}) => {
   // download file
   const openURL = async () => {
     // Cek apakah URL dapat dibuka'
-    
+
     const url = `${ipAdress}/aplikasiLayananAkta/download/downloadFiles.php?IdAnak=${IdAntrian}`;
     const supported = await Linking.canOpenURL(url);
     console.log(supported);
@@ -148,7 +149,13 @@ const CekDataPage = ({route, navigation}) => {
     // console.log(IdAntrian);
     getDataAntrianTerdaftar();
     console.log(valuInput);
+    if (dataRiwayat) {
+      console.log(dataRiwayat);
+    } else {
+      console.log('Tidak ada data');
+    }
   }, [valuInput]);
+
   return (
     <View style={[{flex: 1}]}>
       <View style={[stylesDariGaya.headerBox]}>
@@ -222,10 +229,11 @@ const CekDataPage = ({route, navigation}) => {
               alignItems: 'center',
               justifyContent: 'center',
               // backgroundColor: Kuning,
-              borderLeftWidth: 2, borderColor: Kuning
+              borderLeftWidth: 2,
+              borderColor: Kuning,
             },
           ]}>
-          <Text style={[{ fontSize: 19, fontWeight: '900'}]}>{filezip}</Text>
+          <Text style={[{fontSize: 19, fontWeight: '900'}]}>{filezip}</Text>
           <TouchableOpacity
             onPress={() => openURL()}
             style={[
@@ -242,111 +250,93 @@ const CekDataPage = ({route, navigation}) => {
           </TouchableOpacity>
         </View>
         {/* text input */}
-
-        <TextInput
-          style={[
-            {
-              // borderTopWidth
-              flex: 1,
-              marginTop: 20,
-              padding: 20,
-              color: putih,
-              backgroundColor: ungu,
-              borderRadius: 20,
-            },
-          ]}
-          multiline
-          placeholderTextColor={putih}
-          placeholder="Isi pesan disini"
-          value={valuInput}
-          onChangeText={text => setvaluInput(text)}
-        />
+        {dataRiwayat ? (
+          <View />
+        ) : (
+          <TextInput
+            style={[
+              {
+                // borderTopWidth
+                flex: 1,
+                marginTop: 20,
+                padding: 20,
+                color: putih,
+                backgroundColor: ungu,
+                borderRadius: 20,
+              },
+            ]}
+            multiline
+            placeholderTextColor={putih}
+            placeholder="Isi pesan disini"
+            value={valuInput}
+            onChangeText={text => setvaluInput(text)}
+          />
+        )}
       </ScrollView>
 
       {/* <TextInputMassage setValue={setvaluInput} valuInput={valuInput} /> */}
 
       {/* button */}
-      <View
-        style={[
-          {
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginHorizontal: 20,
-            marginBottom: 10,
-          },
-        ]}>
-        {/* terima */}
-        <TouchableOpacity
+      {dataRiwayat ? (
+        <View></View>
+      ) : (
+        <View
           style={[
             {
-              backgroundColor: hijau,
-              width: '40%',
-              padding: 20,
-              marginTop: 20,
-              borderRadius: 40,
-              justifyContent: 'center',
-              alignItems: 'center',
-              alignSelf: 'center',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginHorizontal: 20,
+              marginBottom: 10,
             },
-          ]}
-          onPress={async () => {
-            try {
-              await TerimaAntrian();
-            } catch (error) {
-              console.log(error);
-            }
-          }}>
-          <Text style={[{color: putih}]}>Terima</Text>
-        </TouchableOpacity>
-        {/* tolak */}
-        <TouchableOpacity
-          style={[
-            {
-              backgroundColor: 'red',
-              width: '40%',
-              padding: 20,
-              borderRadius: 40,
-              marginTop: 20,
-              justifyContent: 'center',
-              alignItems: 'center',
-              alignSelf: 'center',
-            },
-          ]}
-          onPress={async () => {
-            try {
-              await KirimPesan();
-              await TolakAntrian();
-            } catch (error) {
-              console.log(error);
-            }
-          }}>
-          <Text style={[{color: putih}]}>Tolak</Text>
-        </TouchableOpacity>
-        {/* <GreenButton
-          width={'40%'}
-          ButtonText={'Terima'}
-          actionOnclick={async () => {
-            try {
-              await TerimaAntrian();
-            } catch (error) {
-              console.log(error);
-            }
-          }}
-        /> */}
+          ]}>
+          <TouchableOpacity
+            style={[
+              {
+                backgroundColor: hijau,
+                width: '40%',
+                padding: 20,
+                marginTop: 20,
+                borderRadius: 40,
+                justifyContent: 'center',
+                alignItems: 'center',
+                alignSelf: 'center',
+              },
+            ]}
+            onPress={async () => {
+              try {
+                await TerimaAntrian();
+              } catch (error) {
+                console.log(error);
+              }
+            }}>
+            <Text style={[{color: putih}]}>Terima</Text>
+          </TouchableOpacity>
 
-        {/* <GreenButton
-          width={'40%'}
-          ButtonText={'Tolak'}
-          actionOnclick={async () => {
-            try {
-              await KirimPesan();
-              await TolakAntrian();
-            } catch (error) {
-              console.log(error);
-            }
-          }}
-        /> */}
-      </View>
+          <TouchableOpacity
+            style={[
+              {
+                backgroundColor: 'red',
+                width: '40%',
+                padding: 20,
+                borderRadius: 40,
+                marginTop: 20,
+                justifyContent: 'center',
+                alignItems: 'center',
+                alignSelf: 'center',
+              },
+            ]}
+            onPress={async () => {
+              try {
+                await KirimPesan();
+                await TolakAntrian();
+              } catch (error) {
+                console.log(error);
+              }
+            }}>
+            <Text style={[{color: putih}]}>Tolak</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };

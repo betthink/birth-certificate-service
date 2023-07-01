@@ -32,6 +32,7 @@ import CekDataPage from './Screens/AdminScreen/CekDataPage';
 import FormulirScreen from './Screens/AdminScreen/FormulirScreen-Admin';
 import ListFormulir from './Screens/ListFormulir-Umum';
 import InformasiSyarat from './Screens/InformasiSyarat-Umum';
+import DetailRiwayat from './Screens/AdminScreen/DetailRiwayat';
 
 // import TimePicker from './Screens/datetime-component';
 const Stack = createNativeStackNavigator();
@@ -48,6 +49,7 @@ function App() {
         initialRouteName="SplashScreen">
         {/* <Stack.Screen name="DataFileUploadScreen" component={DataFileUploadScreen} /> */}
         <Stack.Screen name="FormulirScreen" component={FormulirScreen} />
+        <Stack.Screen name="DetailRiwayat" component={DetailRiwayat} />
         <Stack.Screen name="DetailProsesAntrian" component={DetailProsesAntrian} />
         <Stack.Screen name="ListFormulir" component={ListFormulir} />
         <Stack.Screen name="DetailDataAntrian" component={DetailDataAntrian} />

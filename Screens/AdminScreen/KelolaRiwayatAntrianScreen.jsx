@@ -83,7 +83,7 @@ export default function KelolaRiwayatAntrianScreen({navigation}) {
               renderItem={({item}) => (
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate('DetailAntrian', {detailAntrian: item})
+                    navigation.navigate('CekDataPage', {IdAntrian: item.IdAntrian, dataRiwayat: true})
                   }
                   style={{
                     // height: 70,

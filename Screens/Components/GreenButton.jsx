@@ -15,6 +15,7 @@ const GreenButton = ({ButtonText, actionOnclick, width}) => {
           justifyContent: 'center',
           alignItems: 'center',
           alignSelf: 'center',
+          borderRadius: 10
         },
       ]}
       onPress={actionOnclick}>
