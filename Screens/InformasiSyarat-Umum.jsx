@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import ButtonBack from './Components/ButtonBack';
-import {stylesDariGaya} from './Components/ImportedStyles';
 import {Grey, putih, ungu} from '../Assets/StylingComponent/Coloring';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';

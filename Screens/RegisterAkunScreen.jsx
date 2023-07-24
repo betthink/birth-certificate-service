@@ -98,7 +98,7 @@ const RegisterAkunScreen = ({navigation}) => {
   return (
     <View style={{backgroundColor: putih, flex: 1}}>
       <View style={[stylesDariGaya.headerBox, {justifyContent: 'center'}]}>
-        <ButtonBack buttontext="Buat AKun" />
+        <ButtonBack buttontext="Buat Akun" />
       </View>
       {/* Form */}
       <ScrollView style={[{paddingHorizontal: 20}]}>
